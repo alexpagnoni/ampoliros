@@ -1,0 +1,55 @@
+STYLE.NAME = amp4000
+
+STYLE.CSS = hui.css
+
+STYLE.BIGDOT = ampbigdot.gif
+STYLE.BIGDOT_ENTERPRISE = ampbigdot_ent.jpg
+STYLE.BIGDOT_ASP = ampbigdot_asp.jpg
+STYLE.MIDDOT = ampmiddot.gif
+STYLE.AMPMINILOGO = hui-amplogo.png
+STYLE.SOLARIXMINILOGO = hui-solarixlogo.png
+
+STYLE.MENUBACK = menubackgray.gif
+STYLE.MENUBACKSHADOW = menubackwhite.gif
+
+STYLE.ROOTACCESS = root.png
+STYLE.SITEACCESS = site.png
+
+STYLE.TITLEBARTITLE = titlebar_shadow.png
+STYLE.TITLEBAR = titlebar_shadow.png
+
+STYLE.WINDOWNEW = window_new.png
+STYLE.WINDOWCLOSE = window_close.png
+
+STYLE.ARROWDOWN = arrowdown.gif
+STYLE.ARROWDOWNSHADOW = arrowdowngray.gif
+STYLE.ARROWRIGHT = arrowright.gif
+STYLE.ARROWRIGHTSHADOW = arrowrightgray.gif
+STYLE.ARROWUP = arrowup.gif
+STYLE.ARROWUPSHADOW = arrowupgray.gif
+STYLE.ARROWLEFT = arrowleft.gif
+STYLE.ARROWLEFTSHADOW = arrowleftgray.gif
+
+STYLE.BLUEBALL = blueball.gif
+STYLE.CRYSTALBALL = crystalball.gif
+STYLE.GOLDBALL = goldball.gif
+STYLE.GREENBALL = greenball.gif
+STYLE.LUCIDBALL = lucidball.gif
+STYLE.ORANGEBALL = orangeball.gif
+STYLE.PINKBALL = pinkball.gif
+STYLE.PURPLEBALL = purpleball.gif
+STYLE.REDBALL = redball.gif
+STYLE.WHITEBALL = whiteball.gif
+STYLE.YELLOWBALL = yellowball.gif
+
+STYLE.TREE_COLLAPSE_CORNER = tree_collapse_corner.png
+STYLE.TREE_CORNER = tree_corner.png
+STYLE.TREE_EXPAND = tree_expand.png
+STYLE.TREE_FOLDER_OPEN = tree_folder_open.png
+STYLE.TREE_SPACE = tree_space.png
+STYLE.TREE_VERTLINE = tree_vertline.png
+STYLE.TREE_COLLAPSE = tree_collapse.png
+STYLE.TREE_EXPAND_CORNER = tree_expand_corner.png
+STYLE.TREE_FOLDER_CLOSED = tree_folder_closed.png
+STYLE.TREE_LEAF = tree_leaf.png
+STYLE.TREE_SPLIT = tree_split.png

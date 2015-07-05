@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="binaries">
+                <field name="name"	type="text"	notnull="1"/>
+                <field name="file"	type="text"	notnull="1"/>
+                <field name="platform"	type="text"	notnull="1"/>
+                <key field="file"	type="unique"/>
+        </table>
+
+</database>

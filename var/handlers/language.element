@@ -1,0 +1,107 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: language.element,v 1.7 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'language';
+$element['classname'] = 'LanguageElement';
+$element['priority'] = 0;
+$element['site'] = false;
+
+if ( !defined( 'LANGUAGE_ELEMENT' ) )
+{
+define( 'LANGUAGE_ELEMENT', true );
+
+Carthag::import('com.solarix.ampoliros.locale.Locale');
+
+/*!
+@class LanguageElement
+
+@abstract Language element handler.
+*/
+class LanguageElement extends ModuleElement
+{
+    public $type = 'language';
+    public $site = false;
+
+    function LanguageElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) and strlen( $params['short'] ) )
+        {
+            $result = &$this->ampdb->Execute( 'INSERT INTO languages '.
+                                              'VALUES ('.$this->ampdb->Format_Text( $params['short'] ).','.
+                                              $this->ampdb->Format_Text( $params['name'] ).')' );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.language_element.languageelement_class.doinstallaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty language name ('.$params['name'].') or short name ('.$params['short'].')', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) and strlen( $params['short'] ) )
+        {
+            $result = &$this->ampdb->Execute( 'DELETE FROM languages '.
+                                              'WHERE langname='.$this->ampdb->Format_Text( $params['name'] ).' '.
+                                              'AND langshort='.$this->ampdb->Format_Text( $params['short'] ) );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.language_element.languageelement_class.douninstallaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty language name ('.$params['name'].') or short name ('.$params['short'].')', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) and strlen( $params['short'] ) )
+        {
+            $result = &$this->ampdb->Execute( 'UPDATE languages '.
+                                              'SET langshort='.$this->ampdb->Format_Text( $params['short'] ).','.
+                                              'langname = '.$this->ampdb->Format_Text( $params['name'] ).' '.
+                                              'WHERE langname='.$this->ampdb->Format_Text( $params['name'] ) );
+
+        }
+        else $this->mLog->LogEvent( 'ampoliros.language_element.languageelement_class.doupdateaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty language name ('.$params['name'].') or short name ('.$params['short'].')', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

@@ -1,0 +1,82 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: ampoliros.library,v 1.47 2004-07-08 15:04:23 alex Exp $
+
+if (!defined('AMPOLIROS_LIBRARY')) {
+    define ('AMPOLIROS_LIBRARY', TRUE);
+
+    function set_root_password($oldPassword, $newPassword) {
+        define ('AMPOLIROS_AMPOLIROS_SETROOTPASSWORD_NEW_PASSWORD_IS_EMPTY', -1);
+        define ('AMPOLIROS_AMPOLIROS_SETROOTPASSWORD_UNABLE_TO_WRITE_NEW_PASSWORD', -2);
+        define ('AMPOLIROS_AMPOLIROS_SETROOTPASSWORD_OLD_PASSWORD_IS_WRONG', -3);
+
+        $result = false;
+
+        $fh = @ fopen(CONFIG_PATH.'amprootpwd.cfg', 'r');
+        if ($fh) {
+            $cpassword = fgets($fh, 4096);
+            fclose($fh);
+        }
+
+        if (md5($oldPassword) == $cpassword) {
+            if (strlen($newPassword)) {
+                $fh = @ fopen(CONFIG_PATH.'amprootpwd.cfg', 'w');
+                if ($fh) {
+                    Carthag :: import('com.solarix.ampoliros.io.log.Logger');
+                    $log = new Logger(AMP_LOG);
+
+                    fputs($fh, md5($newPassword));
+                    fclose($fh);
+                    $result = true;
+
+                    $log -> LogEvent('Ampoliros', 'Changed Ampoliros root password', LOGGER_NOTICE);
+                } else
+                    $result = AMPOLIROS_AMPOLIROS_SETROOTPASSWORD_UNABLE_TO_WRITE_NEW_PASSWORD;
+            } else
+                $result = AMPOLIROS_AMPOLIROS_SETROOTPASSWORD_NEW_PASSWORD_IS_EMPTY;
+        } else
+            $result = AMPOLIROS_AMPOLIROS_SETROOTPASSWORD_OLD_PASSWORD_IS_WRONG;
+
+        return $result;
+    }
+
+    function ampoliros_shutdown() {
+        $amp = Ampoliros :: instance('Ampoliros');
+        $amp -> shutdown();
+    }
+
+    function AmpDie($text = '', $forceInterface = '') {
+        $amp = Ampoliros :: instance('Ampoliros');
+        $amp -> abort($text, $forceInterface);
+    }
+
+    function AmpolirosErrorHandler( $errorType, $errorMessage, $errorFile, $errorLine, $errorContext) {
+        $amp = Ampoliros :: instance('Ampoliros');
+        $amp -> errorHandler($errorType, $errorMessage, $errorFile, $errorLine, $errorContext);
+    }
+}
+?>

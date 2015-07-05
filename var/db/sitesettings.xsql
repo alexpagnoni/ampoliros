@@ -1,0 +1,62 @@
+<?xml version='1.0'?>
+<database>
+
+   <table name="sitesettings">
+      <field name="keyname" type="text" notnull="1"/>
+      <field name="val" 	type="text"/>
+   </table>
+
+   <insert table="sitesettings">
+      <data field="keyname" value="sitecompletename"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="siteaddressa"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="siteaddressb"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitetown"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitestate"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitezip"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitecountry"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitefiscalcode"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="siteemail"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitephone"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitefax"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="siteemail"/>
+      <data field="val" value=""/>
+   </insert>
+   <insert table="sitesettings">
+      <data field="keyname" value="sitelogo"/>
+      <data field="val" value=""/>
+   </insert>
+
+</database>

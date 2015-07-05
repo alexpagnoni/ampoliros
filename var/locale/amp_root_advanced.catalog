@@ -1,0 +1,95 @@
+# General
+
+advanced.title				= Advanced settings
+default.button				= Advanced
+processes.button			= Processes
+help.button				= Help
+eraseall.button			= Erase all
+
+# main_default
+
+submit.button				= Apply
+state.label				= Ampoliros environment state
+debug.radio				= Debug
+development.radio			= Development
+production.radio			= Production
+
+# main_processes
+
+pid.header				= Process id
+creation.header				= Creation
+remove.button				= Remove
+debug.button				= Debug
+remove_confirm.label			= Do you really want to remove process file?
+
+# main_debug
+
+instance.label				= Instance
+pid.label				= Process id
+sessionid.label				= Session id
+state.label				= State
+interface.label				= Interface
+mode.label				= Mode
+pagename.label				= Page
+siteid.label				= Site id
+userid.label				= User id
+environment.label			= Environment
+memorylimit.label			= Memory limit
+timelimit.label				= Time limit
+sessionlifetime.label			= Session lifetime
+extensions.label			= Loaded extensions
+includedfiles.label			= Included files
+memoryusage.label           = Memory usage
+runtime.label				= Runtime
+logevents.label				= Logged events
+libraries.label				= Opened libraries
+huievents.label				= Hui events
+calledhooks.label			= Hook events
+queries.label				= Database queries
+profiler.label				= Profiler
+markers.label			= Markers
+dbmarkers.label         = SQL queries
+dbload.label            = Database load
+source.label			= Source
+classes.label			= Defined classes
+functions.label			= Defined functions
+variables.label			= Global scope variables
+bugreport.label				= Bug report
+module.label				= Module
+bugsemail.label				= Report destination
+submitteremail.label			= Your email
+message.label				= Optional message
+sendnotify.label			= Notify Ampoliros Team
+bugreport.submit			= Submit bug report
+eraseall.confirm			= Do you really want to remove all process files?
+
+# action_setadvanced
+
+advancedset.status			= Advanced settings saved.
+advancednotset.status			= ERROR: Advanced settings not saved.
+
+# action_removepid
+
+pid_removed.status			= The process file has been removed.
+pid_not_removed.status			= ERROR: The process file CANNOT be removed.
+
+all_pids_removed.status			= All process files have been removed.
+
+# pass_submitbugreport
+
+bugreport_sent.status			= Bug report sent.
+bugreport_not_sent.status		= ERROR: Bug report NOT sent.
+
+# semaphores
+
+semaphores.button               = Semaphores
+resource.header                 = Resource
+semaphore.header                = Semaphore
+semaphorepid.header             = Pid
+remove_sem.button               = Remove
+remove_sem_confirm.label        = Do you really want to remove this semaphore?
+eraseall_sem.button             = Erase all
+eraseall_sem.confirm            = Do you really want to remove all semaphores?
+sem_removed.status              = Semaphore removed.
+sem_not_removed.status          = ERROR: Semaphore NOT removed.
+all_sems_removed.status         = All semaphores have been removed.

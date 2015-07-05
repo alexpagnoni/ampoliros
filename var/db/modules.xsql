@@ -1,0 +1,28 @@
+<?xml version='1.0'?>
+<database>
+
+   <table name="modules">
+      <field	name="id"             type="integer" notnull="1"/>
+      <field	name="modid"          type="text"    length="50" notnull="1"/>
+      <field	name="modversion"     type="text"    length="15"/>
+      <field	name="moddate"        type="text"    length="25"/>
+      <field	name="moddesc"        type="text"/>
+      <field	name="modfile"        type="text"/>
+      <field	name="onlyextension"  type="boolean"/>
+      <field	name="author"					type="text"/>
+      <field	name="authoremail"		type="text"/>
+      <field	name="authorsite"			type="text"/>
+      <field	name="supportemail"		type="text"/>
+      <field	name="bugsemail"				type="text"/>
+      <field	name="copyright"			type="text"/>
+      <field	name="license"				type="text"/>
+      <field	name="licensefile"		type="text"/>
+      <field	name="maintainer"	type="text"/>
+      <field	name="maintaineremail"	type="text"/>
+      <field	name="category"	type="text"	default=""/>
+   		<key field="id" type="unique"/>
+   </table>
+
+   <sequence name="modules_id_seq"/>
+
+</database>

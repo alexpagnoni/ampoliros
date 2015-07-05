@@ -1,0 +1,16 @@
+Nuovo modulo
+============
+
+Da questa pagina è possibile installare nuovi moduli ed aggiornare
+quelli già presenti.
+
+Per installare od aggiornare un modulo è sufficiente scegliere il file
+dell'archivio e confermare.
+
+Nella pagina successiva verrà indicato l'esito dell'operazione nella
+barra di stato.
+
+Se vengono indicate dipendenze mancanti, è necessario prima installare
+i rispettivi moduli. Il modulo installato può inoltre elencare
+eventuali altri moduli di cui si consiglia l'installazione, ma che
+tuttavia non è indispensabile installare per il corretto funzionamento.

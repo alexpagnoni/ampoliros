@@ -1,0 +1,3 @@
+ampoliros_cache                 = Cleaning of Ampoliros cache, sessions and temporary files
+ampoliros_logs                  = Cleaning of Ampoliros log files
+ampoliros_requirements          = Check of Ampoliros and modules requirements

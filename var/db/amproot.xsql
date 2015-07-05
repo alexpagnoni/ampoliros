@@ -1,0 +1,858 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="cacheditems">
+  	<field	name="module"	type="text"	notnull="1"/>
+		<field	name="itemid"	type="text"	notnull="1"/>
+    <field	name="itemfile"	type="text"	notnull="1"/>
+    <field	name="validator"	type="text"/>
+    <field  name="siteid"   type="integer"/>
+    <field  name="userid"   type="integer"/>
+	</table>
+
+	<table name="sites">
+		<field name="id"              type="integer" notnull="1"/>
+      	<field name="siteid"         type="text"    length="30" notnull="1"/>
+		<field name="sitemd5id"      type="text"    length="32" notnull="1"/>
+      	<field name="sitepath"       type="text"    length="300" notnull="1"/>
+      	<field name="sitename"       type="text"    length="100" notnull="1"/>
+      	<field name="sitepassword"   type="text"    length="32" notnull="1"/>
+      	<field name="siteurl"        type="text"    length="200"/>
+      	<field name="sitedbname"     type="text"    length="40" notnull="1"/>
+      <field name="sitedbhost"     type="text"    length="100"/>
+      <field name="sitedbport"     type="integer"/>
+      <field name="sitedbuser"     type="text"    length="15"/>
+      <field name="sitedbpassword" type="text"    length="15"/>
+      <field name="sitedblog"      type="text"    length="300"/>
+      <field name="sitedbtype"     type="text"    length="20" notnull="1"/>
+      <field name="sitecreationdate"              type="date"/>
+      <field name="siteexpirydate" type="date"/>
+      <field name="siteactive"     type="boolean"/>
+      <field    name="notes"    type="text"/>
+      <field    name="maxusers" type="integer"/>
+      <key field="id" type="unique"/>
+   </table>
+
+   <sequence name="sites_id_seq"/>
+
+	<table name="hooks">
+		<field name="id"	type="integer"	notnull="1"/>
+		<field name="functionmodule" type="text" notnull="1"/>
+		<field name="function" type="text" notnull="1"/>
+		<field name="event"	type="text"	notnull="1"/>
+		<field name="hookmodule" type="text" notnull="1"/>
+		<field name="hookhandler" type="text" notnull="1"/>
+		<field name="hookfunction" type="text" notnull="1"/>
+
+		<key field="id"	type="unique"/>
+	</table>
+
+	<sequence name="hooks_id_seq"/>
+
+	<table name="hookevents">
+		<field name="id"	type="integer"	notnull="1"/>
+		<field name="functionmodule" type="text" notnull="1"/>
+		<field name="function" type="text" notnull="1"/>
+		<field name="event"	type="text"	notnull="1"/>
+
+		<key field="id"	type="unique"/>
+	</table>
+
+	<sequence name="hookevents_id_seq"/>
+
+	<table name="huielements">
+		<field name="id"	type="integer"	notnull="1"/>
+		<field name="name" type="text" notnull="1"/>
+		<field name="file" type="text" notnull="1"/>
+
+		<key field="id"	type="unique"/>
+	</table>
+
+	<sequence name="huielements_id_seq"	start="41"/>
+
+	<insert table="huielements">
+		<data field="id"	value="1"/>
+		<data field="name"	value="button"/>
+		<data field="file"	value="button.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="2"/>
+		<data field="name"	value="checkbox"/>
+		<data field="file"	value="checkbox.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="3"/>
+		<data field="name"	value="combobox"/>
+		<data field="file"	value="combobox.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="4"/>
+		<data field="name"	value="file"/>
+		<data field="file"	value="file.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="5"/>
+		<data field="name"	value="form"/>
+		<data field="file"	value="form.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="6"/>
+		<data field="name"	value="grid"/>
+		<data field="file"	value="grid.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="7"/>
+		<data field="name"	value="horizbar"/>
+		<data field="file"	value="horizbar.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="8"/>
+		<data field="name"	value="horizframe"/>
+		<data field="file"	value="horizframe.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="9"/>
+		<data field="name"	value="horizgroup"/>
+		<data field="file"	value="horizgroup.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="38"/>
+		<data field="name"	value="iframe"/>
+		<data field="file"	value="iframe.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="10"/>
+		<data field="name"	value="image"/>
+		<data field="file"	value="image.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="11"/>
+		<data field="name"	value="label"/>
+		<data field="file"	value="label.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="12"/>
+		<data field="name"	value="link"/>
+		<data field="file"	value="link.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="13"/>
+		<data field="name"	value="listbox"/>
+		<data field="file"	value="listbox.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="14"/>
+		<data field="name"	value="page"/>
+		<data field="file"	value="page.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="15"/>
+		<data field="name"	value="pushbutton"/>
+		<data field="file"	value="pushbutton.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="16"/>
+		<data field="name"	value="radio"/>
+		<data field="file"	value="radio.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="17"/>
+		<data field="name"	value="raw"/>
+		<data field="file"	value="raw.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="18"/>
+		<data field="name"	value="statusbar"/>
+		<data field="file"	value="statusbar.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="19"/>
+		<data field="name"	value="string"/>
+		<data field="file"	value="string.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="20"/>
+		<data field="name"	value="submit"/>
+		<data field="file"	value="submit.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="21"/>
+		<data field="name"	value="table"/>
+		<data field="file"	value="table.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="22"/>
+		<data field="name"	value="text"/>
+		<data field="file"	value="text.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="23"/>
+		<data field="name"	value="titlebar"/>
+		<data field="file"	value="titlebar.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="24"/>
+		<data field="name"	value="toolbar"/>
+		<data field="file"	value="toolbar.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="25"/>
+		<data field="name"	value="treemenu"/>
+		<data field="file"	value="treemenu.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="39"/>
+		<data field="name"	value="treevmenu"/>
+		<data field="file"	value="treevmenu.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="40"/>
+		<data field="name"	value="vertbar"/>
+		<data field="file"	value="vertbar.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="26"/>
+		<data field="name"	value="vertframe"/>
+		<data field="file"	value="vertframe.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="27"/>
+		<data field="name"	value="vertgroup"/>
+		<data field="file"	value="vertgroup.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="28"/>
+		<data field="name"	value="date"/>
+		<data field="file"	value="date.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="29"/>
+		<data field="name"	value="helpnode"/>
+		<data field="file"	value="helpnode.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="30"/>
+		<data field="name"	value="menu"/>
+		<data field="file"	value="menu.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="31"/>
+		<data field="name"	value="amppage"/>
+		<data field="file"	value="amppage.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="32"/>
+		<data field="name"	value="amptoolbar"/>
+		<data field="file"	value="amptoolbar.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="33"/>
+		<data field="name"	value="empty"/>
+		<data field="file"	value="empty.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="34"/>
+		<data field="name"	value="formarg"/>
+		<data field="file"	value="formarg.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="35"/>
+		<data field="name"	value="sessionkey"/>
+		<data field="file"	value="sessionkey.hui"/>
+	</insert>
+
+	<insert table="huielements">
+		<data field="id"	value="36"/>
+		<data field="name"	value="tab"/>
+		<data field="file"	value="tab.hui"/>
+	</insert>
+	
+    <insert table="huielements">
+		<data field="id"	value="37"/>
+		<data field="name"	value="progressbar"/>
+		<data field="file"	value="progressbar.hui"/>
+	</insert>
+
+    <table name="huivalidators">
+        <field name="name" type="text" notnull="1"/>
+        <field name="file" type="text" notnull="1"/>
+    </table>
+
+	<table name="huicolorssets">
+		<field	name="id"	type="integer"	notnull="1"/>
+		<field	name="name"	type="text"	notnull="1"/>
+		<field	name="file"	type="text"	notnull="1"/>
+                <field	name="catalog"	type="text"	notnull="1"/>
+
+		<key	field="id"	type="unique"/>
+	</table>
+
+	<sequence	name="huicolorssets_id_seq"/>
+
+    	<table name="huiiconssets">
+		<field	name="id"	type="integer"	notnull="1"/>
+		<field	name="name"	type="text"	notnull="1"/>
+		<field	name="file"	type="text"	notnull="1"/>
+                <field	name="catalog"	type="text"	notnull="1"/>
+
+		<key	field="id"	type="unique"/>
+	</table>
+
+	<sequence	name="huiiconssets_id_seq"/>
+
+	<table name="huistyles">
+		<field	name="id"	type="integer"	notnull="1"/>
+		<field	name="name"	type="text"	notnull="1"/>
+		<field	name="file"	type="text"	notnull="1"/>
+                <field	name="catalog"	type="text"	notnull="1"/>
+
+		<key	field="id"	type="unique"/>
+	</table>
+
+	<sequence	name="huistyles_id_seq"/>
+
+	<table name="huithemes">
+		<field	name="id"	type="integer"	notnull="1"/>
+		<field	name="name"	type="text"	notnull="1"/>
+		<field	name="file"	type="text"	notnull="1"/>
+                <field	name="catalog"	type="text"	notnull="1"/>
+
+		<key	field="id"	type="unique"/>
+	</table>
+
+	<sequence	name="huithemes_id_seq"	start="2"/>
+
+        <insert	table="huithemes">
+        	<data	field="id"	value="1"/>
+                <data	field="name"	value="amp4000"/>
+                <data	field="file"	value="amp4000.huitheme"/>
+                <data	field="catalog"	value="amp_misc_amp4000theme"/>
+        </insert>
+
+   <table name="modules">
+      <field name="id"              type="integer" notnull="1"/>
+      <field name="modid"           type="text"    length="50" notnull="1"/>
+      <field name="modversion"      type="text"    length="15"/>
+      <field name="moddate"         type="text"    length="25"/>
+      <field name="moddesc"         type="text"/>
+      <field name="modfile"         type="text"/>
+      <field name="onlyextension"   type="boolean"/>
+      <field	name="author"					type="text"/>
+      <field	name="authoremail"		type="text"/>
+      <field	name="authorsite"			type="text"/>
+      <field	name="supportemail"		type="text"/>
+      <field	name="bugsemail"				type="text"/>
+      <field	name="copyright"			type="text"/>
+      <field	name="license"				type="text"/>
+      <field	name="licensefile"		type="text"/>
+      <field	name="maintainer"	type="text"/>
+      <field	name="maintaineremail"	type="text"/>
+      <field	name="category"	type="text"	default=""/>
+      <key field="id" type="unique"/>
+   </table>
+
+   <sequence name="modules_id_seq"/>
+
+   <table name="submodules">
+
+        <field    name="moduleid" type="integer"  notnull="1"/>
+        <field    name="name" type="text" notnull="1"/>
+
+   </table>
+    
+   <table name="disabledsubmodules">
+
+        <field  name="moduleid" type="integer"  notnull="1"/>
+        <field  name="submodule"    type="text" notnull="1"/>
+        <field  name="siteid"   type="integer"  notnull="1"/>
+
+   </table>
+
+	<table name="moddeps">
+		<field name="modid"			type="integer"	notnull="1"/>
+		<field name="moddep"		type="text"		length="50"	notnull="1"/>
+		<field name="deptype"		type="integer"	notnull="1"/>
+    <field	name="version"	type="text"	default=""/>
+	</table>
+
+	<table name="modconfig">
+		<field name="modname"		type="text"	length="50"	notnull="1"/>
+		<field name="keyname"			type="text"	notnull="1"/>
+		<field name="value"			type="text"/>
+	</table>
+
+	<table name="elementtypes">
+		<field name="id"			type="integer"	notnull="1"/>
+        	<field name="typename"		type="text"	length="50"	notnull="1"/>
+                <field name="priority"		type="integer"	notnull="1"/>
+                <field name="site"		type="boolean"	notnull="1"/>
+                <field name="file"		type="text"	notnull="1"/>
+                <field name="class" type="text"/>
+		<key field="id"	type="unique"/>
+        </table>
+
+	<sequence name="elementtypes_id_seq"	start="34"/>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="1"/>
+        <data field="typename"	value="element"/>
+        <data field="priority"	value="100"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="element.element"/>
+        <data field="class" value="com.solarix.module.elements.ElementElement"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="2"/>
+        <data field="typename"	value="roottable"/>
+        <data field="priority"	value="150"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="roottable.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="3"/>
+        <data field="typename"	value="admingroup"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="admingroup.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="4"/>
+        <data field="typename"	value="adminpage"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="1"/>
+        <data field="file"	value="adminpage.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="5"/>
+        <data field="typename"	value="admintable"/>
+        <data field="priority"	value="130"/>
+        <data field="site"	value="1"/>
+        <data field="file"	value="admintable.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="6"/>
+        <data field="typename"	value="binary"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="binary.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="7"/>
+        <data field="typename"	value="catalog"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="catalog.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="8"/>
+        <data field="typename"	value="cgi"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="cgi.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="9"/>
+        <data field="typename"	value="configurationfile"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="configurationfile.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="10"/>
+        <data field="typename"	value="library"/>
+        <data field="priority"	value="110"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="library.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="11"/>
+        <data field="typename"	value="rootpage"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="rootpage.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="12"/>
+        <data field="typename"	value="xmlrpchandler"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="xmlrpchandler.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="13"/>
+        <data field="typename"	value="xmlrpcmethod"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="xmlrpcmethod.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="14"/>
+        <data field="typename"	value="country"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="country.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="15"/>
+        <data field="typename"	value="language"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="language.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="16"/>
+        <data field="typename"	value="hook"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="hook.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="17"/>
+        <data field="typename"	value="hookevent"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="hookevent.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="18"/>
+        <data field="typename"	value="hookhandler"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="hookhandler.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="19"/>
+        <data field="typename"	value="huielement"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="huielement.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="24"/>
+        <data field="typename"	value="huistyle"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="huistyle.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="25"/>
+        <data field="typename"	value="huiiconsset"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="huiiconsset.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="26"/>
+        <data field="typename"	value="huicolorsset"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="huicolorsset.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="27"/>
+        <data field="typename"	value="huitheme"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="huitheme.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="20"/>
+        <data field="typename"	value="dblayer"/>
+        <data field="priority"	value="110"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="dblayer.element"/>
+   </insert>
+
+    <insert table="elementtypes">
+   	<data field="id"	value="21"/>
+        <data field="typename"	value="extras"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="extras.element"/>
+   </insert>
+
+    <insert table="elementtypes">
+   	<data field="id"	value="22"/>
+        <data field="typename"	value="helpnode"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="helpnode.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="23"/>
+        <data field="typename"	value="rootgroup"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="rootgroup.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="28"/>
+        <data field="typename"	value="tempdir"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="tempdir.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+   	<data field="id"	value="29"/>
+        <data field="typename"	value="huivalidator"/>
+        <data field="priority"	value="40"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="huivalidator.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+        <data field="id"	value="30"/>
+        <data field="typename"	value="moduleconfig"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="moduleconfig.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+        <data field="id"	value="31"/>
+        <data field="typename"	value="siteconfig"/>
+        <data field="priority"	value="10"/>
+        <data field="site"	value="1"/>
+        <data field="file"	value="siteconfig.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+        <data field="id"	value="32"/>
+        <data field="typename"	value="maintenancetask"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="maintenancetask.element"/>
+   </insert>
+
+   <insert table="elementtypes">
+        <data field="id"	value="33"/>
+        <data field="typename"	value="class"/>
+        <data field="priority"	value="0"/>
+        <data field="site"	value="0"/>
+        <data field="file"	value="class.element"/>
+   </insert>
+
+    <table name="maintenancetasks">
+        <field  name="name" type="text"  notnull="1"/>
+        <field  name="file" type="text" notnull="1"/>
+        <field  name="catalog"  type="text"/>
+        <field  name="enabled"  type="boolean"/>
+   </table>
+
+    <insert table="maintenancetasks">
+        <data field="name"  value="ampoliros_logs"/>
+        <data field="file"  value="ampoliros_logs.maintenance"/>
+        <data field="catalog"  value="amp_misc_maintenance"/>
+        <data field="enabled"  value=""/>
+    </insert>
+
+    <insert table="maintenancetasks">
+        <data field="name"  value="ampoliros_cache"/>
+        <data field="file"  value="ampoliros_cache.maintenance"/>
+        <data field="catalog"  value="amp_misc_maintenance"/>
+        <data field="enabled"  value=""/>
+    </insert>
+
+    <insert table="maintenancetasks">
+        <data field="name"  value="ampoliros_requirements"/>
+        <data field="file"  value="ampoliros_requirements.maintenance"/>
+        <data field="catalog"  value="amp_misc_maintenance"/>
+        <data field="enabled"  value=""/>
+    </insert>
+
+	<table name="modregister">
+		<field name="modname"		type="text"		length="100"	notnull="1"/>
+		<field name="categoryid"	type="integer"	notnull="1"/>
+		<field name="keyname"			type="text"		length="200"	notnull="1"/>
+		<field name="elementfile"	type="text"		length="200"	notnull="1"/>
+	</table>
+
+   <table name="rootgroups">
+      <field name="id"       type="integer" notnull="1"/>
+      <field name="name"     type="text"    length="50"/>
+      <field name="catalog"  type="text"    length="250"/>
+      <key field="id" type="unique"/>
+   </table>
+
+   <sequence name="rootgroups_id_seq"/>
+
+	<table name="rootpages">
+		<field name="id"		type="integer"	notnull="1"/>
+		<field name="name"		type="text"		length="50"		notnull="1"/>
+		<field name="location"	type="text"		length="250"	notnull="1"/>
+		<field name="iconfile"	type="text"		length="250"/>
+		<field name="catalog"	type="text"		length="250"/>
+    <field name="groupid"  type="integer"/>
+    <field	name="themeicon"	type="text"	default=""/>
+    <field	name="themeicontype"	type="text"	default=""/>
+		<key field="id"	type="unique"/>
+	</table>
+
+	<sequence name="rootpages_id_seq"/>
+
+   <table name="rootpermissions">
+      <field name="groupid"  type="integer"/>
+      <field name="permnode" type="text"    length="200"/>
+   </table>
+
+   <table name="rootprofiles">
+      <field name="id"        type="integer" notnull="1"/>
+      <field name="profilename" type="text"    length="20"/>
+      <key field="id" type="unique"/>
+   </table>
+
+   <sequence name="rootprofile_id_seq"/>
+
+	<table name="activemodules">
+		<field name="moduleid"	type="integer"	notnull="1"/>
+		<field name="siteid"	type="integer"	notnull="1"/>
+        <field name="activationdate"   type="date"/>
+        <field name="expirydate"       type="date"/>
+        <field name="active"    type="boolean"/>
+	</table>
+
+	<table name="countries">
+		<field name="countryshort"		type="text"		length="6"	notnull="1"/>
+		<field name="countryname"		type="text"		length="40"	notnull="1"/>
+		<field name="countryfile"		type="text"		length="50"	notnull="1"/>
+	</table>
+
+	<table name="languages">
+		<field name="langshort"		type="text"		length="6"	notnull="1"/>
+		<field name="langname"		type="text"		length="30"	notnull="1"/>
+	</table>
+
+	<table name="users">
+		<field name="id"			type="integer"	notnull="1"/>
+		<field name="siteid"		type="integer"/>
+		<field name="groupid"		type="integer"/>
+		<field name="username"		type="text"/>
+		<field name="password"		type="text"		length="32"/>
+		<field name="fname"			type="text"		length="30"/>
+		<field name="lname"			type="text"		length="30"/>
+		<field name="otherdata"		type="text"/>
+                <field	name="email"	type="text"/>
+		<key field="id" type="unique"/>
+	</table>
+
+	<sequence name="users_id_seq"/>
+
+	<table	name="xmlrpcaccounts">
+		<field	name="id"	type="integer"	notnull="1"/>
+		<field	name="name"	type="text"/>
+		<field	name="host"	type="text"/>
+		<field	name="cgi"	type="text"/>
+		<field	name="port"	type="text"/>
+		<field	name="username"	type="text"/>
+		<field	name="password"	type="text"/>
+        <field  name="proxy"    type="text"/>
+        <field  name="proxyport"    type="text"/>
+  		<key	field="id"	type="unique"/>
+	</table>
+
+	<sequence	name="xmlrpcaccounts_id_seq"/>
+
+        <table name="xmlrpcmethods">
+        	<field name="id"	type="integer"	notnull="1"/>
+                <field name="name"	type="text"	notnull="1"/>
+                <field name="function"	type="text"	notnull="1"/>
+                <field name="signature"	type="text"/>
+                <field name="docstring"	type="text"/>
+                <field name="handler"	type="text"     notnull="1"/>
+                <field name="module"    type="text"     notnull="1"/>
+                <field	name="unsecure"	type="boolean"/>
+                <field	name="catalog"	type="text"/>
+                <key field="id"	type="unique"/>
+        </table>
+
+        <sequence name="xmlrpcmethods_id_seq"/>
+
+	<table name="xmlrpcusers">
+        	<field name="id"	type="integer"	notnull="1"/>
+                <field name="username"	type="text"  	notnull="1"/>
+                <field name="password"	type="text"	notnull="1"/>
+                <field name="profileid" type="integer" notnull="1"/>
+                <field  name="siteid"   type="integer"/>
+                <key field="id"	type="unique"/>
+        </table>
+
+	<sequence name="xmlrpcusers_id_seq"/>
+
+        <table name="xmlrpcprofiles">
+        	<field name="id"	type="integer"	notnull="1"/>
+                <field name="profilename"	type="text"	notnull="1"/>
+                <key field="id"	type="unique"/>
+        </table>
+
+	<sequence name="xmlrpcprofiles_id_seq"/>
+
+	<table name="xmlrpcpermissions">
+                <field name="profileid" type="integer" notnull="1"/>
+                <field name="module"	type="text"/>
+                <field name="method"	type="text"/>
+        </table>
+
+</database>

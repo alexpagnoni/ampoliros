@@ -1,0 +1,125 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: amppage.hui,v 1.16 2004-07-08 15:04:22 alex Exp $
+
+OpenLibrary( 'xml.hui', HANDLER_PATH );
+
+$huielementclass = 'HuiAmpPage';
+
+if ( !defined( 'AMPPAGE_HUI' ) )
+{
+define( 'AMPPAGE_HUI', TRUE );
+
+import('com.solarix.ampoliros.hui.widgets.HuiXml');
+
+class HuiAmpPage extends HuiXml
+{
+    public $mWidgetType = 'amppage';
+    //public $mPageTitle;
+    //public $mMenu;
+    //public $mToolBars;
+    //public $mMainContent;
+    //public $mStatus;
+    public $mIcon;
+
+    public function HuiAmpPage( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiXml( $elemName, $elemArgs, $elemTheme, $dispEvents );
+        if ( isset( $this->mArgs['icon'] ) ) $this->mIcon = $this->mArgs['icon'];
+        $this->_fillDefinition();
+    }
+
+    protected function _fillDefinition()
+    {
+        $result = FALSE;
+
+        $this->mDefinition =
+'<?xml version="1.0" encoding="ISO-8859-1"?>
+<page>
+  <name>page</name>
+  <args><title type="encoded">'.urlencode( $this->mArgs['pagetitle'] ).'</title></args>
+  <children>
+
+    <vertgroup>
+      <name>mainvertgroup</name>
+      <children>
+
+        <titlebar>
+          <name>titlebar</name>
+          <args>
+            <title type="encoded">'.urlencode( $this->mArgs['pagetitle'] ).'</title>
+            <icon type="encoded">'.urlencode( $this->mIcon ).'</icon>
+          </args>
+        </titlebar>';
+
+            if ( strlen( $this->mArgs['menu'] ) )
+            {
+                $this->mDefinition .= '<horizgroup><name>menuframe</name><children><menu><name>mainmenu</name><args><menu type="encoded">'.urlencode( $this->mArgs['menu'] ).'</menu></args></menu></children></horizgroup>';
+            }
+
+            if ( is_array( $this->mArgs['toolbars'] ) )
+            {
+                while ( list( , $tbar ) = each( $this->mArgs['toolbars'] ) )
+                {
+                    if ( is_object( $tbar ) )
+                    {
+                        $this->mDefinition .= '<huiobject>'.urlencode( serialize( $tbar ) ).'</huiobject>';
+                    }
+                }
+            }
+
+            $this->mDefinition .=
+'        <horizframe>
+          <name>mainhorizframe</name>
+          <children>';
+
+            if ( $GLOBALS['gEnv']['core']['state'] == AMP_STATE_DEBUG ) $GLOBALS['gEnv']['runtime']['debug']['loadtime']->Mark( 'start - HuiAmpPage::serialize' );
+            if ( is_object( $this->mArgs['maincontent'] ) ) $this->mDefinition .= '<huiobject>'.urlencode( serialize( $this->mArgs['maincontent'] ) ).'</huiobject>';
+            if ( $GLOBALS['gEnv']['core']['state'] == AMP_STATE_DEBUG ) $GLOBALS['gEnv']['runtime']['debug']['loadtime']->Mark( 'end - HuiAmpPage::serialize' );
+
+            $this->mDefinition .=
+'          </children>
+        </horizframe>
+
+        <statusbar>
+          <name>pagestatus</name>
+          <args><status type="encoded">'.urlencode( $this->mArgs['status'] ).'</status></args>
+        </statusbar>
+
+      </children>
+    </vertgroup>
+
+  </children>
+</page>';
+
+        return $result;
+    }
+}
+
+}
+
+?>

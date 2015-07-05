@@ -1,0 +1,28 @@
+# Menus
+
+admin						= Admin
+ampoliros					= Ampoliros
+tools						= Tools
+modsettings					= Applications settings
+
+# Items
+
+logout						= Log out
+password					= Password
+info						= Informations
+ampinterface					= Interface
+ampadvanced					= Advanced
+locale						= Localization
+applications				= Applications
+network						= Network
+sites						= Sites
+xmlrpc						= Web services
+security                    = Security
+maintenance                 = Maintenance
+
+# Main menu
+
+rootadmin					= Control panel
+siteadmin					= Desktop
+amphome						= Ampoliros home
+solarixhome					= Solarix home

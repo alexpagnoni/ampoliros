@@ -1,0 +1,33 @@
+# Global
+
+locale_pagetitle						= Localization
+locale_title							= Localization
+
+country_button							= Country
+language_button							= Language
+help_button								= Help
+
+# pass_setlanguage
+
+languageset_status						= Language set
+
+# pass_setcountry
+
+countryset_status						= Country set
+
+# main_default
+
+country_title							= Country
+country_label							= Country
+country_submit							= Apply
+
+# main_language
+
+language_title							= Language
+language_label							= Language
+language_submit							= Apply
+countrylanguage_label					= Default language for current country: %s
+
+# main_help
+
+help_title								= Help

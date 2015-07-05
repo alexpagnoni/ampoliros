@@ -1,0 +1,33 @@
+# Global
+
+locale_pagetitle						= Localizzazione
+locale_title							= Localizzazione
+
+country_button							= Nazione
+language_button							= Linguaggio
+help_button								= Aiuto
+
+# pass_setlanguage
+
+languageset_status						= Linguaggio impostato.
+
+# pass_setcountry
+
+countryset_status						= Nazione impostata.
+
+# main_default
+
+country_title							= Nazione
+country_label							= Nazione
+country_submit							= Applica
+
+# main_language
+
+language_title							= Linguaggio
+language_label							= Linguaggio
+language_submit							= Applica
+countrylanguage_label					= Linguaggio predefinito per l'attuale nazione: %s
+
+# main_help
+
+help_title								= Aiuto

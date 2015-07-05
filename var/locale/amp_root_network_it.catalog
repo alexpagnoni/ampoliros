@@ -1,0 +1,16 @@
+network						= Rete
+namedesc					= Nome Ampoliros
+namenote					= Nome Ampoliros
+domaindesc					= Dominio
+domainnote					= Dominio di Ampoliros
+dnsdesc						= DNS
+dnsnote						= Name server del dominio di Ampoliros
+submit						= Applica
+reset						= Ripristina
+datachanged					= Settaggi di rete di Ampoliros cambiati.
+
+help_button							= Aiuto
+
+# main_help
+
+help_title							= Aiuto

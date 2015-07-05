@@ -1,0 +1,151 @@
+
+                     Ampoliros Application Server
+
+                       http://www.ampoliros.com
+
+
+
+                             INSTALLATION
+                             ============
+
+
+
+-----------------------------------------------------------------------------
+INDEX
+-----------------------------------------------------------------------------
+
+1. Requirements
+2. How to install (Unix)
+3. How to install (Windows)
+4. How to upgrade (All platforms)
+
+-----------------------------------------------------------------------------
+1. REQUIREMENTS
+-----------------------------------------------------------------------------
+
+You must have root access in order to install Ampoliros into Unix systems.
+
+Ampoliros requires a web server with PHP 4 support and a
+SQL server supported by Ampoliros.
+
+Ampoliros encoded version requires Zend Optimizer to run.
+
+Ampoliros is certified to work with these applications:
+
+Operating systems:
+- GNU/Linux Slackware 7.0, 7.1, 8.0, 8.1 - Debian 2.0, 2.1, 2.2
+- Microsoft Windows 9x/NT/2000 (lacks cron support for now)
+- Red Hat Linux 7.3
+
+SQL servers:
+- PostgreSQL 7.0+ (7.1+ higly reccomended)
+- MySQL 3.22+
+
+Web servers:
+- Apache 1.3.14+ (it should work with previous 1.3.x versions too)
+
+PHP environment:
+- PHP 4.1.0+
+- File upload support (required)
+- XML support (required)
+- DOM XML support (required)
+- ZLib support (required)
+- Zend Optimizer (optional)
+
+Misc:
+Ampoliros has also been tested on Windows systems with PHPTriad and FoxServ.
+
+-----------------------------------------------------------------------------
+2. HOW TO INSTALL (UNIX)
+-----------------------------------------------------------------------------
+
+- Login as root:
+
+su - root
+
+- Unpack Ampoliros tarball distribution:
+
+tar xfz ampoliros-x.x.x.tgz
+
+where x.x.x is current version. Unpacking it in a temporary directory
+(like /tmp) is a good idea.
+
+- Launch configure script and answer questions:
+
+./configure
+
+- Launch make:
+
+make
+
+If something goes wrong, just launch "make remove", adjust
+the settings (you can also change config.h file directly) and retry
+make.
+
+- Tune PHP configuration by adding a new directory in the include_path
+directive, relative to [private directory]/etc. and increase the max
+upload size limit.
+
+e.g.
+
+include_path = ".:/usr/local/ampoliros/etc"
+upload_max_filesize = 4M
+
+- Tune web server configuration, adding an alias for Ampoliros cgi
+public directory. In Apache this is done with:
+
+Alias /ampcgi/ "Ampoliros cgi public directory here"
+
+e.g.
+
+Alias /ampcgi/ "/var/www/ampoliros/cgi/"
+
+and restart Apache.
+
+- Files installation is now done.
+
+-----------------------------------------------------------------------------
+3. HOW TO INSTALL (WINDOWS)
+-----------------------------------------------------------------------------
+
+- Launch Ampoliros installer.
+
+- Setup Ampoliros configuration with AmpCfg, it will be automatically
+executed by the installer at the end of the installation.
+
+- Ampoliros public directory must be made accessible by the web server.
+You can move "public" directory into the document root of your web server,
+and then reconfigure Ampoliros with AmpCfg to match the new directory
+placement. A good choice is to rename public directory to "ampoliros".
+
+- Tune PHP configuration by adding a new directory in the include_path
+directive, relative to [private directory]\etc. and increase the max
+upload size limit.
+
+e.g.
+
+include_path = ".;c:\programs\ampoliros\etc"
+upload_max_filesize = 4M
+
+- Tune web server configuration, adding an alias for Ampoliros cgi
+public directory. In Apache this is done with:
+
+Alias /ampcgi/ "Ampoliros cgi public directory here"
+
+e.g.
+
+Alias /ampcgi/ "c:/apache/htdocs/ampoliros/cgi/"
+
+and restart Apache.
+
+- Files installation is now done.
+
+-----------------------------------------------------------------------------
+4. HOW TO UPGRADE (ALL PLATFORMS)
+-----------------------------------------------------------------------------
+
+Since Ampoliros sees itself as a module (from version 2.5.0), to upgrade an
+existing Ampoliros installation all you have to do is to enter Ampoliros root
+administration area and then upload Ampoliros archive in Module section, like
+any other module.
+

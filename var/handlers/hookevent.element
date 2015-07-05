@@ -1,0 +1,110 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: hookevent.element,v 1.6 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'hookevent';
+$element['classname'] = 'HookeventElement';
+$element['priority'] = 10;
+$element['site'] = false;
+
+if ( !defined( 'HOOKEVENT_ELEMENT' ) )
+{
+define( 'HOOKEVENT_ELEMENT', true );
+
+OpenLibrary( 'hooks.library' );
+
+/*!
+@class HookeventElement
+
+@abstract Hookevent element handler.
+*/
+class HookeventElement extends ModuleElement
+{
+    public $type = 'hookevent';
+    public $site = false;
+
+    function HookeventElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $hook = new Hook( $this->ampdb, $this->modname, $params['function'] );
+            if ( $hook->AddEvent( $params['event'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.hookevent_element.hookeventelement_class.doinstallaction',
+				'In module '.$this->modname.', element '.$params['name'].': Unable to add hookevent', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.hookevent_element.hookeventelement_class.doinstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty hookevent name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+		$result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new Hook( $this->ampdb, $this->modname, $params['function'] );
+            if ( $xm->RemoveEvent( $params['event'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.hook_element.hookelement_class.douninstallaction',
+				'In module '.$this->modname.', element '.$params['name'].': Unable to remove hookevent', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.hook_element.hookelement_class.douninstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty hook nameevent', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+		$result = true;
+
+		/*
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new XmlRpcMethod( $this->ampdb, $params['name'] );
+            if ( $xm->Update( $params['function'], $params['handler'], $params['signature'], $params['docstring'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.doupdateaction', 'In module '.$this->modname.', element '.$params['name'].': Unable to update xmlrpc method', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.doupdateaction', 'In module '.$this->modname.', element '.$params['name'].': Empty xmlrpc handler file name', LOGGER_ERROR );
+		*/
+
+        return $result;
+    }
+}
+
+}
+?>

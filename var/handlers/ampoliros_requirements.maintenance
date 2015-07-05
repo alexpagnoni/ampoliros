@@ -1,0 +1,86 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2003-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: ampoliros_requirements.maintenance,v 1.3 2004-07-08 15:04:22 alex Exp $
+
+if ( defined( 'AMPOLIROS_REQUIREMENTS_MAINTENANCE' ) ) return;
+else define( 'AMPOLIROS_REQUIREMENTS_MAINTENANCE', true );
+
+class AmpolirosRequirementsMaintenance
+{
+    function AmpolirosCacheMaintenance()
+    {
+    }
+
+    function DoMaintenance()
+    {
+        $result = true;
+
+        // /ampcgi/ alias
+        if ( !@fopen( 'http://'.AMP_HOST.CGI_URL.'clear.gif', 'r' ) ) $result = false;
+
+        // PHP version check
+        if ( !( ereg( "[4-9]\.[1-9]\.[0-9].*", phpversion() ) or ereg( "[5-9]\.[0-9]\.[0-9].*", phpversion() ) ) ) $result = false;
+
+        // File upload support
+        if ( !( ini_get( 'file_uploads' ) == '1' ) ) $result = false;
+
+        // XML support
+        if ( !function_exists( 'xml_set_object' ) ) $result = false;
+
+        // Zlib support
+        if ( !function_exists( 'gzinflate' ) ) $result = false;
+
+        // Database support
+        if ( !( function_exists( 'mysql_connect' ) or function_exists( 'pg_connect' ) ) ) $result = false;
+
+        // Modules extensions
+        $mod_deps = &$GLOBALS['gEnv']['root']['db']->Execute(
+            'SELECT moddep '.
+            'FROM moddeps '.
+            'WHERE moddep LIKE '.$GLOBALS['gEnv']['root']['db']->Format_Text( '%.extension' )
+            );
+
+        while ( !$mod_deps->eof )
+        {
+            $dep = substr( $mod_deps->Fields( 'moddep' ), 0, -10 );
+            if ( !extension_loaded( $dep ) ) $result = false;
+
+            $mod_deps->MoveNext();
+        }
+
+        return $result;
+    }
+
+}
+
+function ampoliros_requirements_maintenance_handler()
+{
+    $maint = new AmpolirosRequirementsMaintenance();
+    return $maint->DoMaintenance();
+}
+
+?>

@@ -1,0 +1,32 @@
+# General
+
+sitedata_title						= Site
+sitedata_button					= Site data
+sitedataedit_button				= Edit
+help_button						= Help
+
+# main_edit
+
+edit_title						= Edit
+editdata_submit					= Apply
+sitecompletename_label			= Site complete name
+siteaddressa_label				= Address
+siteaddressb_label				= Address
+sitetown_label					= Town
+sitestate_label					= State
+sitezip_label					= Zip
+sitecountry_label				= Country
+sitefiscalcode_label			= Fiscal code
+siteemail_label					= Email
+sitephone_label					= Phone
+sitefax_label					= Fax
+sitelogo_label					= Logo
+
+# main_help
+
+help_title						= Help
+
+# pass_edit
+
+sitedataset_status				= Site data changed.
+

@@ -1,0 +1,64 @@
+maintenance.title                   = Manutenzione
+ampoliros.title                     = Ampoliros
+general.title                       = Generale
+ampoliros.toolbar                   = Ampoliros
+general.toolbar                     = Generale
+
+report_task_ok.label                = OK
+report_task_failed.label            = FALLITO
+
+# main default
+
+ampoliros_status.tab                = Stato
+ampoliros_settings.tab              = Impostazioni
+ampoliros_status.label              = Stato Ampoliros - Spazio occupato
+ampoliros_settings.label            = Pulizia programmata
+
+clear.label                         = Pulisci
+clearall.label                      = Pulisci tutto
+
+action_clean.label                  = Pulisci
+action_rotate.label                 = Ruota
+action_none.label                   = Lascia
+
+amplog_size.label                   = Log principale di Ampoliros
+ampdblog_size.label                 = Log del database di Ampoliros
+accesslog_size.label                = Log degli accessi
+remotelog_size.label                = Log dei servizi web
+phplog_size.label                   = Log del PHP
+systemlogs_size.label               = Log di sistema
+siteslogs_size.label                = Log dei siti
+cache_size.label                    = Cache
+sessions_size.label                 = Sessioni
+pidfiles_size.label                 = File dei processi
+tempdirs_size.label                 = Directory temporanee di Ampoliros
+clipboard_size.label                = Clipboard
+cleanable_size.label                = Totale spazio
+
+systemlogs_cleaned.status           = Log di sistema puliti.
+siteslogs_cleaned.status            = Log dei siti puliti.
+cache_cleaned.status                = Cache pulita.
+sessions_cleaned.status             = Sessioni pulite.
+tempdirs_cleaned.status             = Directory temporanee di Ampoliros pulite.
+pidfiles_cleaned.status             = File dei processi puliti.
+clipboard_cleaned.status            = Clipboard pulita.
+all_cleaned.status                  = Pulito tutto.
+settings_set.status                 = Impostazioni salvate.
+maintenance_done.status             = Manutenzione eseguita.
+
+apply.button                        = Applica
+
+# main general
+
+status.label                        = Stato
+report.label                        = Report
+last_maintenance.label              = Ultima manutenzione programmata eseguita
+scheduled_tasks.label               = Operazioni pianificate
+report.label                        = Rapporto
+report_email.label                  = Email rapporto
+report_enabled.label                = Rapporto abilitato
+general_status.tab                  = Stato
+general_report.tab                  = Rapporto
+general_tasks.tab                   = Operazioni pianificate
+run_maintenance.button              = Avvia la manutenzione ora
+

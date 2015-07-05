@@ -1,0 +1,110 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: siteconfig.element,v 1.6 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'siteconfig';
+$element['classname'] = 'SiteconfigElement';
+$element['priority'] = 10;
+$element['site'] = true;
+
+if ( !defined( 'SITECONFIG_ELEMENT' ) )
+{
+define( 'SITECONFIG_ELEMENT', true );
+
+/*!
+@class SiteconfigElement
+
+@abstract Siteconfig element handler.
+*/
+class SiteconfigElement extends ModuleElement
+{
+    public $type = 'siteconfig';
+    public $site = true;
+
+    function SiteconfigElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoEnableSiteAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and isset( $params['key'] ) )
+        {
+            OpenLibrary( 'sites.library' );
+            $site_cfg = new SiteSettings( $this->sitedb );
+            $site_cfg->SetKey( $params['key'], isset( $params['value'] ) ? $params['value'] : '' );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.siteconfig_element.siteconfigelement_class.doenablesiteaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty file argument', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoDisableSiteAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and isset( $params['module'] ) and isset( $params['key'] ) )
+        {
+            if ( !( isset( $params['keep'] ) and $params['keep'] = 'true' ) )
+            {
+                OpenLibrary( 'sites.library' );
+                $site_cfg = new SiteSettings( $this->sitedb );
+                $site_cfg->DeleteKey( $params['key'] );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.siteconfig_element.siteconfigelement_class.dodisablesiteaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty file argument', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateSiteAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and isset( $params['module'] ) and isset( $params['key'] ) )
+        {
+            OpenLibrary( 'sites.library' );
+            $site_cfg = new SiteSettings( $this->sitedb );
+
+            if ( !( isset( $params['keep'] ) and $params['keep'] = 'true' and $site_cfg->CheckKey( $params['key'] ) ) )
+            {
+                $site_cfg->SetKey( $params['key'], isset( $params['value'] ) ? $params['value'] : '' );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.siteconfig_element.siteconfigelement_class.doupdatesiteaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty file argument', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

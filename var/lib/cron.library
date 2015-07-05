@@ -1,0 +1,191 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: cron.library,v 1.10 2004-07-08 15:04:23 alex Exp $
+
+if ( !defined( 'CRON_LIBRARY' ) )
+{
+define( 'CRON_LIBRARY', true );
+
+OpenLibrary( 'configman.library' );
+
+define( 'SIMPLECRONFILE_REGULAR',   CONFIG_PATH.'simplecron_regular'   );
+define( 'SIMPLECRONFILE_TEMPORARY', CONFIG_PATH.'simplecron_temporary' );
+
+define( 'SIMPLECRONTYPE_REGULAR',   0 );
+define( 'SIMPLECRONTYPE_TEMPORARY', 1 );
+
+/*!
+ @class SimpleCron
+
+ @abstract Handles cron jobs in a simple manner.
+
+ @discussion Handles cron jobs in a simple manner.
+ */
+class SimpleCron
+{
+    /*! @var mModId string - Module id name. */
+    var $mModId;
+    /*! @var mRegCron ConfigMan class - Regular cron tab handler. */
+    var $mRegCron;
+    /*! @var mTempCron ConfigMan class - Temporary cron tab handler. */
+    var $mTempCron;
+
+    /*!
+     @function SimpleCron
+
+     @abstract Class constructor.
+
+     @discussion Class constructor.
+
+     @param modId string - Module id name.
+     */
+    function SimpleCron( $modId )
+    {
+        // Arguments check
+        //
+        if ( !empty( $modId ) ) $this->mModId = $modId;
+        else {
+            import('com.solarix.ampoliros.io.log.Logger');
+$log = new Logger(AMP_LOG);
+            $log->LogDie( 'ampoliros.cron_library.simplecron_class.simplecron',
+                                 'No module id name' );
+        }
+        /*
+        if ( !empty( $ ) ) $this-> = $;
+        else $this->mLog->logdie( 'ampoliros.configman_library.configman_class.configman', '' );
+        */
+
+        $this->mRegCron  = new ConfigMan( $this->mModId, SIMPLECRONFILE_REGULAR,   CONFIGMODE_DIRECT );
+        $this->mTempCron = new ConfigMan( $this->mModId, SIMPLECRONFILE_TEMPORARY, CONFIGMODE_DIRECT );
+    }
+
+    /*!
+     @function AddEntry
+
+     @abstract Adds an entry to the cron tab.
+
+     @discussion Adds an entry to the cron tab.
+
+     @param identifier string - Entry identifier.
+     @param entry string - Entry content, the command to be executed.
+     @param entryType integer - SIMPLECRONTYPE_REGULAR if a regular cron tab entry, SIMPLECRONTYPE_TEMPORARY if a temporary cron tab entry.
+
+     @result TRUE if the entry has been added.
+     */
+    function AddEntry( $identifier, $entry, $entryType )
+    {
+        $result = FALSE;
+
+        if (
+            strlen( $identifier )
+            and
+            strlen( $entry )
+            and
+            strlen( $entryType )
+           )
+        {
+            switch ( $entryType )
+            {
+            case SIMPLECRONTYPE_REGULAR:
+                $result = $this->mRegCron->changesegment( $this->mModId.'-'.$identifier, $entry );
+                break;
+
+            case SIMPLECRONTYPE_TEMPORARY:
+                $result = $this->mTempCron->changesegment( $this->mModId.'-'.$identifier, $entry );
+                $this->mTempCron->changesegment( 'ampoliros-cronremover', 'rm '.SIMPLECRONFILE_TEMPORARY."\n" );
+                break;
+
+            default:
+            import('com.solarix.ampoliros.io.log.Logger');
+$log = new Logger(AMP_LOG);
+                $log->LogEvent( 'ampoliros.cron_library.simplecron_class.addentry',
+                                      'Invalid entry type', LOGGER_ERROR );
+                break;
+            }
+        }
+        else {
+            import('com.solarix.ampoliros.io.log.Logger');
+$log = new Logger(AMP_LOG);
+            $log->LogEvent( 'ampoliros.cron_library.simplecron_class.addentry',
+                                   'Empty identifier ('.$identifier.'), entry ('.$entry.') or entry type ('.$entryType.')', LOGGER_ERROR );
+        }
+        return $result;
+    }
+
+    /*!
+     @function RemoveEntry
+
+     @abstract Removes an entry from the cron tab.
+
+     @discussion Removes an entry from the cron tab.
+
+     @param identifier string - Entry identifier.
+     @param entryType integer - SIMPLECRONTYPE_REGULAR if a regular cron tab entry, SIMPLECRONTYPE_TEMPORARY if a temporary cron tab entry.
+
+     @result TRUE if the entry has been removed.
+     */
+    function RemoveEntry( $identifier, $entryType )
+    {
+        $result = FALSE;
+
+        if (
+            strlen( $identifier )
+            and
+            strlen( $entryType )
+           )
+        {
+            switch ( $entryType )
+            {
+            case SIMPLECRONTYPE_REGULAR:
+                $result = $this->mRegCron->removesegment( $this->mModId.'-'.$identifier );
+                break;
+
+            case SIMPLECRONTYPE_TEMPORARY:
+                $result = $this->mTempCron->removesegment( $this->mModId.'-'.$identifier );
+                $this->mTempCron->changesegment( 'ampoliros-cronremover', 'rm '.SIMPLECRONFILE_TEMPORARY."\n" );
+                break;
+
+            default:
+            import('com.solarix.ampoliros.io.log.Logger');
+$log = new Logger(AMP_LOG);
+                $log->LogEvent( 'ampoliros.cron_library.simplecron_class.removeentry',
+                                      'Invalid entry type', LOGGER_ERROR );
+                break;
+            }
+        }
+        else {
+            import('com.solarix.ampoliros.io.log.Logger');
+$log = new Logger(AMP_LOG);
+            $log->LogEvent( 'ampoliros.cron_library.simplecron_class.removeentry',
+                                   'Empty identifier ('.$identifier.') or entry type ('.$entryType.')', LOGGER_ERROR );
+        }
+        return $result;
+    }
+}
+
+}
+?>

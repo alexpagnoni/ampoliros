@@ -1,0 +1,19 @@
+ampoliros.version		= Restituisce la versione di Ampoliros
+
+ampoliros.log.amp.get		= Restituisce il contenuto del log principale di Ampoliros
+ampoliros.log.amp.erase		= Elimina il log principale di Ampoliros
+ampoliros.log.amp.logevent	= Aggiunge un evento nel log principale di Ampoliros
+ampoliros.log.db.get		= Restituisce il contenuto del log del database di Ampoliros
+ampoliros.log.db.erase		= Elimina il log del database di Ampoliros
+ampoliros.log.db.logevent	= Aggiunge un evento nel log del database di Ampoliros
+
+ampoliros.modules.list		= Restistuisce la lista dei moduli installati
+ampoliros.modules.module.install	= Installa un modulo
+ampoliros.modules.module.remove	= Rimuove un modulo
+
+ampoliros.sites.list		= Restituisce la lista dei siti
+ampoliros.sites.site.enabledmodules	= Restituisce la lista dei moduli abilitati ad un certo sito
+
+ampoliros.log.remote.get	= Restituisce il contenuto del log dei servizi web
+ampoliros.log.remote.erase	= Elimina il log dei servizi web
+ampoliros.log.remote.logevent	= Aggiunge un evento nel log dei servizi web

@@ -1,0 +1,126 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: huielement.element,v 1.9 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'huielement';
+$element['classname'] = 'HuielementElement';
+$element['priority'] = 50;
+$element['site'] = false;
+
+if (!defined('HUIELEMENT_ELEMENT') and !defined('HUI_ELEMENT')) {
+	define ('HUIELEMENT_ELEMENT', TRUE);
+
+	// :NOTE: 20020821 wuh: compatibility
+	// This is for compatibility with older bugged versions.
+
+	define ('HUI_ELEMENT', TRUE);
+
+	//OpenLibrary('hui.library');
+	import('com.solarix.ampoliros.hui.HuiElementHandler');
+
+	/*!
+	@class HuielementElement
+	
+	@abstract Huielement element handler.
+	*/
+	class HuielementElement extends ModuleElement {
+		public $type = 'huielement';
+		public $site = false;
+
+		function HuielementElement($ampdb, $sitedb, $modname, $name, $file, $basedir) {
+			$this -> ModuleElement($ampdb, $sitedb, $modname, $name, $file, $basedir);
+		}
+
+		function DoInstallAction($params) {
+			$result = false;
+
+			if (strlen($params['file'])) {
+				$params['file'] = $this -> basedir.'/var/handlers/'.basename($params['file']);
+
+				if (@ copy($params['file'], HANDLER_PATH.basename($params['file']))) {
+					@ chmod(HANDLER_PATH.basename($params['file']), 0644);
+
+					$hui_element = new HuiElementHandler($this -> ampdb);
+					$params['file'] = basename($params['file']);
+
+					if ($hui_element -> Install($params)) {
+						$result = true;
+					} else
+						$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.doinstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to install element', LOGGER_ERROR);
+				} else
+					$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.doinstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to copy hui element file ('.$params['file'].') to its destination ('.HANDLER_PATH.basename($params['file']).')', LOGGER_ERROR);
+			} else
+				$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.doinstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Empty element file name', LOGGER_ERROR);
+
+			return $result;
+		}
+
+		function DoUninstallAction($params) {
+			$result = false;
+
+			if (strlen($params['file'])) {
+				$hui_element = new HuiElementHandler($this -> ampdb, $params['name']);
+
+				if ($hui_element -> Remove($params)) {
+					if (@ unlink(HANDLER_PATH.basename($params['file']))) {
+						$result = true;
+					}
+				} else
+					$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.douninstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to uninstall element', LOGGER_ERROR);
+			} else
+				$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.douninstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Empty element file name', LOGGER_ERROR);
+
+			return $result;
+		}
+
+		function DoUpdateAction($params) {
+			$result = false;
+
+			if (strlen($params['file'])) {
+				$params['file'] = $this -> basedir.'/var/handlers/'.basename($params['file']);
+
+				if (@ copy($params['file'], HANDLER_PATH.basename($params['file']))) {
+					@ chmod(HANDLER_PATH.basename($params['file']), 0644);
+
+					$hui_element = new HuiElementHandler($this -> ampdb, $params['name']);
+					$params['file'] = basename($params['file']);
+					if ($hui_element -> Update($params)) {
+						$result = true;
+					} else
+						$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.doupdateaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to update element', LOGGER_ERROR);
+				} else
+					$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.doupdateaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to copy hui element file ('.$params['file'].') to its destination ('.HANDLER_PATH.basename($params['file']).')', LOGGER_ERROR);
+
+			} else
+				$this -> mLog -> LogEvent('ampoliros.huielement_element.huielement_class.doupdateaction', 'In module '.$this -> modname.', element '.$params['name'].': Empty element file name', LOGGER_ERROR);
+
+			return $result;
+		}
+	}
+
+}
+?>

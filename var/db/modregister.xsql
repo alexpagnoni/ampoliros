@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="modregister">
+		<field name="modname"		type="text"		length="50"	notnull="1"/>
+		<field name="categoryid"	type="integer"	notnull="1"/>
+		<field name="keyname"			type="text"		length="200"	notnull="1"/>
+		<field name="elementfile"	type="text"		length="200"	notnull="1"/>
+	</table>
+
+</database>

@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="huielements">
+		<field name="id"	type="integer"	notnull="1"/>
+		<field name="name" type="text" notnull="1"/>
+		<field name="file" type="text" notnull="1"/>
+
+		<key field="id"	type="unique"/>
+	</table>
+
+	<sequence name="huielements_id_seq"	start="28"/>
+
+</database>

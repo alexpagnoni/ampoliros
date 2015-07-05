@@ -1,0 +1,583 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: setup.library,v 1.16 2004-07-08 15:04:23 alex Exp $
+
+if ( !defined( 'SETUP_LIBRARY' ) )
+{
+define( 'SETUP_LIBRARY', TRUE );
+define( 'WEBSETUP_CONFIG_FILE', CONFIG_PATH.'websetup.cfg' );
+
+if ( defined( 'AMPOLIROS_SETUP_PHASE' ) )
+{
+	Carthag::import('com.solarix.ampoliros.db.DBLayerFactory');
+	Carthag::import('com.solarix.ampoliros.db.XmlDb');
+	//Carthag::import('com.solarix.ampoliros.db.XmlDbParser');
+    OpenLibrary( 'modules.library' );
+    OpenLibrary( 'modulesbase.library' );
+
+    function setup_by_config_file( $configFile = '', $echo = FALSE )
+    {
+        $result = FALSE;
+
+        $success_string = "[  \033[1;32mOK\033[0;39m  ]\n";
+        $failure_string = "[\033[1;31mFAILED\033[0;39m]\n";
+
+        OpenLibrary( 'configman.library' );
+
+        if ( strlen( $configFile ) and file_exists( $configFile ) ) $config_file = $configFile;
+        else $config_file = WEBSETUP_CONFIG_FILE;
+
+        if ( file_exists( $config_file ) )
+        {
+            $log = new Logger( AMP_LOG );
+
+            $cfg = new ConfigFile( $config_file );
+            if ( $echo ) echo str_pad( 'System check: ', 60 );
+            if ( setup_checksystem( '', $log ) )
+            {
+                if ( $echo ) echo $success_string.str_pad( 'Files installation: ', 60 );
+
+                if ( setup_setedition( array( 'edition' => $cfg->Value( 'EDITION' ) ) ) )
+                {
+                    if ( $echo ) echo $success_string.str_pad( 'Edition setting: ', 60 );
+                    
+                    if ( setup_installfiles( '', $log ) )
+                    {
+                        if ( $echo ) echo $success_string.str_pad( 'Database layers creation: ', 60 );
+
+                        if ( setup_dblayers( '', $log ) )
+                        {
+                            if ( $echo ) echo $success_string.str_pad( 'Ampoliros database creation: ', 60 );
+
+                            $db_args = array(
+                                             'dbtype' => $cfg->Value( 'DB_TYPE' ),
+                                             'dbname' => $cfg->Value( 'DB_NAME' ),
+                                             'dbhost' => $cfg->Value( 'DB_HOST' ),
+                                             'dbport' => $cfg->Value( 'DB_PORT' ),
+                                             'dbuser' => $cfg->Value( 'DB_USER' ),
+                                             'dbpass' => $cfg->Value( 'DB_PASS' )
+                                            );
+
+                            if ( setup_createdb( $db_args, $log ) )
+                            {
+                                if ( $echo ) echo $success_string.str_pad( 'Components initialization (may take some time): ', 60 );
+
+                                import('carthag.core.Registry');
+                                $reg = Registry :: instance();
+                                $db_args['dblog'] = $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log';
+
+                                if ( setup_initializecomponents( $db_args, $log ) )
+                                {
+                                    if ( $echo ) echo $success_string.str_pad( 'Root password: ', 60 );
+
+                                    $pwd_args = $db_args;
+                                    $pwd_args['passworda'] = $cfg->Value( 'PASSWORD' );
+                                    $pwd_args['passwordb'] = $cfg->Value( 'PASSWORD' );
+
+                                    if ( setup_setpassword( $pwd_args, $log ) )
+                                    {
+                                        if ( $echo ) echo $success_string.str_pad( 'Network settings: ', 60 );
+
+                                        $host_args['amphost'] = $cfg->Value( 'AMP_NAME' );
+                                        $host_args['ampdomain'] = $cfg->Value( 'AMP_DOMAIN' );
+                                        $host_args['ampdns'] = $cfg->Value( 'AMP_DNS' );
+
+                                        if ( setup_setamphost( $host_args, $log ) )
+                                        {
+                                            if ( $echo ) echo $success_string.str_pad( 'Country setting: ', 60 );
+
+                                            $country_args['country'] = $cfg->Value( 'COUNTRY' );
+
+                                            if ( setup_setcountry( $country_args, $log ) )
+                                            {
+                                                if ( $echo ) echo $success_string.str_pad( 'Language setting: ', 60 );
+
+                                                $lang_args['language'] = $cfg->Value( 'LANGUAGE' );
+
+                                                if ( setup_setlanguage( $lang_args, $log ) )
+                                                {
+                                                    if ( $echo ) echo $success_string.str_pad( 'Clean up: ', 60 );
+
+                                                    if ( setup_cleanup( '', $log ) )
+                                                    {
+                                                        if ( $echo ) echo $success_string.str_pad( 'Setup finish: ', 60 );
+
+                                                        if ( setup_finish( '', $log ) )
+                                                        {
+                                                            if ( $echo ) echo $success_string.str_pad( 'Remotion of setup phases locks: ', 60 );
+
+                                                            if ( setup_check_lock_files() )
+                                                            {
+                                                                if ( $echo ) echo $success_string.str_pad( 'Remotion of setup lock: ', 60 );
+
+                                                                setup_remove_lock_files();
+                                                                if ( setup_remove_setup_lock_file() )
+                                                                {
+                                                                    echo $success_string;
+                                                                    $result = TRUE;
+                                                                }
+                                                                else if ( $echo ) echo $failure_string;
+                                                            }
+                                                            else if ( $echo ) echo $failure_string;
+                                                        }
+                                                        else if ( $echo ) echo $failure_string;
+                                                    }
+                                                else if ( $echo ) echo $failure_string;
+                                                }
+                                            else if ( $echo ) echo $failure_string;
+                                            }
+                                            else if ( $echo ) echo $failure_string;
+                                        }
+                                        else if ( $echo ) echo $failure_string;
+                                    }
+                                    else if ( $echo ) echo $failure_string;
+                                }
+                                else if ( $echo ) echo $failure_string;
+                            }
+                            else if ( $echo ) echo $failure_string;
+                        }
+                        else if ( $echo ) echo $failure_string;
+                    }
+                    else if ( $echo ) echo $failure_string;
+                }
+                else if ( $echo ) echo $failure_string;
+            }
+            else if ( $echo ) echo $failure_string;
+        }
+
+        return $result;
+    }
+
+    function setup_checksystem( $eventData = '', $log = '' )
+    {
+        @touch( TMP_PATH.'.systemchecked', time() );
+        if ( file_exists( TMP_PATH.'.checkingsystem' ) ) @unlink( TMP_PATH.'.checkingsystem' );
+
+        return TRUE;
+    }
+
+    function setup_installfiles( $eventData = '', $log = '' )
+    {
+        // :TODO: wuh 10/07/2001
+        // There should be some file copy stuff.
+
+        @touch( TMP_PATH.'.filesinstalled', time() );
+        if ( file_exists( TMP_PATH.'.installingfiles' ) ) @unlink( TMP_PATH.'.installingfiles' );
+
+        return TRUE;
+    }
+
+    function setup_setedition( $eventData, $log = '' )
+    {
+        @touch( TMP_PATH.'.editionset', time() );
+        if ( file_exists( TMP_PATH.'.settingedition' ) ) @unlink( TMP_PATH.'.settingedition' );
+        $ampcfg = new ConfigFile( AMP_CONFIG );
+        $ampcfg->SetValue( 'AMP_EDITION', $eventData['edition'] );
+        // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+
+        return TRUE;
+    }
+
+    function setup_dblayers( $eventData = '', $log = '' )
+    {
+    	$layer = new DBLayerFactory();
+        $layer->AddDBLayer( 'mysql', 'MySQL 3.22+' );
+        $layer->AddDBLayer( 'pgsql', 'PostgreSQL 7.0+' );
+
+        @touch( TMP_PATH.'.dblayerscreated', time() );
+        if ( file_exists( TMP_PATH.'.creatingdblayers' ) ) @unlink( TMP_PATH.'.creatingdblayers' );
+
+        return TRUE;
+    }
+
+    function setup_createdb( $eventData = '', $log = '' )
+    {
+        $result = FALSE;
+        import('carthag.core.Registry');
+        $reg = Registry :: instance();
+        $eventData['dblog']  = $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log';
+
+		$layer = new DBLayerFactory();
+        $tmpdb = $layer->NewDBLayer( $eventData );
+
+        if ( $tmpdb->Connect( $eventData ) )
+        {
+            $tmpdb->DropDB( $eventData );
+            $tmpdb->Close();
+        }
+
+        if ( $tmpdb->CreateDB( $eventData ) )
+        {
+            if ( $tmpdb->Connect( $eventData ) )
+            {
+                // Tables creation
+                //
+                $xmldb = new XMLDB( $tmpdb, DBLAYER_PARSER_SQL_CREATE );
+                if ( $xmldb->Load_DefFile( INITDB_PATH.'amproot.xsql' ) )
+                {
+                    if ( $tmpdb->Execute( $xmldb->get_sql() ) )
+                    {
+                        // Database configuration file creation
+                        //
+                        $fh = @fopen( CONFIG_PATH.'ampconfig.cfg', 'a' );
+                        if ( $fh )
+                        {
+                            fputs( $fh, 'AMP_DBTYPE = '.$eventData['dbtype']."\n" );
+                            fputs( $fh, 'AMP_DBNAME = '.$eventData['dbname']."\n" );
+                            fputs( $fh, 'AMP_DBHOST = '.$eventData['dbhost']."\n" );
+                            fputs( $fh, 'AMP_DBPORT = '.$eventData['dbport']."\n" );
+                            fputs( $fh, 'AMP_DBUSER = '.$eventData['dbuser']."\n" );
+                            fputs( $fh, 'AMP_DBPASS = '.$eventData['dbpass']."\n" );
+                            fputs( $fh, 'AMP_DBDEBUG = 0'."\n" );
+                            fclose( $fh );
+
+                            $result = TRUE;
+
+                            @touch( TMP_PATH.'.dbcreated', time() );
+                            if ( file_exists( TMP_PATH.'.creatingdb' ) ) @unlink( TMP_PATH.'.creatingdb' );
+                            // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+                        }
+                        else $log->logevent( 'ampoliros.root.main_php',
+                                             'Unable to create root database configuration file during initialization', LOGGER_ERROR );
+                    }
+                    else $log->logevent( 'ampoliros.root.main_php',
+                                         'Unable to create root database tables during initialization', LOGGER_ERROR );
+                }
+                else $log->logevent( 'ampoliros.root.main_php',
+                                     'Unable to open Ampoliros structure file during initialization', LOGGER_ERROR );
+            }
+            else $log->logevent( 'ampoliros.root.main_php',
+                                 'Unable to connect to root database during initialization', LOGGER_ERROR );
+        }
+        else $log->logevent( 'ampoliros.root.main_php',
+                             'Unable to create root database during initialization: '.$tmpdb->ErrorMsg(), LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function setup_initializecomponents( $eventData = '', $log = '' )
+    {
+        $result = FALSE;
+
+        if ( isset( $eventData['dbname'] ) and strlen( $eventData['dbname'] ) )
+        {
+            $args = $eventData;
+        }
+        else
+        {
+            $args['dbname'] = AMP_DBNAME;
+            $args['dbhost'] = AMP_DBHOST;
+            $args['dbport'] = AMP_DBPORT;
+            $args['dbuser'] = AMP_DBUSER;
+            $args['dbpass'] = AMP_DBPASS;
+            $args['dbtype'] = AMP_DBTYPE;
+            $args['dblog']  = AMP_DBLOG;
+        }
+
+		$layer = new DBLayerFactory();
+        $tmpdb = $layer->NewDBLayer( $args );
+        if ( $tmpdb->Connect( $args ) )
+        {
+            // Components initialization
+            //
+            $ampmod = new Module( $tmpdb );
+            if ( $ampmod->Setup( PRIVATE_TREE.'tmp/ampoliros/' ) )
+            {
+                $modreg = new ModuleRegister( $tmpdb );
+                $modreg->RegisterElement( 'ampoliros', 'configurationfile', 'ampconfigpath.php', 'ampconfigpath.php' );
+                $modreg->RegisterElement( 'ampoliros', 'configurationfile', 'ampconfig.cfg', 'ampconfig.cfg' );
+                $modreg->RegisterElement( 'ampoliros', 'configurationfile', 'dblayers.cfg', 'dblayers.cfg' );
+                $modreg->RegisterElement( 'ampoliros', 'configurationfile', 'ampdbconfig.cfg', 'ampdbconfig.cfg' );
+
+                $result = TRUE;
+
+                @touch( TMP_PATH.'.componentsinitialized', time() );
+                if ( file_exists( TMP_PATH.'.initializingcomponents' ) ) @unlink( TMP_PATH.'.initializingcomponents' );
+                // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+            }
+            else $log->logevent( 'ampoliros.root.main_php',
+                                'Unable to setup Ampoliros during initialization', LOGGER_ERROR );
+        }
+        else $log->logevent( 'ampoliros.root.main_php',
+                            'Unable to connect to root database during initialization', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function setup_setpassword( $eventData, $log = '' )
+    {
+        $result = FALSE;
+
+        global $gEnv;
+
+        // Password setting
+        //
+        if ( strlen( $eventData['passworda'] ) and ( $eventData['passworda'] == $eventData['passwordb'] ) )
+        {
+            // Creates Ampoliros root password file
+            //
+            $fh = @fopen( CONFIG_PATH.'amprootpwd.cfg', 'w' );
+            if ( $fh )
+            {
+                fputs( $fh, md5( $eventData['passworda'] ) );
+                fclose( $fh );
+                if ( @touch( TMP_PATH.'.passwordset', time() ) )
+                {
+                    // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+
+                    if ( strlen( $eventData['dbname'] ) )
+                    {
+                        $args = $eventData;
+                    }
+                    else
+                    {
+                        $args['dbname'] = AMP_DBNAME;
+                        $args['dbhost'] = AMP_DBHOST;
+                        $args['dbport'] = AMP_DBPORT;
+                        $args['dbuser'] = AMP_DBUSER;
+                        $args['dbpass'] = AMP_DBPASS;
+                        $args['dbtype'] = AMP_DBTYPE;
+                        $args['dblog']  = AMP_DBLOG;
+                    }
+
+					$layer = new DBLayerFactory();
+                    $gEnv['root']['db'] = $layer->NewDBLayer( $args );
+                    if ( $gEnv['root']['db']->connect( $args ) )
+                    {
+                        $modreg = new ModuleRegister( $gEnv['root']['db'] );
+                        $modreg->RegisterElement( 'ampoliros', 'configurationfile', 'amprootpwd.cfg', 'amprootpwd.cfg' );
+
+                        $result = TRUE;
+
+                        if ( file_exists( TMP_PATH.'.settingpassword' ) ) @unlink( TMP_PATH.'.settingpassword' );
+                        // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+                    }
+                    else $log->logevent( 'ampoliros.root.main_php',
+                                        'Unable to connect to Ampoliros database during initialization', LOGGER_ERROR );
+                }
+                else $log->logevent( 'ampoliros.root.main_php',
+                                    'Unable to create .passwordset lock file during initialization', LOGGER_ERROR );
+            }
+            else $log->logevent( 'ampoliros.root.main_php',
+                                'Unable to create root password file', LOGGER_ERROR );
+        }
+
+        return $result;
+    }
+
+    function setup_setamphost( $eventData, $log = '' )
+    {
+        @touch( TMP_PATH.'.amphostset', time() );
+        if ( file_exists( TMP_PATH.'.settingamphost' ) ) @unlink( TMP_PATH.'.settingamphost' );
+
+        $ampcfg = new ConfigFile( AMP_CONFIG );
+        $ampcfg->SetValue( 'AMP_NAME', $eventData['amphost'] );
+        $ampcfg->SetValue( 'AMP_DOMAIN', $eventData['ampdomain'] );
+        $ampcfg->SetValue( 'AMP_DNS', $eventData['ampdns'] );
+        // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+
+        return TRUE;
+    }
+
+    function setup_setcountry( $eventData, $log = '' )
+    {
+        @touch( TMP_PATH.'.countryset', time() );
+        if ( file_exists( TMP_PATH.'.settingcountry' ) ) @unlink( TMP_PATH.'.settingcountry' );
+        $ampcfg = new ConfigFile( AMP_CONFIG );
+        $ampcfg->SetValue( 'AMP_COUNTRY', $eventData['country'] );
+        // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+
+        return TRUE;
+    }
+
+    function setup_setlanguage( $eventData, $log = '' )
+    {
+        @touch( TMP_PATH.'.languageset', time() );
+        if ( file_exists( TMP_PATH.'.settinglanguage' ) ) @unlink( TMP_PATH.'.settinglanguage' );
+        $ampcfg = new ConfigFile( AMP_CONFIG );
+        $ampcfg->SetValue( 'AMP_LANG', $eventData['language'] );
+        // !!! $page->add( new HTMLScript( 'JavaScript1.2', 'parent.frames.sum.location.reload()', '' ) );
+
+        return TRUE;
+    }
+
+    function setup_ampcentral( $eventData, $log = '' )
+    {
+        if ( $eventData['ampcentral'] == 'on' )
+        {
+            global $gEnv;
+        
+            OpenLibrary( 'xmlrpc.library' );
+
+            $xmlrpc_client = new XmlRpc_Client(
+                '/ampcgi/xmlrpc.php',
+                'www.ampoliros.com',
+                80
+                );
+            
+            $xmlrpc_message = new XmlRpcMsg(
+                'ampcentral-server.retrieve_ampcentral_client'
+                );
+
+            $xmlrpc_resp = $xmlrpc_client->Send( $xmlrpc_message );
+
+            if ( $xmlrpc_resp )
+            {
+                if ( !$xmlrpc_resp->FaultCode() )
+                {
+                    $xv = $xmlrpc_resp->Value();
+
+                    $tmp_filename = TMP_PATH.'modinst/ampcentral-client.tgz';
+
+                    $fh = fopen( $tmp_filename, 'wb' );
+                    if ( $fh )
+                    {
+                        OpenLibrary( 'modulesbase.library' );
+
+                        fputs( $fh, $xv->ScalarVal() );
+                        fclose( $fh );
+
+                        unset( $xv );
+                        unset( $xmlrpc_resp );
+
+                        $args['dbname'] = AMP_DBNAME;
+                        $args['dbhost'] = AMP_DBHOST;
+                        $args['dbport'] = AMP_DBPORT;
+                        $args['dbuser'] = AMP_DBUSER;
+                        $args['dbpass'] = AMP_DBPASS;
+                        $args['dbtype'] = AMP_DBTYPE;
+                        $args['dblog']  = AMP_DBLOG;
+
+						$layer = new DBLayerFactory();
+                        $gEnv['root']['db'] = $layer->NewDBLayer( $args );
+                        if ( $gEnv['root']['db']->connect( $args ) )
+                        {
+                            $tmp_module = new Module( $gEnv['root']['db'], '' );
+                            $tmp_module->Install( $tmp_filename );
+                        
+                            @touch( TMP_PATH.'.ampcentralset', time() );
+                            if ( file_exists( TMP_PATH.'.settingampcentral' ) ) @unlink( TMP_PATH.'.settingampcentral' );
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            @touch( TMP_PATH.'.ampcentralset', time() );
+            if ( file_exists( TMP_PATH.'.settingampcentral' ) ) @unlink( TMP_PATH.'.settingampcentral' );
+        }
+    }
+    
+    function setup_cleanup( $eventData = '', $log = '' )
+    {
+        RecRemoveDir( PRIVATE_TREE.'tmp/ampoliros/' );
+
+        @touch( TMP_PATH.'.cleanedup', time() );
+        if ( file_exists( TMP_PATH.'.cleaningup' ) ) @unlink( TMP_PATH.'.cleaningup' );
+        @touch( TMP_PATH.'.setupfinished', time() );
+
+        return TRUE;
+    }
+
+    function setup_finish( $eventData = '', $log = '' )
+    {
+        @touch( TMP_PATH.'.done', time() );
+        $log->LogEvent( 'Ampoliros',
+                        'Ampoliros setup has been completed - Operating', LOGGER_NOTICE );
+
+        return TRUE;
+    }
+
+    function setup_check_lock_files()
+    {
+        $result = FALSE;
+
+        if (
+            file_exists( TMP_PATH.'.systemchecked' ) and
+            file_exists( TMP_PATH.'.filesinstalled' ) and
+            file_exists( TMP_PATH.'.dblayerscreated' ) and
+            file_exists( TMP_PATH.'.dbcreated' ) and
+            file_exists( TMP_PATH.'.componentsinitialized' ) and
+            file_exists( TMP_PATH.'.passwordset' ) and
+            file_exists( TMP_PATH.'.amphostset' ) and
+            file_exists( TMP_PATH.'.countryset' ) and
+            file_exists( TMP_PATH.'.languageset' ) and
+            file_exists( TMP_PATH.'.ampcentralset' ) and
+            file_exists( TMP_PATH.'.editionset' ) and
+            file_exists( TMP_PATH.'.cleanedup' ) and
+            file_exists( TMP_PATH.'.done' )
+           ) $result = TRUE;
+
+        return $result;
+    }
+
+    function setup_remove_lock_files()
+    {
+        @unlink( TMP_PATH.'.systemchecked' );
+        @unlink( TMP_PATH.'.filesinstalled' );
+        @unlink( TMP_PATH.'.dblayerscreated' );
+        @unlink( TMP_PATH.'.dbcreated' );
+        @unlink( TMP_PATH.'.componentsinitialized' );
+        @unlink( TMP_PATH.'.passwordset' );
+        @unlink( TMP_PATH.'.amphostset' );
+        @unlink( TMP_PATH.'.countryset' );
+        @unlink( TMP_PATH.'.languageset' );
+        @unlink( TMP_PATH.'.ampcentralset' );
+        @unlink( TMP_PATH.'.editionset' );
+        @unlink( TMP_PATH.'.cleanedup' );
+        @unlink( TMP_PATH.'.setupfinished' );
+        @unlink( TMP_PATH.'.done' );
+
+        return TRUE;
+    }
+
+    function setup_remove_setup_lock_file()
+    {
+        $result = FALSE;
+
+        if ( file_exists( AMP_SETUP_LOCK ) and @unlink( AMP_SETUP_LOCK ) ) $result = TRUE;
+
+        return $result;
+    }
+
+    function setup_check_log( &$container )
+    {
+        if ( file_exists( AMP_LOG ) )
+        {
+            $log_content = file_get_contents( AMP_LOG );
+
+            $container->AddChild( new HuiHorizBar( 'loghr' ) );
+            $container->AddChild( new HuiText( "amplog", array( "disp" => "pass", "readonly" => "true", "value" => htmlentities( $log_content ), "rows" => "20", "cols" => "80" ) ), 0, 1 );
+
+            @unlink( AMP_LOG );
+        }
+    }
+}
+
+}
+?>

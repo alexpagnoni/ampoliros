@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<database>
+        <table name="xmlrpcmethods">
+        	<field name="id"	type="integer"	notnull="1"/>
+                <field name="name"	type="text"	notnull="1"/>
+                <field name="function"	type="text"	notnull="1"/>
+                <field name="signature"	type="text"/>
+                <field name="docstring"	type="text"/>
+                <field name="handler"	type="text"     notnull="1"/>
+                <field name="module"    type="text"     notnull="1"/>
+                <field	name="unsecure"	type="boolean"/>
+                <field	name="catalog"	type="text"/>
+                <key field="id"	type="unique"/>
+        </table>
+
+        <sequence name="xmlrpcmethods_id_seq"/>
+</database>

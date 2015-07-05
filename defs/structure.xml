@@ -1,0 +1,1903 @@
+<?xml version="1.0"?>
+<structure>
+
+    <!-- Elements - They must be at top of structure file -->
+
+    <element
+        name="element"
+        file="element.element"/>
+    <element
+        name="admingroup"
+        file="admingroup.element"/>
+    <element
+        name="adminpage"
+        file="adminpage.element"/>
+    <element
+        name="admintable"
+        file="admintable.element"/>
+    <element
+        name="binary"
+        file="binary.element"/>
+    <element
+        name="catalog"
+        file="catalog.element"/>
+    <element
+        name="cgi"
+        file="cgi.element"/>
+    <element
+        name="class"
+        file="class.element"/>
+    <element
+        name="country"
+        file="country.element"/>
+    <element
+        name="configurationfile"
+        file="configurationfile.element"/>
+    <element
+        name="dblayer"
+        file="dblayer.element"/>
+    <element
+        name="extras"
+        file="extras.element"/>
+    <element
+        name="helpnode"
+        file="helpnode.element"/>
+    <element
+        name="hook"
+        file="hook.element"/>
+    <element
+        name="hookevent"
+        file="hookevent.element"/>
+    <element
+        name="hookhandler"
+        file="hookhandler.element"/>
+    <element
+        name="huielement"
+        file="huielement.element"/>
+    <element
+        name="huistyle"
+        file="huistyle.element"/>
+    <element
+        name="huicolorsset"
+        file="huicolorsset.element"/>
+    <element
+        name="huiiconsset"
+        file="huiiconsset.element"/>
+    <element
+        name="huitheme"
+        file="huitheme.element"/>
+    <element
+        name="huivalidator"
+        file="huivalidator.element"/>
+    <element
+        name="language"
+        file="language.element"/>
+    <element
+        name="library"
+        file="library.element"/>
+    <element
+        name="maintenancetask"
+        file="maintenancetask.element"/>
+    <element
+        name="moduleconfig"
+        file="moduleconfig.element"/>
+    <element
+        name="rootgroup"
+        file="rootgroup.element"/>
+    <element
+        name="rootpage"
+        file="rootpage.element"/>
+    <element
+        name="roottable"
+        file="roottable.element"/>
+    <element
+        name="siteconfig"
+        file="siteconfig.element"/>
+    <element
+        name="tempdir"
+        file="tempdir.element"/>
+    <element
+        name="xmlrpchandler"
+        file="xmlrpchandler.element"/>
+    <element
+        name="xmlrpcmethod"
+        file="xmlrpcmethod.element"/>
+
+    <class
+        name="com.solarix.ampoliros.module.elements.ElementElement"
+        file="com.solarix.ampoliros.module.elements.ElementElement"/>
+    <class
+        name="com.solarix.ampoliros.module.elements.ClassElement"
+        file="com.solarix.ampoliros.module.elements.ClassElement"/>
+
+    <!-- Installation scripts -->
+
+    <generalpreupdate
+        file="generalpreupdate.php"/>
+    <generalpostupdate
+        file="generalpostupdate.php"/>
+
+    <!-- Ampoliros base -->
+
+    <binary
+        name="updater"
+        file="updater"/>
+
+    <class
+        name="com.solarix.ampoliros.core.Ampoliros"
+        file="com.solarix.ampoliros.core.Ampoliros"/>
+    <class
+        name="com.solarix.ampoliros.core.AmpConfig"
+        file="com.solarix.ampoliros.core.AmpConfig"/>
+    <class
+        name="com.solarix.ampoliros.io.log.Logger"
+        file="com.solarix.ampoliros.io.log.Logger"/>
+    <class
+        name="com.solarix.ampoliros.io.log.LogCenter"
+        file="com.solarix.ampoliros.io.log.LogCenter"/>
+
+    <catalog
+        name="amp_misc_auth"
+        file="amp_misc_auth.catalog"/>
+    <catalog
+        name="amp_misc_install"
+        file="amp_misc_install.catalog"/>
+    <catalog
+        name="amp_misc_shared"
+        file="amp_misc_shared.catalog"/>
+    <catalog
+        name="amp_misc_webservices"
+        file="amp_misc_webservices.catalog"/>
+    <catalog
+        name="amp_root_advanced"
+        file="amp_root_advanced.catalog"/>
+    <catalog
+        name="amp_root_info"
+        file="amp_root_info.catalog"/>
+    <catalog
+        name="amp_root_interface"
+        file="amp_root_interface.catalog"/>
+    <catalog
+        name="amp_root_locale"
+        file="amp_root_locale.catalog"/>
+    <catalog
+        name="amp_root_menu"
+        file="amp_root_menu.catalog"/>
+    <catalog
+        name="amp_root_password"
+        file="amp_root_password.catalog"/>
+
+    <catalog
+        name="amp_misc_auth_it"
+        file="amp_misc_auth_it.catalog"/>
+    <catalog
+        name="amp_misc_install_it"
+        file="amp_misc_install_it.catalog"/>
+    <catalog
+        name="amp_misc_shared_it"
+        file="amp_misc_shared_it.catalog"/>
+    <catalog
+        name="amp_misc_webservices_it"
+        file="amp_misc_webservices_it.catalog"/>
+    <catalog
+        name="amp_root_advanced_it"
+        file="amp_root_advanced_it.catalog"/>
+    <catalog
+        name="amp_root_info_it"
+        file="amp_root_info_it.catalog"/>
+    <catalog
+        name="amp_root_interface_it"
+        file="amp_root_interface_it.catalog"/>
+    <catalog
+        name="amp_root_locale_it"
+        file="amp_root_locale_it.catalog"/>
+    <catalog
+        name="amp_root_menu_it"
+        file="amp_root_menu_it.catalog"/>
+    <catalog
+        name="amp_root_password_it"
+        file="amp_root_password_it.catalog"/>
+
+    <cgi
+        name="unlock.php"
+        file="unlock.php"/>
+    <cgi
+        name="ampoliros.wav"
+        file="ampoliros.wav"/>
+    <cgi
+        name="ampoliros_logo.png"
+        file="ampoliros_logo.png"/>
+
+    <configurationfile
+        name="ampoliros.php"
+        file="ampoliros.php"/>
+
+    <dblayer
+        name="mysql"
+        file="dblayer_mysql.dblayer"
+        desc="MySQL 3.22+"/>
+    <dblayer
+        name="pgsql"
+        file="dblayer_pgsql.dblayer"
+        desc="PostgreSQL 7.0+"/>
+
+<class
+name="com.solarix.ampoliros.db.DBLayer"
+file="com.solarix.ampoliros.db.DBLayer"/>
+    <class
+        name="com.solarix.ampoliros.db.DBLayerFactory"
+        file="com.solarix.ampoliros.db.DBLayerFactory"/>
+<class
+name="com.solarix.ampoliros.db.RecordSet"
+file="com.solarix.ampoliros.db.RecordSet"/>
+<class
+name="com.solarix.ampoliros.db.XmlDb"
+file="com.solarix.ampoliros.db.XmlDb"/>
+<class
+name="com.solarix.ampoliros.db.XmlDbUpdater"
+file="com.solarix.ampoliros.db.XmlDbUpdater"/>
+<class
+name="com.solarix.ampoliros.db.drivers.mysql.DBLayer_mysql"
+file="com.solarix.ampoliros.db.drivers.mysql.DBLayer_mysql"/>
+<class
+name="com.solarix.ampoliros.db.drivers.mysql.RecordSet_mysql"
+file="com.solarix.ampoliros.db.drivers.mysql.RecordSet_mysql"/>
+<class
+name="com.solarix.ampoliros.db.drivers.pgsql.DBLayer_pgsql"
+file="com.solarix.ampoliros.db.drivers.pgsql.DBLayer_pgsql"/>
+<class
+name="com.solarix.ampoliros.db.drivers.pgsql.RecordSet_pgsql"
+file="com.solarix.ampoliros.db.drivers.pgsql.RecordSet_pgsql"/>
+<class
+name="com.solarix.ampoliros.db.drivers.odbc.DBLayer_odbc"
+file="com.solarix.ampoliros.db.drivers.odbc.DBLayer_odbc"/>
+<class
+name="com.solarix.ampoliros.db.drivers.odbc.RecordSet_odbc"
+file="com.solarix.ampoliros.db.drivers.odbc.RecordSet_odbc"/>
+    <class
+        name="com.solarix.ampoliros.debug.Debugger"
+        file="com.solarix.ampoliros.debug.Debugger"/>
+    <class
+        name="com.solarix.ampoliros.xml.XMLParser"
+        file="com.solarix.ampoliros.xml.XMLParser"/>
+    <class
+        name="com.solarix.ampoliros.help.HelpNode"
+        file="com.solarix.ampoliros.help.HelpNode"/>
+
+    <extras
+        name="amplogo.png"
+        file="amplogo.png"/>
+
+    <helpnode
+        name="ampoliros.root.informations.default"
+        file="ampoliros.root.informations.default.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.license"
+        file="ampoliros.root.informations.license.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.changes"
+        file="ampoliros.root.informations.changes.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.sysinfo"
+        file="ampoliros.root.informations.sysinfo.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.showamplog"
+        file="ampoliros.root.informations.showamplog.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.showampdblog"
+        file="ampoliros.root.informations.showampdblog.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.showampremotelog"
+        file="ampoliros.root.informations.showampremotelog.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.interface.default"
+        file="ampoliros.root.interface.default.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.interface.advanced"
+        file="ampoliros.root.interface.advanced.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.password.default"
+        file="ampoliros.root.password.default.helpnode"
+        forceinstall="true"/>
+
+    <helpnode
+        name="ampoliros.root.informations.default_it"
+        file="ampoliros.root.informations.default_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.license_it"
+        file="ampoliros.root.informations.license_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.changes_it"
+        file="ampoliros.root.informations.changes_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.sysinfo_it"
+        file="ampoliros.root.informations.sysinfo_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.showamplog_it"
+        file="ampoliros.root.informations.showamplog_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.showampdblog_it"
+        file="ampoliros.root.informations.showampdblog_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.informations.showampremotelog_it"
+        file="ampoliros.root.informations.showampremotelog_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.interface.default_it"
+        file="ampoliros.root.interface.default_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.interface.advanced_it"
+        file="ampoliros.root.interface.advanced_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.password.default_it"
+        file="ampoliros.root.password.default_it.helpnode"
+        forceinstall="true"/>
+
+    <hookevent
+        name="instance.startup"
+        file="instance.startup"
+        function="instance"
+        event="startup"
+        forceinstall="true"/>
+    <hookevent
+        name="instance.shutdown"
+        file="instance.shutdown"
+        function="instance"
+        event="shutdown"
+        forceinstall="true"/>
+
+    <library
+        name="ampoliros"
+        file="ampoliros.library"/>
+    <library
+        name="ampshared"
+        file="ampshared.library"/>
+    <library
+        name="configman"
+        file="configman.library"/>
+    <library
+        name="cron"
+        file="cron.library"/>
+    <library
+        name="debug"
+        file="debug.library"/>
+    <library
+        name="mail"
+        file="mail.library"/>
+    <library
+        name="minixml"
+        file="minixml.library"/>
+    <library
+        name="misc"
+        file="misc.library"/>
+    <library
+        name="setup"
+        file="setup.library"/>
+
+    <rootgroup
+        name="ampoliros"
+        file="ampoliros"
+        catalog="amp_root_menu"
+        forceinstall="true"/>
+    <rootgroup
+        name="tools"
+        file="tools"
+        catalog="amp_root_menu"
+        forceinstall="true"/>
+    <rootgroup
+        name="modsettings"
+        file="modsettings"
+        catalog="amp_root_menu"
+        forceinstall="true"/>
+
+    <rootpage
+        name="index"
+        file="index.php"
+        show="no"/>
+    <rootpage
+        name="auth"
+        file="auth.php"
+        show="no"/>
+    <rootpage
+        name="header"
+        file="header.php"
+        show="no"/>
+    <rootpage
+        name="main"
+        file="main.php"
+        show="no"/>
+    <rootpage
+        name="sum"
+        file="sum.php"
+        show="no"/>
+    <rootpage
+        name="favicon"
+        file="favicon.ico"
+        show="no"/>
+    <rootpage
+        name="ampinterface"
+        file="ampinterface.php"
+        themeicon="style"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+    <rootpage
+        name="ampadvanced"
+        file="ampadvanced.php"
+        themeicon="package_system"
+        themeicontype="apps"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+    <rootpage
+        name="info"
+        file="info.php"
+        themeicon="help_index"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+    <rootpage
+        name="password"
+        file="password.php"
+        themeicon="password"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+
+    <roottable
+        name="binaries"
+        file="binaries.xsql"/>
+    <roottable
+        name="rootgroups"
+        file="rootgroups.xsql"/>
+    <roottable
+        name="rootpages"
+        file="rootpages.xsql"/>
+    <roottable
+        name="rootpermissions"
+        file="rootpermissions.xsql"/>
+    <roottable
+        name="rootprofiles"
+        file="rootprofiles.xsql"/>
+
+    <tempdir
+        name="phpsessions"
+        file="phpsessions"
+        forceinstall="true"/>
+    <tempdir
+        name="pids"
+        file="pids"
+        forceinstall="true"/>
+
+    <xmlrpchandler
+        name="ampoliros"
+        file="ampoliros.xmlrpchandler"/>
+
+    <xmlrpcmethod
+        name="ampoliros.version"
+        file="ampoliros.version"
+        function="ampoliros_version"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"/>
+    <xmlrpcmethod
+        name="ampoliros.log.amp.get"
+        file="ampoliros.log.amp.get"
+        function="ampoliros_log_amp_get"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"/>
+    <xmlrpcmethod
+        name="ampoliros.log.amp.erase"
+        file="ampoliros.log.amp.erase"
+        function="ampoliros_log_amp_erase"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"
+        unsecure="1"/>
+    <xmlrpcmethod
+        name="ampoliros.log.amp.logevent"
+        file="ampoliros.log.amp.logevent"
+        function="ampoliros_log_amp_logevent"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"
+        unsecure="1"/>
+    <xmlrpcmethod
+        name="ampoliros.log.db.get"
+        file="ampoliros.log.db.get"
+        function="ampoliros_log_db_get"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"/>
+    <xmlrpcmethod
+        name="ampoliros.log.db.erase"
+        file="ampoliros.log.db.erase"
+        function="ampoliros_log_db_erase"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"
+        unsecure="1"/>
+    <xmlrpcmethod
+        name="ampoliros.log.db.logevent"
+        file="ampoliros.log.db.logevent"
+        function="ampoliros_log_db_logevent"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"
+        unsecure="1"/>
+
+    <!-- Cache -->
+
+    <class
+        name="com.solarix.ampoliros.datatransfer.cache.CachedItem"
+        file="com.solarix.ampoliros.datatransfer.cache.CachedItem"/>
+    <class
+        name="com.solarix.ampoliros.datatransfer.cache.CacheGarbageCollector"
+        file="com.solarix.ampoliros.datatransfer.cache.CacheGarbageCollector"/>
+
+    <roottable
+        name="cacheditems"
+        file="cacheditems.xsql"/>
+
+    <tempdir
+        name="ampcache"
+        file="ampcache"
+        forceinstall="true"/>
+
+    <!-- Hooks -->
+
+    <class
+        name="com.solarix.ampoliros.util.Hook"
+        file="com.solarix.ampoliros.util.Hook"/>
+
+    <roottable
+        name="hooks"
+        file="hooks.xsql"/>
+    <roottable
+        name="hookevents"
+        file="hookevents.xsql"/>
+
+    <!-- Hui -->
+
+    <class
+        name="com.solarix.ampoliros.hui.Hui"
+        file="com.solarix.ampoliros.hui.Hui"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiContainerElement"
+        file="com.solarix.ampoliros.hui.HuiContainerElement"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiDispatcher"
+        file="com.solarix.ampoliros.hui.HuiDispatcher"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiElementHandler"
+        file="com.solarix.ampoliros.hui.HuiElementHandler"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiEvent"
+        file="com.solarix.ampoliros.hui.HuiEvent"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiEventRawData"
+        file="com.solarix.ampoliros.hui.HuiEventRawData"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiEventsCall"
+        file="com.solarix.ampoliros.hui.HuiEventsCall"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiWidgetElement"
+        file="com.solarix.ampoliros.hui.HuiWidgetElement"/>
+    <class
+        name="com.solarix.ampoliros.hui.HuiXmlParser"
+        file="com.solarix.ampoliros.hui.HuiXmlParser"/>
+    <class
+        name="com.solarix.ampoliros.hui.mvc.HuiCommand"
+        file="com.solarix.ampoliros.hui.mvc.HuiCommand"/>
+    <class
+        name="com.solarix.ampoliros.hui.mvc.HuiFrontController"
+        file="com.solarix.ampoliros.hui.mvc.HuiFrontController"/>
+    <class
+        name="com.solarix.ampoliros.hui.mvc.HuiRequest"
+        file="com.solarix.ampoliros.hui.mvc.HuiRequest"/>
+    <class
+        name="com.solarix.ampoliros.hui.mvc.HuiResponse"
+        file="com.solarix.ampoliros.hui.mvc.HuiResponse"/>
+    <class
+        name="com.solarix.ampoliros.hui.mvc.HuiSession"
+        file="com.solarix.ampoliros.hui.mvc.HuiSession"/>
+    <class
+        name="com.solarix.ampoliros.hui.helpers.HuiAuthHelperFactory"
+        file="com.solarix.ampoliros.hui.helpers.HuiAuthHelperFactory"/>
+    <class
+        name="com.solarix.ampoliros.hui.helpers.HuiAuthHelper"
+        file="com.solarix.ampoliros.hui.helpers.HuiAuthHelper"/>
+    <class
+        name="com.solarix.ampoliros.hui.helpers.HuiRootAuthHelper"
+        file="com.solarix.ampoliros.hui.helpers.HuiRootAuthHelper"/>
+    <class
+        name="com.solarix.ampoliros.hui.helpers.HuiSessionHelper"
+        file="com.solarix.ampoliros.hui.helpers.HuiSessionHelper"/>
+    <class
+        name="com.solarix.ampoliros.hui.helpers.HuiSiteAuthHelper"
+        file="com.solarix.ampoliros.hui.helpers.HuiSiteAuthHelper"/>
+    <class
+        name="com.solarix.ampoliros.hui.helpers.HuiValidatorHelper"
+        file="com.solarix.ampoliros.hui.helpers.HuiValidatorHelper"/>
+    <class
+        name="com.solarix.ampoliros.hui.theme.HuiColorsSet"
+        file="com.solarix.ampoliros.hui.theme.HuiColorsSet"/>
+    <class
+        name="com.solarix.ampoliros.hui.theme.HuiIconsSet"
+        file="com.solarix.ampoliros.hui.theme.HuiIconsSet"/>
+    <class
+        name="com.solarix.ampoliros.hui.theme.HuiStyle"
+        file="com.solarix.ampoliros.hui.theme.HuiStyle"/>
+    <class
+        name="com.solarix.ampoliros.hui.theme.HuiTheme"
+        file="com.solarix.ampoliros.hui.theme.HuiTheme"/>
+    <class
+        name="com.solarix.ampoliros.hui.widgets.HuiXml"
+        file="com.solarix.ampoliros.hui.widgets.HuiXml"/>
+
+    <catalog
+        name="amp_misc_hui"
+        file="amp_misc_hui.catalog"/>
+    <catalog
+        name="amp_misc_hui_it"
+        file="amp_misc_hui_it.catalog"/>
+    <catalog
+        name="amp_misc_amp4000theme"
+        file="amp_misc_amp4000theme.catalog"/>
+    <catalog
+        name="amp_misc_amp4000theme_it"
+        file="amp_misc_amp4000theme_it.catalog"/>
+
+    <cgi
+        name="layersmenu.js"
+        file="layersmenu.js"/>
+    <configurationfile
+        name="layersmenu-browser_detection.js"
+        file="layersmenu-browser_detection.js"/>
+    <cgi
+        name="clear.gif"
+        file="clear.gif"/>
+    <cgi
+        name="hui.js"
+        file="hui.js"/>
+    <cgi
+        name="pngbehavior.htc"
+        file="pngbehavior.htc"/>
+    <cgi
+        name="hui-forward.gif"
+        file="hui-forward.gif"/>
+    <cgi
+        name="hui-reload.gif"
+        file="hui-reload.gif"/>
+
+    <configurationfile
+        name="layersmenu-plain_menu.ihtml"
+        file="layersmenu-plain_menu.ihtml"/>
+    <configurationfile
+        name="layersmenu-horizontal_plain_menu.ihtml"
+        file="layersmenu-horizontal_plain_menu.ihtml"/>
+    <configurationfile
+        name="layersmenu-vertical_menu.ihtml"
+        file="layersmenu-vertical_menu.ihtml"/>
+    <configurationfile
+        name="layersmenu-horizontal_menu.ihtml"
+        file="layersmenu-horizontal_menu.ihtml"/>
+    <configurationfile
+        name="layersmenu-sub_menu.ihtml"
+        file="layersmenu-sub_menu.ihtml"/>
+    <configurationfile
+        name="layersmenu-footer.ijs"
+        file="layersmenu-footer.ijs"/>
+    <configurationfile
+        name="layersmenu-header.ijs"
+        file="layersmenu-header.ijs"/>
+    <configurationfile
+        name="layerstreemenu.ijs"
+        file="layerstreemenu.ijs"/>
+
+    <huielement
+        name="amppage"
+        file="amppage.hui"/>
+    <huielement
+        name="amptoolbar"
+        file="amptoolbar.hui"/>
+    <huielement
+        name="button"
+        file="button.hui"/>
+    <huielement
+        name="checkbox"
+        file="checkbox.hui"/>
+    <huielement
+        name="combobox"
+        file="combobox.hui"/>
+    <huielement
+        name="date"
+        file="date.hui"/>
+    <huielement
+        name="empty"
+        file="empty.hui"/>
+    <huielement
+        name="file"
+        file="file.hui"/>
+    <huielement
+        name="form"
+        file="form.hui"/>
+    <huielement
+        name="formarg"
+        file="formarg.hui"/>
+    <huielement
+        name="grid"
+        file="grid.hui"/>
+    <huielement
+        name="helpnode"
+        file="helpnode.hui"/>
+    <huielement
+        name="horizbar"
+        file="horizbar.hui"/>
+    <huielement
+        name="horizframe"
+        file="horizframe.hui"/>
+    <huielement
+        name="horizgroup"
+        file="horizgroup.hui"/>
+    <huielement
+        name="iframe"
+        file="iframe.hui"/>
+    <huielement
+        name="image"
+        file="image.hui"/>
+    <huielement
+        name="label"
+        file="label.hui"/>
+    <huielement
+        name="link"
+        file="link.hui"/>
+    <huielement
+        name="listbox"
+        file="listbox.hui"/>
+    <huielement
+        name="menu"
+        file="menu.hui"/>
+    <huielement
+        name="page"
+        file="page.hui"/>
+    <huielement
+        name="progressbar"
+        file="progressbar.hui"/>
+    <huielement
+        name="pushbutton"
+        file="pushbutton.hui"/>
+    <huielement
+        name="radio"
+        file="radio.hui"/>
+    <huielement
+        name="raw"
+        file="raw.hui"/>
+    <huielement
+        name="sessionkey"
+        file="sessionkey.hui"/>
+    <huielement
+        name="statusbar"
+        file="statusbar.hui"/>
+    <huielement
+        name="string"
+        file="string.hui"/>
+    <huielement
+        name="submit"
+        file="submit.hui"/>
+    <huielement
+        name="tab"
+        file="tab.hui"/>
+    <huielement
+        name="table"
+        file="table.hui"/>
+    <huielement
+        name="text"
+        file="text.hui"/>
+    <huielement
+        name="titlebar"
+        file="titlebar.hui"/>
+    <huielement
+        name="toolbar"
+        file="toolbar.hui"/>
+    <huielement
+        name="treemenu"
+        file="treemenu.hui"/>
+    <huielement
+        name="treevmenu"
+        file="treevmenu.hui"/>
+    <huielement
+        name="vertbar"
+        file="vertbar.hui"/>
+    <huielement
+        name="vertframe"
+        file="vertframe.hui"/>
+    <huielement
+        name="vertgroup"
+        file="vertgroup.hui"/>
+    <huielement
+        name="xml"
+        file="xml.hui"/>
+
+    <huivalidator
+        name="file"
+        file="file.huivalidator"
+        forceinstall="true"/>
+
+    <huitheme
+        name="amp4000"
+        file="amp4000.huitheme"
+        catalog="amp_misc_amp4000theme"/>
+
+    <huicolorsset
+        name="amp4000"
+        file="amp4000.huicolorsset"
+        catalog="amp_misc_amp4000theme"/>
+    
+    <huistyle
+        name="amp4000"
+        file="amp4000.huistyle"
+        catalog="amp_misc_amp4000theme"/>
+
+    <huiiconsset
+        name="crystal"
+        file="crystal.huiiconsset"
+        catalog="amp_misc_amp4000theme"/>
+
+    <library
+        name="phplibtemplate"
+        file="phplibtemplate.library"/>
+    <library
+        name="phplayersmenu"
+        file="phplayersmenu.library"/>
+
+    <roottable
+        name="huielements"
+        file="huielements.xsql"/>
+    <roottable
+        name="huivalidators"
+        file="huivalidators.xsql"/>
+    <roottable
+        name="huistyles"
+        file="huistyles.xsql"/>
+    <roottable
+        name="huiiconssets"
+        file="huiiconssets.xsql"/>
+    <roottable
+        name="huicolorssets"
+        file="huicolorssets.xsql"/>
+    <roottable
+        name="huithemes"
+        file="huithemes.xsql"/>
+
+    <!-- Locale -->
+
+    <catalog
+        name="amp_misc_locale"
+        file="amp_misc_locale.catalog"/>
+    <catalog
+        name="amp_misc_locale_it"
+        file="amp_misc_locale_it.catalog"/>
+
+    <country
+        name="brazil"
+        file="brazil.country"
+        short="br"
+        forceinstall="true"/>
+    <country 
+        name="canada"
+        file="canada.country"
+        short="ca"
+        forceinstall="true"/>
+    <country 
+        name="france"
+        file="france.country"
+        short="fr"
+        forceinstall="true"/>
+    <country 
+        name="germany"
+        file="germany.country"
+        short="de"
+        forceinstall="true"/>
+    <country 
+        name="greece"
+        file="greece.country"
+        short="gr"
+        forceinstall="true"/>
+    <country 
+        name="italy"
+        file="italy.country"
+        short="it"
+        forceinstall="true"/>
+    <country 
+        name="japan"
+        file="japan.country"
+        short="jp"
+        forceinstall="true"/>
+    <country 
+        name="sanmarino"
+        file="sanmarino.country"
+        short="sm"
+        forceinstall="true"/>
+    <country 
+        name="spain"
+        file="spain.country"
+        short="es"
+        forceinstall="true"/>
+    <country 
+        name="unitedkingdom"
+        file="unitedkingdom.country"
+        short="gb"
+        forceinstall="true"/>
+    <country 
+        name="unitedstates"
+        file="unitedstates.country"
+        short="us"
+        forceinstall="true"/>
+
+    <helpnode
+        name="ampoliros.root.locale.default"
+        file="ampoliros.root.locale.default.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.locale.language"
+        file="ampoliros.root.locale.language.helpnode"
+        forceinstall="true"/>
+
+    <helpnode
+        name="ampoliros.root.locale.default_it"
+        file="ampoliros.root.locale.default_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.locale.language_it"
+        file="ampoliros.root.locale.language_it.helpnode"
+        forceinstall="true"/>
+
+    <language
+        name="brazilian"
+        file="brazilian"
+        short="br"
+        forceinstall="true"/>
+    <language 
+        name="german"
+        file="german"
+        short="de"
+        forceinstall="true"/>
+    <language 
+        name="greek"
+        file="greek"
+        short="el"
+        forceinstall="true"/>
+    <language 
+        name="english"
+        file="english"
+        short="en"
+        forceinstall="true"/>
+    <language 
+        name="spanish"
+        file="spanish"
+        short="es"
+        forceinstall="true"/>
+    <language 
+        name="finnish"
+        file="finnish"
+        short="fi"
+        forceinstall="true"/>
+    <language 
+        name="french"
+        file="french"
+        short="fr"
+        forceinstall="true"/>
+    <language 
+        name="italian"
+        file="italian"
+        short="it"
+        forceinstall="true"/>
+    <language 
+        name="polish"
+        file="polish"
+        short="pl"
+        forceinstall="true"/>
+    <language 
+        name="portuguese"
+        file="portuguese"
+        short="pt"
+        forceinstall="true"/>
+    <language 
+        name="russian"
+        file="russian"
+        short="ru"
+        forceinstall="true"/>
+    <language 
+        name="swedish"
+        file="swedish"
+        short="sw"
+        forceinstall="true"/>
+
+    <class
+    name="com.solarix.ampoliros.locale.Locale"
+    file="com.solarix.ampoliros.locale.Locale"/>
+    <class
+    name="com.solarix.ampoliros.locale.LocaleCountry"
+    file="com.solarix.ampoliros.locale.LocaleCountry"/>
+
+    <rootpage 
+    name="locale"
+    file="locale.php"
+    themeicon="package_network"
+    catalog="amp_root_menu"
+    category="ampoliros"
+    forceinstall="true"/>
+
+    <roottable
+    name="countries"
+    file="countries.xsql"/>
+    <roottable
+    name="languages"
+    file="languages.xsql"/>
+
+    <!-- Modules -->
+
+<class
+name="com.solarix.ampoliros.module.Module"
+file="com.solarix.ampoliros.module.Module"/>
+<class
+name="com.solarix.ampoliros.module.ModuleConfig"
+file="com.solarix.ampoliros.module.ModuleConfig"/>
+<class
+name="com.solarix.ampoliros.module.ModuleDep"
+file="com.solarix.ampoliros.module.ModuleDep"/>
+<class
+name="com.solarix.ampoliros.module.ModuleElement"
+file="com.solarix.ampoliros.module.ModuleElement"/>
+<class
+name="com.solarix.ampoliros.module.ModuleElementFactory"
+file="com.solarix.ampoliros.module.ModuleElementFactory"/>
+<class
+name="com.solarix.ampoliros.module.ModuleRegister"
+file="com.solarix.ampoliros.module.ModuleRegister"/>
+<class
+name="com.solarix.ampoliros.module.XMLDefFile"
+file="com.solarix.ampoliros.module.XMLDefFile"/>
+
+    <catalog
+    name="amp_root_modules"
+    file="amp_root_modules.catalog"/>
+
+    <catalog
+    name="amp_root_modules_it"
+    file="amp_root_modules_it.catalog"/>
+
+    <helpnode
+    name="ampoliros.root.modules.default"
+    file="ampoliros.root.modules.default.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.root.modules.newmodule"
+    file="ampoliros.root.modules.newmodule.helpnode"
+    forceinstall="true"/>
+
+    <helpnode
+    name="ampoliros.root.modules.default_it"
+    file="ampoliros.root.modules.default_it.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.root.modules.newmodule_it"
+    file="ampoliros.root.modules.newmodule_it.helpnode"
+    forceinstall="true"/>
+
+    <hookevent
+    name="module.enable.calltime"
+    file="module.enable.calltime"
+    function="module.enable"
+    event="calltime"
+    forceinstall="true"/>
+    <hookevent
+    name="module.enable.moduleenabled"
+    file="module.enable.moduleenabled"
+    function="module.enable"
+    event="moduleenabled"
+    forceinstall="true"/>
+    <hookevent
+    name="module.disable.calltime"
+    file="module.disable.calltime"
+    function="module.disable"
+    event="calltime"
+    forceinstall="true"/>
+    <hookevent
+    name="module.disable.moduledisabled"
+    file="module.disable.moduledisabled"
+    function="module.disable"
+    event="moduledisabled"
+    forceinstall="true"/>
+
+    <library
+    name="modules"
+    file="modules.library"/>
+    <library
+    name="modulesbase"
+    file="modulesbase.library"/>
+
+    <rootpage
+        name="applications"
+        file="applications.php"
+        themeicon="kpackage"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+
+    <roottable
+    name="elementtypes"
+    file="elementtypes.xsql"/>
+    <roottable
+    name="modconfig"
+    file="modconfig.xsql"/>
+    <roottable
+    name="moddeps"
+    file="moddeps.xsql"/>
+    <roottable
+    name="modregister"
+    file="modregister.xsql"/>
+    <roottable
+    name="modules"
+    file="modules.xsql"/>
+    <roottable
+        name="submodules"
+        file="submodules.xsql"/>
+    <roottable
+        name="disabledsubmodules"
+        file="disabledsubmodules.xsql"/>
+
+    <tempdir
+        name="modinst"
+        file="modinst"
+        forceinstall="true"/>
+
+    <xmlrpcmethod 
+    name="ampoliros.modules.list"
+    file="ampoliros.modules.list"
+    function="ampoliros_modules_list"
+    handler="ampoliros"
+    catalog="amp_misc_webservices"
+    forceinstall="true"/>
+    <xmlrpcmethod 
+    name="ampoliros.modules.module.install"
+    file="ampoliros.modules.module.install"
+    function="ampoliros_modules_module_install"
+    handler="ampoliros"
+    catalog="amp_misc_webservices"
+    forceinstall="true"
+    unsecure="1"/>
+    <xmlrpcmethod 
+    name="ampoliros.modules.module.remove"
+    file="ampoliros.modules.module.remove"
+    function="ampoliros_modules_module_remove"
+    handler="ampoliros"
+    catalog="amp_misc_webservices"
+    forceinstall="true"
+    unsecure="1"/>
+
+    <!-- Network -->
+
+    <catalog
+        name="amp_root_network"
+        file="amp_root_network.catalog"/>
+    <catalog
+        name="amp_root_network_it"
+        file="amp_root_network_it.catalog"/>
+
+    <helpnode
+        name="ampoliros.root.network.default"
+        file="ampoliros.root.network.default.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.network.edit"
+        file="ampoliros.root.network.edit.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.network.default_it"
+        file="ampoliros.root.network.default_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.network.edit_it"
+        file="ampoliros.root.network.edit_it.helpnode"
+        forceinstall="true"/>
+
+    <rootpage
+        name="network"
+        file="network.php"
+        themeicon="network"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+
+    <!-- Sites -->
+
+    <admingroup
+        name="tools"
+        file="tools"
+        catalog="amp_site_menu"/>
+    <admingroup
+        name="preferences"
+        file="preferences"
+        catalog="amp_site_menu"/>
+
+    <adminpage
+        name="index"
+        file="index.php"
+        show="no"/>
+    <adminpage
+        name="auth"
+        file="auth.php"
+        show="no"/>
+    <adminpage
+        name="header"
+        file="header.php"
+        show="no"/>
+    <adminpage
+        name="main"
+        file="main.php"
+        show="no"/>
+    <adminpage
+        name="sum"
+        file="sum.php"
+        show="no"/>
+    <adminpage
+        name="ampinterface"
+        file="ampinterface.php"
+        category="preferences"
+        themeicon="style"
+        catalog="amp_site_menu"/>
+    <adminpage
+        name="sitedata"
+        file="site.php"
+        category="preferences"
+        themeicon="terminal"
+        catalog="amp_site_menu"/>
+    <adminpage
+        name="password"
+        file="password.php"
+        category="preferences"
+        themeicon="password"
+        catalog="amp_site_menu"/>
+    <adminpage
+        name="locale"
+        file="locale.php"
+        category="preferences"
+        themeicon="package_network"
+        catalog="amp_site_menu"/>
+    <adminpage
+        name="profiles"
+        file="profiles.php"
+        category="preferences"
+        themeicon="kuser"
+        catalog="amp_site_menu"/>
+    <adminpage
+        name="favicon"
+        file="favicon"
+        icon="favicon.ico"
+        show="no"/>
+
+    <!--admintable name="aclnodes"file="aclnodes.xsql"/-->
+    <!--admintable name="aclperms"file="aclperms.xsql"/-->
+    <admintable
+        name="admingroups"
+        file="admingroups.xsql"/>
+    <admintable
+        name="adminpages"
+        file="adminpages.xsql"/>
+    <admintable
+        name="groups"
+        file="groups.xsql"/>
+    <admintable
+        name="permissions"
+        file="permissions.xsql"/>
+    <admintable
+        name="sitesettings"
+        file="sitesettings.xsql"/>
+    <admintable
+        name="usersettings"
+        file="usersettings.xsql"/>
+
+    <catalog
+    name="amp_root_sites"
+    file="amp_root_sites.catalog"/>
+    <catalog
+    name="amp_site_interface"
+    file="amp_site_interface.catalog"/>
+    <catalog
+    name="amp_site_locale"
+    file="amp_site_locale.catalog"/>
+    <catalog
+    name="amp_site_menu"
+    file="amp_site_menu.catalog"/>
+    <catalog
+    name="amp_site_password"
+    file="amp_site_password.catalog"/>
+    <catalog
+    name="amp_site_profiles"
+    file="amp_site_profiles.catalog"/>
+    <catalog
+    name="amp_site_site"
+    file="amp_site_site.catalog"/>
+
+    <catalog
+    name="amp_site_locale_it"
+    file="amp_site_locale_it.catalog"/>
+    <catalog
+    name="amp_site_interface_it"
+    file="amp_site_interface_it.catalog"/>
+    <catalog
+    name="amp_site_menu_it"
+    file="amp_site_menu_it.catalog"/>
+    <catalog
+    name="amp_site_password_it"
+    file="amp_site_password_it.catalog"/>
+    <catalog
+    name="amp_site_profiles_it"
+    file="amp_site_profiles_it.catalog"/>
+    <catalog
+    name="amp_site_site_it"
+    file="amp_site_site_it.catalog"/>
+    <catalog
+    name="amp_root_sites_it"
+    file="amp_root_sites_it.catalog"/>
+
+    <helpnode
+    name="ampoliros.root.sites.default" 
+    file="ampoliros.root.sites.default.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.root.sites.newsite"
+    file="ampoliros.root.sites.newsite.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.locale.default"
+    file="ampoliros.site.locale.default.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.locale.language"
+    file="ampoliros.site.locale.language.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.password.default"
+    file="ampoliros.site.password.default.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.profiles.default"
+    file="ampoliros.site.profiles.default.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.profiles.newprofile"
+    file="ampoliros.site.profiles.newprofile.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.profiles.users"
+    file="ampoliros.site.profiles.users.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.profiles.newuser"
+    file="ampoliros.site.profiles.newuser.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.site.default"
+    file="ampoliros.site.site.default.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.site.site.edit"
+    file="ampoliros.site.site.edit.helpnode"
+    forceinstall="true"/>
+
+    <helpnode
+    name="ampoliros.root.sites.default_it" 
+    file="ampoliros.root.sites.default_it.helpnode"
+    forceinstall="true"/>
+    <helpnode
+    name="ampoliros.root.sites.newsite_it"
+    file="ampoliros.root.sites.newsite_it.helpnode"
+    forceinstall="true"/>
+    <helpnode name="ampoliros.site.locale.default_it" file="ampoliros.site.locale.default_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.locale.language_it" file="ampoliros.site.locale.language_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.password.default_it" file="ampoliros.site.password.default_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.profiles.default_it" file="ampoliros.site.profiles.default_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.profiles.newprofile_it" file="ampoliros.site.profiles.newprofile_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.profiles.users_it" file="ampoliros.site.profiles.users_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.profiles.newuser_it" file="ampoliros.site.profiles.newuser_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.site.default_it" file="ampoliros.site.site.default_it.helpnode" forceinstall="true"/>
+    <helpnode name="ampoliros.site.site.edit_it" file="ampoliros.site.site.edit_it.helpnode" forceinstall="true"/>
+
+    <hookevent name="site.create.calltime" file="site.create.calltime" function="site.create" event="calltime" forceinstall="true"/>
+    <hookevent name="site.create.sitecreated" file="site.create.sitecreated" function="site.create" event="sitecreated" forceinstall="true"/>
+    <hookevent name="site.edit.calltime" file="site.edit.calltime" function="site.edit" event="calltime" forceinstall="true"/>
+    <hookevent name="site.edit.siteedited" file="site.edit.siteedited" function="site.edit" event="siteedited" forceinstall="true"/>
+    <hookevent name="site.chpasswd.calltime" file="site.chpasswd.calltime" function="site.chpasswd" event="calltime" forceinstall="true"/>
+    <hookevent name="site.chpasswd.passwordchanged" file="site.chpasswd.passwordchanged" function="site.chpasswd" event="passwordchanged" forceinstall="true"/>
+    <hookevent name="site.remove.calltime" file="site.remove.calltime" function="site.remove" event="calltime" forceinstall="true"/>
+    <hookevent name="site.remove.siteremoved" file="site.remove.siteremoved" function="site.remove" event="siteremoved" forceinstall="true"/>
+    <hookevent name="site.user.add.calltime" file="site.user.add.calltime" function="site.user.add" event="calltime" forceinstall="true"/>
+    <hookevent name="site.user.add.useradded" file="site.user.add.useradded" function="site.user.add" event="useradded" forceinstall="true"/>
+    <hookevent name="site.user.remove.calltime" file="site.user.remove.calltime" function="site.user.remove" event="calltime" forceinstall="true"/>
+    <hookevent name="site.user.remove.userremoved" file="site.user.remove.userremoved" function="site.user.remove" event="userremoved" forceinstall="true"/>
+    <hookevent name="site.group.add.calltime" file="site.group.add.calltime" function="site.group.add" event="calltime" forceinstall="true"/>
+    <hookevent name="site.group.add.groupadded" file="site.group.add.groupadded" function="site.group.add" event="useradded" forceinstall="true"/>
+    <hookevent name="site.group.remove.calltime" file="site.group.remove.calltime" function="site.group.remove" event="calltime" forceinstall="true"/>
+    <hookevent name="site.group.remove.groupremoved" file="site.group.remove.groupremoved" function="site.group.remove" event="userremoved" forceinstall="true"/>
+    <hookevent name="site.module.enable.calltime" file="site.module.enable.calltime" function="site.module.enable" event="calltime" forceinstall="true"/>
+    <hookevent name="site.module.enable.moduleenabled" file="site.module.enable.moduleenabled" function="site.module.enable" event="moduleenabled" forceinstall="true"/>
+    <hookevent name="site.module.disable.calltime" file="site.module.disable.calltime" function="site.module.disable" event="calltime" forceinstall="true"/>
+    <hookevent name="site.module.disable.moduledisabled" file="site.module.disable.moduledisabled" function="site.module.disable" event="moduledisabled" forceinstall="true"/>
+
+    <class
+        name="com.solarix.ampoliros.site.Site"
+        file="com.solarix.ampoliros.site.Site"/>
+    <class
+        name="com.solarix.ampoliros.site.SiteSettings"
+        file="com.solarix.ampoliros.site.SiteSettings"/>
+    <class
+        name="com.solarix.ampoliros.site.user.User"
+        file="com.solarix.ampoliros.site.user.User"/>
+    <class
+        name="com.solarix.ampoliros.site.user.UserSettings"
+        file="com.solarix.ampoliros.site.user.UserSettings"/>
+    <class
+        name="com.solarix.ampoliros.site.user.Group"
+        file="com.solarix.ampoliros.site.user.Group"/>
+    <class
+        name="com.solarix.ampoliros.site.user.Permissions"
+        file="com.solarix.ampoliros.site.user.Permissions"/>
+
+    <rootpage
+        name="sites"
+        file="sites.php"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        themeicon="package"
+        forceinstall="true"/>
+
+    <roottable
+        name="activemodules"
+        file="activemodules.xsql"/>
+    <roottable
+        name="sites"
+        file="sites.xsql"/>
+    <roottable
+        name="users"
+        file="users.xsql"/>
+
+    <xmlrpcmethod
+        name="ampoliros.sites.list"
+        file="ampoliros.sites.list"
+        function="ampoliros_sites_list"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"/>
+    <xmlrpcmethod
+        name="ampoliros.sites.site.enabledmodules"
+        file="ampoliros.sites.site.enabledmodules"
+        function="ampoliros_sites_site_enabledmodules"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"/>
+
+    <!-- Security -->
+
+    <class
+        name="com.solarix.ampoliros.security.SecurityLayer"
+        file="com.solarix.ampoliros.security.SecurityLayer"/>
+
+    <rootpage
+        name="security"
+        file="security.php"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        themeicon="important"
+        forceinstall="true"/>
+
+    <catalog
+        name="amp_root_security"
+        file="amp_root_security.catalog"/>
+    <catalog
+        name="amp_root_security_it"
+        file="amp_root_security_it.catalog"/>
+
+    <!-- Maintenance -->
+
+    <class
+        name="com.solarix.ampoliros.maintenance.AmpolirosMaintenanceTaskHandler"
+        file="com.solarix.ampoliros.maintenance.AmpolirosMaintenanceTaskHandler"/>
+    <class
+        name="com.solarix.ampoliros.maintenance.AmpolirosMaintenanceHandler"
+        file="com.solarix.ampoliros.maintenance.AmpolirosMaintenanceHandler"/>
+
+    <roottable
+        name="maintenancetasks"
+        file="maintenancetasks.xsql"/>
+
+
+    <configurationfile
+        name="ampmaintenance.php"
+        file="ampmaintenance.php"/>
+
+    <hookevent
+        name="instance.maintenance"
+        file="instance.maintenance"
+        function="instance"
+        event="maintenance"
+        forceinstall="true"/>
+
+    <maintenancetask
+        name="ampoliros_logs"
+        file="ampoliros_logs.maintenance"
+        catalog="amp_misc_maintenance"
+        enabled="false"/>
+    <maintenancetask
+        name="ampoliros_cache"
+        file="ampoliros_cache.maintenance"
+        catalog="amp_misc_maintenance"
+        enabled="false"/>
+    <maintenancetask
+        name="ampoliros_requirements"
+        file="ampoliros_requirements.maintenance"
+        catalog="amp_misc_maintenance"
+        enabled="false"/>
+
+    <rootpage
+        name="maintenance"
+        file="maintenance.php"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        themeicon="package_utilities"
+        forceinstall="true"/>
+
+    <catalog
+        name="amp_root_maintenance"
+        file="amp_root_maintenance.catalog"/>
+    <catalog
+        name="amp_root_maintenance_it"
+        file="amp_root_maintenance_it.catalog"/>
+    <catalog
+        name="amp_misc_maintenance"
+        file="amp_misc_maintenance.catalog"/>
+    <catalog
+        name="amp_misc_maintenance_it"
+        file="amp_misc_maintenance_it.catalog"/>
+
+    <!-- Processes and semaphores -->
+
+    <tempdir
+        name="semaphores"
+        file="semaphores"
+    forceinstall="true"/>
+
+    <class
+        name="com.solarix.ampoliros.process.Process"
+        file="com.solarix.ampoliros.process.Process"/>
+    <class
+        name="com.solarix.ampoliros.process.Semaphore"
+        file="com.solarix.ampoliros.process.Semaphore"/>
+
+    <!-- Clipboard -->
+
+    <class
+        name="com.solarix.ampoliros.datatransfer.Clipboard"
+        file="com.solarix.ampoliros.datatransfer.Clipboard"/>
+
+    <tempdir
+        name="clipboard"
+        file="clipboard"
+    forceinstall="true"/>
+
+    <!-- Remote procedures -->
+
+    <xmlrpcmethod
+        name="ampoliros.log.remote.get"
+        file="ampoliros.log.remote.get"
+        function="ampoliros_log_remote_get"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"/>
+    <xmlrpcmethod
+        name="ampoliros.log.remote.erase"
+        file="ampoliros.log.remote.erase"
+        function="ampoliros_log_remote_erase"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"
+        unsecure="1"/>
+    <xmlrpcmethod
+        name="ampoliros.log.remote.logevent"
+        file="ampoliros.log.remote.logevent"
+        function="ampoliros_log_remote_logevent"
+        handler="ampoliros"
+        catalog="amp_misc_webservices"
+        forceinstall="true"
+        unsecure="1"/>
+
+    <!-- XML RPC -->
+
+    <catalog
+        name="amp_root_xmlrpc"
+        file="amp_root_xmlrpc.catalog"/>
+    <catalog
+        name="amp_root_xmlrpc_it"
+        file="amp_root_xmlrpc_it.catalog"/>
+
+    <cgi
+        name="xmlrpc.php"
+        file="xmlrpc.php"/>
+        
+    <class
+        name="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcAccount"
+        file="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcAccount"/>
+    <class
+        name="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcUser"
+        file="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcUser"/>
+    <class
+        name="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcProfile"
+        file="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcProfile"/>
+    <class
+        name="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcMethod"
+        file="com.solarix.ampoliros.webservices.xmlrpc.XmlRpcMethod"/>
+    <class
+        name="com.solarix.ampoliros.webservices.xmlrpc.XmlRpc_Client"
+        file="com.solarix.ampoliros.webservices.xmlrpc.XmlRpc_Client"/>
+    <class
+        name="com.solarix.ampoliros.webservices.xmlrpc.XmlRpc_Server"
+        file="com.solarix.ampoliros.webservices.xmlrpc.XmlRpc_Server"/>
+
+    <helpnode
+        name="ampoliros.root.xmlrpc.accounts"
+        file="ampoliros.root.xmlrpc.accounts.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.default"
+        file="ampoliros.root.xmlrpc.default.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.newaccount"
+        file="ampoliros.root.xmlrpc.newaccount.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.newprofile"
+        file="ampoliros.root.xmlrpc.newprofile.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.newuser"
+        file="ampoliros.root.xmlrpc.newuser.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.users"
+        file="ampoliros.root.xmlrpc.users.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.accounts_it"
+        file="ampoliros.root.xmlrpc.accounts_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.default_it"
+        file="ampoliros.root.xmlrpc.default_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.newaccount_it"
+        file="ampoliros.root.xmlrpc.newaccount_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.newprofile_it"
+        file="ampoliros.root.xmlrpc.newprofile_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.newuser_it"
+        file="ampoliros.root.xmlrpc.newuser_it.helpnode"
+        forceinstall="true"/>
+    <helpnode
+        name="ampoliros.root.xmlrpc.users_it"
+        file="ampoliros.root.xmlrpc.users_it.helpnode"
+        forceinstall="true"/>
+
+    <hookevent
+        name="xmlrpcaccount.create.calltime"
+        file="xmlrpcaccount.create.calltime"
+        function="xmlrpcaccount.create"
+        event="calltime"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcaccount.create.accountcreated"
+        file="xmlrpcaccount.create.accountcreated"
+        function="xmlrpcaccount.create"
+        event="accountcreated"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcaccount.remove.calltime"
+        file="xmlrpcaccount.remove.calltime"
+        function="xmlrpcaccount.remove"
+        event="calltime"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcaccount.remove.accountremoved"
+        file="xmlrpcaccount.remove.accountremoved"
+        function="xmlrpcaccount.remove"
+        event="accountremoved"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcaccount.udpate.calltime"
+        file="xmlrpcaccount.update.calltime"
+        function="xmlrpcaccount.update" event="calltime"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcaccount.update.accountupdated"
+        file="xmlrpcaccount.update.accountupdated"
+        function="xmlrpcaccount.update"
+        event="accountupdated"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcprofile.add.calltime"
+        file="xmlrpcprofile.add.calltime"
+        function="xmlrpcprofile.add"
+        event="calltime"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcprofile.add.profileadded"
+        file="xmlrpcprofile.add.profileadded"
+        function="xmlrpcprofile.add"
+        event="profileadded"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcprofile.remove.calltime"
+        file="xmlrpcprofile.remove.calltime"
+        function="xmlrpcprofile.remove"
+        event="calltime"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcprofile.remove.profileremoved"
+        file="xmlrpcprofile.remove.profileremoved"
+        function="xmlrpcprofile.remove"
+        event="profileremoved"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcprofile.rename.calltime"
+        file="xmlrpcprofile.rename.calltime"
+        function="xmlrpcprofile.rename"
+        event="calltime"
+        forceinstall="true"/>
+    <hookevent
+        name="xmlrpcprofile.rename.profilerenamed"
+        file="xmlrpcprofile.rename.profilerenamed"
+        function="xmlrpcprofile.rename"
+        event="profilerenamed"
+        forceinstall="true"/>
+
+    <library
+        name="xmlrpc"
+        file="xmlrpc.library"/>
+
+    <rootpage
+        name="xmlrpc"
+        file="xmlrpc.php"
+        themeicon="connect_to_network"
+        themeicontype="filesystems"
+        catalog="amp_root_menu"
+        category="ampoliros"
+        forceinstall="true"/>
+
+    <roottable
+        name="xmlrpcaccounts"
+        file="xmlrpcaccounts.xsql"/>
+    <roottable
+        name="xmlrpcmethods"
+        file="xmlrpcmethods.xsql"/>
+    <roottable
+        name="xmlrpcprofiles"
+        file="xmlrpcprofiles.xsql"/>
+    <roottable
+        name="xmlrpcpermissions"
+        file="xmlrpcpermissions.xsql"/>
+    <roottable
+        name="xmlrpcusers"
+        file="xmlrpcusers.xsql"/>
+
+    <!-- Tests -->
+
+    <class
+        name="com.solarix.ampoliros.tests.AllAmpolirosTests"
+        file="com.solarix.ampoliors.tests.AllAmpolirosTests"/>
+    <class
+        name="com.solarix.ampoliros.tests.core.AllAmpolirosCoreTests"
+        file="com.solarix.ampoliors.tests.core.AllAmpolirosCoreTests"/>
+    <class
+        name="com.solarix.ampoliros.tests.core.AmpConfigTest"
+        file="com.solarix.ampoliors.tests.core.AmpConfigTest"/>
+    <class
+        name="com.solarix.ampoliros.tests.core.AmpolirosTest"
+        file="com.solarix.ampoliors.tests.core.AmpolirosTest"/>
+    <class
+        name="com.solarix.ampoliros.tests.datatransfer.AllAmpolirosDatatransferTests"
+        file="com.solarix.ampoliors.tests.datatransfer.AllAmpolirosDatatransferTests"/>
+    <class
+        name="com.solarix.ampoliros.tests.datatransfer.ClipboardTest"
+        file="com.solarix.ampoliors.tests.datatransfer.ClipboardTest"/>
+
+    <!-- Old or unsupported -->
+
+    <configurationfile
+        name="ampconfig.php"
+        file="ampconfig.php"/>
+    <configurationfile
+        name="amproot.php"
+        file="amproot.php"/>
+    <configurationfile
+        name="ampsite.php"
+        file="ampsite.php"/>
+    <configurationfile
+        name="ampremote.php"
+        file="ampremote.php"/>
+    <library
+        name="sites"
+        file="sites.library"/>
+    <library
+        name="users"
+        file="users.library"/>
+    <library
+        name="logger"
+        file="logger.library"/>
+    <library
+    name="locale"
+    file="locale.library"/>
+    <library
+        name="archives"
+        file="archives.library"/>
+    <library
+        name="dblayer"
+        file="dblayer.library"/>
+    <library
+        name="dblayer_parser"
+        file="dblayer_parser.library"/>
+    <library
+        name="cache"
+        file="cache.library"/>
+    <library
+        name="clipboard"
+        file="clipboard.library"/>
+    <library
+        name="helpnode"
+        file="helpnode.library"/>
+    <library
+        name="hui"
+        file="hui.library"/>
+    <library
+        name="huithemes"
+        file="huithemes.library"/>
+    <library
+        name="maintenance"
+        file="maintenance.library"/>
+    <library
+        name="security"
+        file="security.library"/>
+    <library
+        name="hooks"
+        file="hooks.library"/>
+    <library
+        name="semaphores"
+        file="semaphores.library"/>
+    <library
+        name="xml"
+        file="xml.library"/>
+
+</structure>

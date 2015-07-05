@@ -1,0 +1,250 @@
+#!/bin/sh
+#
+#
+#                     Ampoliros Application Server
+#
+#                       http://www.ampoliros.com
+#
+#
+#
+#    Copyright (C) 2000-2004 Solarix
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+# Little test for using correctly the echo command
+
+if test "`/bin/echo 'blah\c'`" = "blah\c"
+then
+        EFLAG="-n"
+        ENDER=""
+else
+        EFLAG=""
+        ENDER="\c"
+fi
+ECHO="/bin/echo ${EFLAG}"
+
+############################
+# Setting the default values
+############################
+
+# 1 - Global Environment
+# ----------------------
+
+# Auto Detection - Not Needed - DEF_AMP_HOST=localhost
+DEF_ROOTCRONTAB=/var/spool/cron/crontabs/root
+DEF_PRIVATEDIR=/usr/local/ampoliros
+DEF_PUBLICDIR=/var/www/htdocs/ampoliros
+# Auto Detection - Not Needed    DEF_AMP_URL=http://localhost/ampoliros"
+#             / /                               DEF_AMP_ROOTURL=http://localhost/ampoliros/root
+#             / /                               DEF_AMP_ADMINURL=http://localhost/ampoliros/admin
+#             / /                               DEF_AMP_CGIURL=http://localhost/ampoliros/cgi/
+DEF_SITESDIR=/var/www/htdocs/ampsites
+
+# 2 - Web Server
+# --------------
+DEF_HTTPDUSER=nobody
+DEF_HTTPDGROUP=nogroup
+
+##########
+# Header #
+##########
+
+echo
+echo "                     Ampoliros Application Server"
+echo
+echo "                       http://www.ampoliros.com"
+echo
+
+echo
+echo "             ---------------------------------------------"
+echo "             Welcome to the Ampoliros configuration script"
+echo "             ---------------------------------------------"
+echo
+
+######################
+# Global Environment #
+######################
+
+########
+# Header
+
+echo "                    - Section 1 - Global Environment -"
+
+#####################
+# Hostname - AMP_HOST
+
+echo
+echo "Your hostname appears to be $HOSTNAME, remember not to leave the"
+echo "local host as your hostname otherwise Ampoliros will not be reached"
+echo "from outside of your host "
+echo
+${ECHO} "Specify your Hostname [$HOSTNAME]: "
+read AMP_HOST
+
+if test ! $AMP_HOST
+then
+	AMP_HOST=$HOSTNAME
+fi
+
+###########
+# Interlude
+
+echo
+echo "Setting up the directory"
+echo
+echo "You are going to set up the directories that will be used"
+echo "by Ampoliros, please be careful while setting them, it will make your"
+echo "life easier."
+echo "Remember not to use trailing "/" in paths"
+
+#######################
+# Crontab - ROOTCRONTAB
+echo
+${ECHO} "Enter the root cron tab file [$DEF_ROOTCRONTAB]: "
+read ROOTCRONTAB
+if test ! $ROOTCRONTAB
+then
+        ROOTCRONTAB=$DEF_ROOTCRONTAB
+fi
+
+###########################
+# Private Tree - PRIVATEDIR
+echo
+echo "Setting up where to store Ampoliros private tree"
+echo "NOTE : it MUST NOT be www readable "
+echo
+${ECHO} "Enter the Ampoliros Private dir [$DEF_PRIVATEDIR]: "
+read PRIVATEDIR
+if test ! $PRIVATEDIR
+then
+        PRIVATEDIR=$DEF_PRIVATEDIR
+fi
+
+#########################
+# Public Tree - PUBLICDIR
+echo
+echo "Setting up where to store Ampoliros public tree"
+echo "NOTE : it MUST be www readable, it contains the files availables to the web "
+echo
+${ECHO} "Enter the Ampoliros Public dir [$DEF_PUBLICDIR]: "
+read PUBLICDIR
+if test ! $PUBLICDIR
+then
+        PUBLICDIR=$DEF_PUBLICDIR
+fi
+
+##########
+# AMP_URL
+DEF_AMP_URL="http://$AMP_HOST/ampoliros"
+echo
+${ECHO} "Enter the Ampoliros URL relative to the Public Dir [$DEF_AMP_URL]: "
+read AMP_URL
+if test ! $AMP_URL
+then
+        AMP_URL=$DEF_AMP_URL
+fi
+
+##############
+# AMP_ROOTURL
+DEF_AMP_ROOTURL="$AMP_URL/root"
+echo
+${ECHO} "Enter the Ampoliros URL relative to PublicDir/root [$DEF_AMP_ROOTURL]: "
+read AMP_ROOTURL
+if test ! $AMP_ROOTURL
+then
+        AMP_ROOTURL=$DEF_AMP_ROOTURL
+fi
+
+################
+# AMP_ADMINURL
+DEF_AMP_ADMINURL="$AMP_URL/admin"
+echo
+${ECHO} "Enter the Ampoliros Admin URL relative to PublicDir/admin [$DEF_AMP_ADMINURL]: "
+read AMP_ADMINURL
+if test ! $AMP_ADMINURL
+then
+        AMP_ADMINURL=$DEF_AMP_ADMINURL
+fi
+
+################
+# AMP_CGIURL
+DEF_AMP_CGIURL="$AMP_URL/ampcgi/"
+echo
+${ECHO} "Enter the Ampoliros Cgi URL relative to PublicDir/cgi [$DEF_AMP_CGIURL]: "
+read AMP_CGIURL
+if test ! $AMP_CGIURL
+then
+        AMP_CGIURL=$DEF_AMP_CGIURL
+fi
+
+##########
+# SITESDIR
+echo
+echo "Enter the directory where to create new sites"
+echo "It is used when a site is created without site path"
+echo
+${ECHO} "Default Site dir [$DEF_SITESDIR]: "
+read SITESDIR
+if test ! $SITESDIR
+then
+        SITESDIR=$DEF_SITESDIR
+fi
+
+##############
+# Web Server #
+##############
+
+echo
+echo "			- Section 2 - Web Server -"
+echo
+
+###########
+# HTTPDUSER
+
+${ECHO} "Enter the Apache user id, in some systems is httpd, nobody, apache or www-run [$DEF_HTTPDUSER]: "
+read HTTPDUSER
+if test ! $HTTPDUSER
+then
+        HTTPDUSER=$DEF_HTTPDUSER
+fi
+############
+# HTTPDGROUP
+
+echo
+${ECHO} "Enter the Apache group id, in some systems is httpd, nogroup, apache or www-run [$DEF_HTTPDGROUP]: "
+read HTTPDGROUP
+if test ! $HTTPDGROUP
+then
+        HTTPDGROUP=$DEF_HTTPDGROUP
+fi
+
+echo
+echo "Creating config.h"
+echo "AMP_HOST=$AMP_HOST" > config.h
+echo "ROOTCRONTAB=$ROOTCRONTAB" >> config.h
+echo "PRIVATEDIR=$PRIVATEDIR" >> config.h
+echo "PUBLICDIR=$PUBLICDIR" >> config.h
+echo "AMP_URL=$AMP_URL" >> config.h
+echo "AMP_ROOTURL=$AMP_ROOTURL" >> config.h
+echo "AMP_ADMINURL=$AMP_ADMINURL" >> config.h
+echo "AMP_CGIURL=$AMP_CGIURL" >> config.h
+echo "SITESDIR=$SITESDIR" >> config.h
+echo "HTTPDUSER=$HTTPDUSER" >> config.h
+echo "HTTPDGROUP=$HTTPDGROUP" >> config.h
+echo
+echo "Configuration Finished"
+echo
+echo "Now you can run "make", Enjoy!"

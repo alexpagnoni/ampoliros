@@ -1,0 +1,32 @@
+# General
+
+sitedata_title						= Sito
+sitedata_button					= Dati sito
+sitedataedit_button				= Edita
+help_button						= Aiuto
+
+# main_edit
+
+edit_title						= Variazione dati
+editdata_submit					= Applica
+sitecompletename_label			= Nome completo del sito
+siteaddressa_label				= Indirizzo
+siteaddressb_label				= Indirizzo
+sitetown_label					= Città
+sitestate_label					= Provincia
+sitezip_label					= Cap
+sitecountry_label				= Stato
+sitefiscalcode_label			= Codice fiscale
+siteemail_label					= Email
+sitephone_label					= Telefono
+sitefax_label					= Fax
+sitelogo_label					= Logo
+
+# main_help
+
+help_title						= Aiuto
+
+# pass_edit
+
+sitedataset_status				= Dati del sito cambiati.
+

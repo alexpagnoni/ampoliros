@@ -1,0 +1,169 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: roottable.element,v 1.7 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'roottable';
+$element['classname'] = 'RoottableElement';
+$element['priority'] = 150;
+$element['site'] = false;
+
+if ( !defined( 'ROOTTABLE_ELEMENT' ) )
+{
+define( 'ROOTTABLE_ELEMENT', true );
+
+if ( !defined( 'DBLAYER_PARSER_LIBRARY' ) ) include( LIBRARY_PATH.'dblayer_parser.library' );
+
+/*!
+@class RoottableElement
+
+@abstract Roottable element handler.
+*/
+class RoottableElement extends ModuleElement
+{
+    public $type = 'roottable';
+    public $site = false;
+
+    function RoottableElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $params['file'] = $this->basedir.'/var/db/'.$params['file'];
+
+            if ( @copy( $params['file'], INITDB_PATH.basename( $params['file'] ) ) )
+            {
+                @chmod( INITDB_PATH.basename( $params['file'] ), 0644 );
+
+                $xmldb = new xmldb( $this->ampdb, DBLAYER_PARSER_SQL_CREATE );
+                $xmldb->load_deffile( INITDB_PATH.basename( $params['file'] ) );
+                if ( $this->ampdb->Execute( $xmldb->get_sql() ) )
+                {
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.doinstallaction',
+					'In module '.$this->modname.', element '.$params['name'].': Unable to create root table from '.basename( $params['file'] ).' table file', LOGGER_ERROR );
+                $xmldb->free();
+            }
+            else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.doinstallaction',
+				'In module '.$this->modname.', element '.$params['name'].': Unable to copy root table file '.$params['file'].' to destination '.INITDB_PATH.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.doinstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty table file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $xmldb = new xmldb( $this->ampdb, DBLAYER_PARSER_SQL_DROP );
+            $xmldb->load_deffile( INITDB_PATH.basename( $params['file'] ) );
+            if ( $this->ampdb->Execute( $xmldb->get_sql() ) )
+            {
+                if ( @unlink( INITDB_PATH.basename( $params['file'] ) ) )
+                {
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.douninstallaction',
+					'In module '.$this->modname.', element '.$params['name'].': Unable to remove root table file '.INITDB_PATH.basename( $params['file'] ), LOGGER_ERROR );
+            }
+            else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.douninstallaction',
+				'In module '.$this->modname.', element '.$params['name'].': Unable to drop root table from '.basename( $params['file'] ).' table file', LOGGER_ERROR );
+            $xmldb->free();
+        }
+        else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.douninstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty table file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = true;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $params['file'] = $this->basedir.'/var/db/'.$params['file'];
+
+            if ( file_exists( INITDB_PATH.basename( $params['file'] ).'.old' ) ) @copy( INITDB_PATH.basename( $params['file'] ).'.old', INITDB_PATH.basename( $params['file'] ).'.old2' );
+            @copy( INITDB_PATH.basename( $params['file'] ), INITDB_PATH.basename( $params['file'] ).'.old' );
+
+            $xml_upd = new XmlDbUpdater( $this->ampdb, INITDB_PATH.basename( $params['file'] ), $params['file'] );
+            $xml_upd->CheckDiffs();
+
+            $old_columns = $xml_upd->GetOldColumns();
+
+            if ( is_array( $old_columns ) )
+            {
+                while ( list( , $column ) = each( $old_columns ) )
+                {
+                    $upd_data['tablename'] = $params['name'];
+                    $upd_data['column'] = $column;
+
+                    $this->ampdb->RemoveColumn( $upd_data );
+                }
+            }
+
+            $new_columns = $xml_upd->GetNewColumns();
+
+            if ( is_array( $new_columns ) )
+            {
+                while ( list( , $column ) = each( $new_columns ) )
+                {
+                    $upd_data['tablename'] = $params['name'];
+                    $upd_data['columnformat'] = $column;
+
+                    $this->ampdb->AddColumn( $upd_data );
+                }
+            }
+
+            if ( @copy( $params['file'], INITDB_PATH.basename( $params['file'] ) ) )
+            {
+                @chmod( INITDB_PATH.basename( $params['file'] ), 0644 );
+                $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.doupdateaction',
+                                       'In module '.$this->modname.', element '.$params['name'].': Unable to copy '.$params['file'].' to destination '.INITDB_PATH.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.roottable_element.roottableelement_class.doupdateaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty table file name', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

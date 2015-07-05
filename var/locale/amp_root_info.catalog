@@ -1,0 +1,90 @@
+info_pagetitle				= System informations
+amplog_title				= Ampoliros log
+ampremotelog_title			= Ampoliros remote procedures log
+ampdblog_title				= Ampoliros database log
+phplog_title				= PHP log
+license_title				= Ampoliros license
+version_title				= Ampoliros version
+changes_title				= Ampoliros change log
+
+# Page toolbars
+
+sysinfo_button				= System
+phpinfo_button				= PHP
+help_button					= Help
+amplog_button				= Main log
+ampremotelog_button			= Remote log
+ampdblog_button				= Database log
+phplog_button				= PHP log
+license_button				= License
+version_button				= Version
+changes_button				= Change log
+
+# main_default
+
+required_label				= Required
+optional_label				= Optional
+info_label					= Information
+
+ampcgi_test_label			= Ampoliros cgi alias %s
+ampcgi_available_label		= Available
+ampcgi_not_available_label	= Not available - Alias %s has not been defined in the web server. (Tried to open %sampbigdot.gif)
+
+fileupload_test_label				= File upload support
+fileupload_available_label			= Available
+fileupload_not_available_label		= Not available - Set file_uploads = On in php.ini
+
+php_test_label				= PHP version >= 5.0.0
+php_available_label			= %s - Supported
+php_not_available_label		= %s - Not supported
+
+xml_test_label				= PHP XML support
+xml_available_label			= Available
+xml_not_available_label		= Not available
+
+domxml_test_label				= PHP DOM XML support
+domxml_available_label			= Available
+domxml_not_available_label		= Not available
+
+zlib_test_label				= ZLib support
+zlib_available_label			= Available
+zlib_not_available_label		= Not available
+
+db_test_label				= PHP support for Ampoliros supported databases
+db_available_label			= Available
+db_not_available_label		= Not available
+
+crontab_test_label			= Scheduled tasks support
+crontab_available_label		= Available
+crontab_not_available_label	= Not available
+
+xmlrpc_test_label			= XML-RPC authentication support
+xmlrpc_available_label		= Available
+xmlrpc_not_available_label	= Not available - Current web server interface is cgi, HTTP authentication for XML-RPC calls cannot be done
+
+xmlrpc_ssl_test_label			= XML-RPC SSL support
+xmlrpc_ssl_available_label		= Available
+xmlrpc_ssl_not_available_label	= Not available - SSL support for XML-RPC not available, PHP Curl extension not enabled
+
+com_test_label				= Windows COM support
+com_available_label			= Available
+com_not_available_label		= Not available
+
+os_test_label				= Operating system
+
+webserver_test_label		= Web server interface
+
+user_test_label				= Current PHP user
+
+cleanlog_button				= Clean log
+
+# main_help
+
+help_title								= Help
+
+ampoliros_copyright.label   = © 2000, 2004 Solarix S.r.l.
+
+#pass_cleanlog
+
+logcleaned_status			= Log cleaned.
+lognotcleaned_status			= ERROR: Log not cleaned.

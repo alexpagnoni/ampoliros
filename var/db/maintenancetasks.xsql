@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<database>
+
+    <table name="maintenancetasks">
+
+        <field  name="name" type="text"  notnull="1"/>
+        <field  name="file" type="text" notnull="1"/>
+        <field  name="catalog"  type="text"/>
+        <field  name="enabled"  type="boolean"/>
+
+   </table>
+
+</database>

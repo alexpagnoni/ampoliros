@@ -1,0 +1,296 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: ampoliros.xmlrpchandler,v 1.9 2004-07-08 15:04:22 alex Exp $
+
+if ( !defined( 'AMPOLIROS_XMLRPCHANDLER' ) )
+{
+define( 'AMPOLIROS_XMLRPCHANDLER', true );
+
+OpenLibrary( 'xmlrpc.library'    );
+
+// Returns Ampoliros main log file content
+//
+function ampoliros_log_amp_get()
+{
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( AMP_LOG );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->RawReadLog() ) );
+}
+
+// Returns Ampoliros main log file content
+//
+function ampoliros_log_amp_erase()
+{
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( AMP_LOG );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->CleanLog() ) );
+}
+
+// Writes an event in the Ampoliros main log file.
+//
+function ampoliros_log_amp_logevent()
+{
+    global $xmlrpcerruser;
+
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( AMP_LOG );
+
+    $event_caller = $m->GetParam( 0 );
+    $event_string = $m->GetParam( 1 );
+    $event_type = $m->GetParam( 2 );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->LogEvent( $event_caller->ScalarVal(), $event_string->ScalarVal(), $event_type->ScalarVal() ) ) );
+}
+
+// Returns Ampoliros remote log file content
+//
+function ampoliros_log_remote_get()
+{
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( REMOTE_LOG );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->RawReadLog() ) );
+}
+
+// Returns Ampoliros remote log file content
+//
+function ampoliros_log_remote_erase()
+{
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( REMOTE_LOG );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->CleanLog() ) );
+}
+
+// Writes an event in the Ampoliros main log file.
+//
+function ampoliros_log_remote_logevent()
+{
+    global $xmlrpcerruser;
+
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( REMOTE_LOG );
+
+    $event_caller = $m->GetParam( 0 );
+    $event_string = $m->GetParam( 1 );
+    $event_type = $m->GetParam( 2 );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->LogEvent( $event_caller->ScalarVal(), $event_string->ScalarVal(), $event_type->ScalarVal() ) ) );
+}
+
+// Returns Ampoliros database log file content
+//
+function ampoliros_log_db_get()
+{
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( AMPDB_LOG );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->RawReadLog() ) );
+}
+
+// Returns Ampoliros database log file content
+//
+function ampoliros_log_db_erase()
+{
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( AMPDB_LOG );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->CleanLog() ) );
+}
+
+// Writes an event in the Ampoliros database log file.
+//
+function ampoliros_log_db_logevent()
+{
+    global $xmlrpcerruser;
+
+    Carthag::import('com.solarix.ampoliros.io.log.Logger');
+
+    $log = new Logger( AMPDB_LOG );
+
+    $event_caller = $m->GetParam( 0 );
+    $event_string = $m->GetParam( 1 );
+    $event_type = $m->GetParam( 2 );
+
+    return new XmlRpcResp( new XmlRpcVal( $log->LogEvent( $event_caller->ScalarVal(), $event_string->ScalarVal(), $event_type->ScalarVal() ) ) );
+}
+
+// Returns Ampoliros version
+//
+function ampoliros_version()
+{
+    global $gEnv;
+
+    $result = '';
+
+    $query = &$GLOBALS['gEnv']['root']['db']->Execute(
+        'SELECT modversion '.
+        'FROM modules '.
+        'WHERE modid='.$this->mrAmpDb->Format_Text( 'ampoliros' )
+        );
+
+    if ( $query )
+    {
+        $result = $query->Fields( 'modversion' );
+    }
+
+    return new XmlRpcResp( new XmlRpcVal( $result ) );
+}
+
+// Returns the list of current modules
+//
+function ampoliros_modules_list()
+{
+    global $gEnv;
+
+    $result = array();
+
+    $query = &$GLOBALS['gEnv']['root']['db']->Execute(
+        'SELECT modid,modversion,moddate '.
+        'FROM modules'
+        );
+
+    if ( $query )
+    {
+        $result = array();
+
+        while ( !$query->eof )
+        {
+            $result[] = $query->Fields();
+            $query->MoveNext();
+        }
+    }
+
+    return new XmlRpcResp( new XmlRpcVal( $result ) );
+}
+
+// Installs a new module
+//
+function ampoliros_modules_module_install( $m )
+{
+    global $gEnv;
+    global $xmlrpcerruser;
+
+    //return new XmlRpcResp( new XmlRpcVal( $amp->InstallModule( $modfile ) ) );
+    return new XmlRpcResp( new XmlRpcVal( '' ) );
+}
+
+// Removes a module
+//
+function ampoliros_modules_module_remove( $m )
+{
+    global $gEnv;
+    global $xmlrpcerruser;
+
+
+    $modid = $m->GetParam( 0 );
+
+    if (
+        isset( $modid )
+        and ( $modid->ScalarTyp() == 'string' )
+        )
+    {
+        return new XmlRpcResp( 0, $xmlrpcerruser, 'Wrong parameters' );
+        //return new XmlRpcResp( new XmlRpcVal( $amp->UninstallModule( $modid->ScalarVal() ) ) );
+    }
+    else
+    {
+        return new XmlRpcResp( 0, $xmlrpcerruser, 'Wrong parameters' );
+    }
+}
+
+// Returns the list of current sites
+//
+function ampoliros_sites_list()
+{
+    global $gEnv;
+
+    $result = array();
+
+    $query = &$GLOBALS['gEnv']['root']['db']->Execute( 'SELECT siteid,sitename FROM sites' );
+
+    if ( $query )
+    {
+        $result = array();
+
+        while ( !$query->eof )
+        {
+            $result[] = $query->Fields();
+            $query->MoveNext();
+        }
+    }
+
+    return new XmlRpcResp( new XmlRpcVal( $result ) );
+}
+
+// Returns the list of the modules enabled to a given site
+//
+function ampoliros_sites_site_enabledmodules( $m )
+{
+    global $gEnv;
+    global $xmlrpcerruser;
+
+    $siteid = $m->GetParam( 0 );
+
+    if ( isset( $siteid ) and ( $siteid->ScalarTyp() == 'string' ) )
+    {
+        $result = array();
+
+            $query = &$GLOBALS['gEnv']['root']['db']->Execute(
+                'SELECT modules.modid '.
+                'FROM activemodules,sites,modules '.
+                'WHERE activemodules.siteid=sites.id '.
+                'AND sites.siteid='.$this->mrAmpDb->Format_Text( $siteid->ScalarVal() ).' '.
+                'AND activemodules.moduleid=modules.id'
+                );
+
+            if ( is_object( $query ) )
+            {
+                while ( !$query->eof )
+                {
+					$result[] = $query->Fields();
+                    $query->MoveNext();
+                }
+            }
+
+        return new XmlRpcResp( new XmlRpcVal( $result ) );
+    }
+    else return new XmlRpcResp( 0, $xmlrpcerruser, 'Wrong parameters' );
+}
+
+}
+?>

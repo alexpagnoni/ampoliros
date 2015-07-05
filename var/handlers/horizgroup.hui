@@ -1,0 +1,120 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: horizgroup.hui,v 1.10 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiHorizGroup';
+
+if ( !defined( 'HORIZGROUP_HUI' ) )
+{
+define( 'HORIZGROUP_HUI', true );
+
+import('com.solarix.ampoliros.hui.HuiContainerElement');
+
+/*!
+ @class HuiHorizGroup
+
+ @abstract Horizontal group widget container.
+ */
+class HuiHorizGroup extends HuiContainerElement
+{
+    public $mWidgetType = 'horizgroup';
+    /*
+    public $mAlign;
+    public $mGroupAlign;
+    public $mGroupValign;
+    public $mWidth;
+    */
+
+    public function HuiHorizGroup( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiContainerElement( $elemName, $elemArgs, $elemTheme, $dispEvents );
+
+            if (isset($this -> mArgs['align'])) {
+                switch ($this -> mArgs['align']) {
+                    case 'top' :
+                    case 'middle' :
+                    case 'bottom':
+                        break;
+                    default :
+                        $this -> mArgs['align'] = 'top';
+                }
+            } else
+                $this -> mArgs['align'] = 'top';
+
+            if (isset($this -> mArgs['groupalign'])) {
+                switch ($this -> mArgs['groupalign']) {
+                    case 'left' :
+                    case 'center' :
+                    case 'right':
+                        break;
+                    default :
+                        $this -> mArgs['groupalign'] = 'left';
+                }
+            } else
+                $this -> mArgs['groupalign'] = 'left';
+
+            if (isset($this -> mArgs['groupvalign'])) {
+                switch ($this -> mArgs['groupvalign']) {
+                    case 'top' :
+                    case 'middle' :
+                    case 'bottom':
+                        break;
+                    default :
+                        $this -> mArgs['groupvalign'] = 'middle';
+                }
+            } else
+                $this -> mArgs['groupvalign'] = 'middle';
+    }
+
+    protected function _BuildBegin()
+    {
+        return ( $this->mComments ? '<!-- begin '.$this->mName." horizgroup -->\n" : '' ).
+            '<table border="0" cellspacing="1" cellpadding="0" height="100%"'.
+            ( strlen( $this->mArgs['groupalign' ]) ? ' align="'.$this->mArgs['groupalign'].'"' : '' ).
+            ( strlen( $this->mArgs['groupvalign'] ) ? ' valign="'.$this->mArgs['groupvalign'].'"' : '' ).
+            ( strlen( $this->mArgs['width'] ) ? ' width="'.$this->mArgs['width'].'"' : '' ).
+            "><tr>\n";
+    }
+
+    function _BuildEnd()
+    {
+        return "</tr></table>\n".( $this->mComments ? '<!-- end '.$this->mName." horizgroup -->\n" : '' );
+    }
+
+    function _BuildBlockBegin()
+    {
+        return '<td'.( $this->mArgs['align'] ? ' valign="'.$this->mArgs['align'].'"' : '' ).'>';
+    }
+
+    function _BuildBlockEnd()
+    {
+        return "</td>\n";
+    }
+}
+
+}
+?>

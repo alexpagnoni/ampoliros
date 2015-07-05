@@ -1,0 +1,63 @@
+maintenance.title                   = Maintenance
+ampoliros.title                     = Ampoliros
+general.title                       = General
+ampoliros.toolbar                   = Ampoliros
+general.toolbar                     = General
+
+report_task_ok.label                = OK
+report_task_failed.label            = FAILED
+
+# main default
+
+ampoliros_status.tab                = State
+ampoliros_settings.tab              = Settings
+ampoliros_status.label              = Ampoliros state - Occupied space
+ampoliros_settings.label            = Scheduled cleaning
+
+clear.label                         = Clean
+clearall.label                      = Clean all
+
+action_clean.label                  = Clean
+action_rotate.label                 = Rotate
+action_none.label                   = Leave
+
+amplog_size.label                   = Main Ampoliros log
+ampdblog_size.label                 = Ampoliros database log
+accesslog_size.label                = Access log
+remotelog_size.label                = Web services log
+phplog_size.label                   = PHP log
+systemlogs_size.label               = System logs
+siteslogs_size.label                = Sites logs
+cache_size.label                    = Cache
+sessions_size.label                 = Sessions
+pidfiles_size.label                 = Process files
+tempdirs_size.label                 = Ampoliros temporary directories
+clipboard_size.label                = Clipboard
+cleanable_size.label                = Total space
+
+systemlogs_cleaned.status           = System logs cleaned.
+siteslogs_cleaned.status            = Sites logs cleaned.
+cache_cleaned.status                = Cache cleaned.
+sessions_cleaned.status             = Sessions cleaned.
+tempdirs_cleaned.status             = Ampoliros temporary directories cleaned.
+pidfiles_cleaned.status             = Process files cleaned.
+clipboard_cleaned.status            = Clipboard cleaned.
+all_cleaned.status                  = All cleaned.
+settings_set.status                 = Settings saved.
+maintenance_done.status             = Maintenance executed.
+
+apply.button                        = Apply
+
+# main general
+
+status.label                        = State
+report.label                        = Report
+last_maintenance.label              = Last executed scheduled maintenance
+scheduled_tasks.label               = Scheduled tasks
+report.label                        = Report
+report_email.label                  = Report email
+report_enabled.label                = Report enabled
+general_status.tab                  = Status
+general_report.tab                  = Report
+general_tasks.tab                   = Scheduled tasks
+run_maintenance.button              = Run maintenance now

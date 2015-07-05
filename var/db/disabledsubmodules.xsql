@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<database>
+
+    <table name="disabledsubmodules">
+
+        <field  name="moduleid" type="integer"  notnull="1"/>
+        <field  name="submodule"    type="text" notnull="1"/>
+        <field  name="siteid"   type="integer"  notnull="1"/>
+
+   </table>
+
+</database>

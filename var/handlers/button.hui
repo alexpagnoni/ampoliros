@@ -1,0 +1,183 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: button.hui,v 1.29 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiButton';
+
+if ( !defined( 'BUTTON_HUI' ) )
+{
+define( 'BUTTON_HUI', true );
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+
+/*!
+ @class HuiButton
+
+ @abstract Button widget.
+ */
+class HuiButton extends HuiWidgetElement
+{
+    public $mWidgetType = 'button';
+    //public $mAction;
+    //public $mLabel;
+    //public $mImage;
+    //public $mThemeImage;
+    //public $mThemArgs['image']Type;
+    //public $mHint;
+    //public $mTarget;
+    //public $mHoriz;
+    //public $mNoWrap;
+    //public $mDisabled;
+    //public $mFormSubmit;
+    //public $mNeedConfirm;
+    //public $mConfirmMessage;
+    //public $mFormCheckMessage;
+    //public $mHighlight;
+    //public $mCompact;
+
+    public function HuiButton( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiWidgetElement( $elemName, $elemArgs, $elemTheme, $dispEvents );
+
+        if ( isset( $this->mArgs['compact'] ) ) $this->mArgs['compact']  = $this->mArgs['compact'] == 'true' ? 'true' : 'false';
+        else $this->mArgs['compact'] = 'false';
+        
+        if ( !isset( $this->mArgs['themeimagetype'] ) or !strlen( $this->mArgs['themeimagetype'] ) ) $this->mArgs['themeimagetype'] = 'actions';
+
+        if ( isset( $this->mArgs['themeimage'] ) and strlen( $this->mArgs['themeimage'] ) )
+        {
+            $this->mArgs['image'] = $this->mThemeHandler->mIconsBase.$this->mThemeHandler->mIconsSet[$this->mArgs['themeimagetype']][$this->mArgs['themeimage']]['base'].
+                '/'.$this->mArgs['themeimagetype'].'/'.$this->mThemeHandler->mIconsSet[$this->mArgs['themeimagetype']][$this->mArgs['themeimage']]['file'];
+        }
+
+        if ( isset( $this->mArgs['confirmmessage'] ) ) $this->mArgs['confirmmessage'] = addslashes( $this->mArgs['confirmmessage'] );
+
+        if ( isset( $this->mArgs['disabled'] ) and
+             (
+              $this->mArgs['disabled'] == 'true'
+              or
+              $this->mArgs['disabled'] == 'false'
+             )
+           )
+            $this->mArgs['disabled'] = $this->mArgs['disabled'];
+        else $this->mArgs['disabled'] = 'false';
+
+        if ( isset( $this->mArgs['nowrap'] ) and
+             (
+              $this->mArgs['nowrap'] == 'true'
+              or
+              $this->mArgs['nowrap'] == 'false'
+             )
+           )
+            $this->mArgs['nowrap'] = $this->mArgs['nowrap'];
+        else $this->mArgs['nowrap'] = 'true';
+
+        if ( !strlen( $this->mArgs['action'] ) ) $this->mArgs['disabled'] = 'true';
+
+        if (
+            $this->mArgs['target'] == 'groupop'
+            or
+            $this->mArgs['target'] == 'header'
+            or
+            $this->mArgs['target'] == 'sum'
+            ) $this->mArgs['target'] = 'parent.'.$this->mArgs['target'];
+
+        if ( $this->mArgs['target'] == '_top' ) $this->mArgs['target'] = 'top';
+
+        if ( !isset( $this->mArgs['highlight'] ) ) $this->mArgs['highlight'] = 'true';
+    }
+
+    protected function _build()
+    {
+        if ( $this->mArgs['themeimagetype'] == 'actions' )
+        {
+            $image_width = 22;
+            $image_height = 22;
+        }
+        elseif  ( $this->mArgs['themeimagetype'] == 'mini' )
+        {
+            $image_width = 16;
+            $image_height = 16;
+        }
+        elseif  ( $this->mArgs['themeimagetype'] == 'big' )
+        {
+            $image_width = 64;
+            $image_height = 64;
+        }
+        else
+        {
+            $image_width = 32;
+            $image_height = 32;
+        }
+
+        $this->mLayout = ( $this->mComments ? '<!-- begin '.$this->mName.' button -->' : '' ).
+            '<table border="0"'.
+            ( $this->mArgs['compact'] == 'true' ? ' cellpadding="1" cellspacing="0"' : '' ).
+            ' style="'.( $this->mArgs['disabled'] == 'true' ? 'cursor: default;' : 'cursor: pointer;' ).'"'.
+            (
+                $this->mArgs['disabled'] == 'true' ?
+                '' :
+            ( $this->mArgs['highlight'] == 'true' ? ' onMouseOver="this.style.backgroundColor=\''.$this->mThemeHandler->mColorsSet['buttons']['notselected'].'\';'.( strlen( $this->mArgs['label'] ) ? 'huiHint(\''.$this->mArgs['label'].'\');' : '' ).'" onMouseOut="this.style.backgroundColor=\''.$this->mThemeHandler->mColorsSet['pages']['bgcolor'].'\';huiUnHint();"' : '' ).
+            ' onClick="'.( $this->mArgs['needconfirm'] == 'true' ? 'javascript:if ( confirm(\''.$this->mArgs['confirmmessage'].'\') ) {' : '' ).( $this->mArgs['highlight'] == 'true' ? 'this.style.backgroundColor=\''.$this->mThemeHandler->mColorsSet['buttons']['selected'].'\';' : '' ).( strlen( $this->mArgs['formsubmit'] ) ?
+		'void(submitForm(\''.$this->mArgs['formsubmit'].'\',\''.$this->mArgs['action'].'\',\''.$this->mArgs['formcheckmessage'].'\',\''.
+		( ( strlen( $this->mArgs['target'] ) ) ?
+                    $this->mArgs['target'] :
+                    ''
+                )
+		.'\'));' :
+                (
+                ( ( strlen( $this->mArgs['target'] ) and ( $this->mArgs['target'] != '_blank' ) ) ?
+                    $this->mArgs['target'].'.' :
+                    ''
+                ).(
+                $this->mArgs['target'] == '_blank' ?
+                'window.open(\'' :
+                'location.href=\''
+                ).$this->mArgs['action'].(
+                $this->mArgs['target'] == '_blank' ?
+                '\')' :
+                '\''
+                )
+                ) ).( $this->mArgs['needconfirm'] == 'true' ? '}' : '' ).'"'
+            ).
+            '><tr valign="middle"><td class="normalsmall" align="center" '.( $this->mArgs['nowrap'] == 'true' ? 'nowrap style="white-space: nowrap" ' : '' ).' valign="middle"><center>'.
+            ( strlen( $this->mArgs['image'] ) ? '<img src="'.$this->mArgs['image'].'" align="middle" border="0"'.
+              ( strlen( $this->mArgs['themeimage'] ) ? ' style="width: '.$image_width.'px; height: '.$image_height.'px;"' : '' ).
+              ( strlen( $this->mArgs['hint'] ) ? ' alt="'.$this->mArgs['hint'].'"' : 'alt=""' ).'>'.
+              ( $this->mArgs['horiz'] == 'true' ? '</center></td><td class="normalsmall" align="center" '.( $this->mArgs['nowrap'] == 'true' ? 'nowrap style="white-space: nowrap"' : '' ).' valign="middle"><center>'
+               : '<br>'  ) : '' ).
+            ( $this->mArgs['disabled'] == 'true' ?
+                '<font color="'.$this->mThemeHandler->mColorsSet['buttons']['disabledtext'].'">'.( strlen( $this->mArgs['label'] ) ? htmlentities( $this->mArgs['label'] ) : "" ).'</font>' :
+                '<font color="'.$this->mThemeHandler->mColorsSet['buttons']['text'].'">'.( strlen( $this->mArgs['label'] ) ? htmlentities( $this->mArgs['label'] ) : "" ) ).
+            '</font></center></td></tr></table>'.
+            ( $this->mComments ? '<!-- end '.$this->mName." button -->\n" : '' );
+        return true;
+    }
+}
+
+}
+?>

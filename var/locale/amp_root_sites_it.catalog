@@ -1,0 +1,126 @@
+sites_title						= Siti
+newsite_title					= Nuovo sito
+showsiteconfig_title			= Configurazione sito
+editsiteconfig_title			= Cambia la configurazione del sito
+showsitedblog_title				= Log del database del sito
+showsitelog_title				= Log del sito
+
+sites_button					= Siti
+newsite_button					= Nuovo sito
+help_button						= Aiuto
+situation.button                = Situazione
+
+cleanlog_button				= Pulisci il log
+
+sitecreated_status				= Sito creato.
+sitenotcreated_status			= ERRORE: Sito non creato.
+siteupdated_status				= Sito aggiornato.
+sitenotupdated_status			= ERRORE: Sito non aggiornato.
+siteremoved_status				= Sito rimosso.
+sitenotremoved_status			= ERRORE: Sito non rimosso.
+siteenabled_status				= Sito abilitato.
+sitenotenabled_status			= ERRORE: Sito non abilitato.
+sitedisabled_status				= Sito disabilitato.
+sitenotdisabled_status			= ERRORE: Sito non disabilitato.
+
+createdb_label					= Crea il database
+dbparamsnote_label				= (**) se lasciato vuoto, verrà determinato automaticamente.
+createdbnote_label				= (***) se selezionato e il database è già esistente, verrà prima eliminato.
+
+status_header					= Stato
+siteid_header					= Id
+sitename_header					= Nome
+sitecreationdate_header			= Data di creazione
+
+showconfig_label				= Configurazione
+editconfig_label				= Edita
+accesssite_label				= Accesso
+enablesite_label				= Abilita
+disablesite_label				= Disabilita
+removesite_label				= Rimuovi
+sitemodules_label				= Applicazioni
+sitelog_label					= Log
+sitedblog_label					= Db log
+no_available_sites_status			= Non ci sono siti disponibili.
+enable_all_modules.button       = Abilita tutte le applicazioni
+modules_enabled.status          = Applicazioni abilitate.
+modules_not_enabled.status      = ERRORE: Applicazioni non abilitate.
+disable_all_modules.button       = Disabilita tutte le applicazioni
+modules_disabled.status          = Applicazioni disabilitate.
+modules_not_disabled.status      = ERRORE: Applicazioni non disabilitate.
+disable_all_modules.confirm     = Vuoi veramente disabilitare tutte le applicazioni?
+
+requiredfields_label			= (*) campo obbligatorio
+
+sitename_label					= Nome del sito
+siteid_label					= Id
+sitepassword_label				= Password
+sitepath_label					= Path
+siteurl_label					= Url
+maxusers_label                  = Numero massimo di utenti
+sitedbtype_label				= Tipo database
+sitedbname_label				= Nome database
+sitedbhost_label				= Host name database
+sitedbport_label				= Porta database
+sitedbuser_label				= Utente database
+sitedbpassword_label			= Password database
+sitedblog_label					= Log file database
+
+createsite_submit				= Crea
+editsite_submit					= Aggiorna
+
+# pass_activatemodule
+
+modenabled_status				= Applicazione abilitata.
+modnotenabled_status			= APPLICAZIONE NON ABILITATA.
+unmetsuggs_status				= Suggerimenti non soddisfatti:
+unmetdeps_status				= Dipendenze non soddisfatte:
+
+# pass_deactivatemodule
+
+moddisabled_status				= Applicazione disabilitata.
+modnotdisabled_status			= APPLICAZIONE NON DISABILITATA.
+disunmetdeps_status				= Dipendenze non soddisfatte:
+
+# main_newsite
+
+newsite_formcheck.message       = Alcuni campi contengono dati errati:
+
+# main_editsite
+
+editsite_formcheck.message       = Alcuni campi contengono dati errati:
+
+# main_removesite
+
+removesite_title				= Rimozione sito
+removesitequestion_label			= Vuoi veramente rimuovere il sito %s?
+okremove_button					= Rimuovi
+dontremove_button				= Cancella
+
+# main_sitemodules
+
+sitemodules_title				= Applicazioni del sito
+moduleid_header					= Applicazione
+modactivationdate_header		= Data di attivazione
+deactivatemodule_label			= Disabilita
+activatemodule_label			= Abilita
+moddeps_header					= Dipendenze non soddisfatte o pendenti
+enable_submodule.button         = Abilita la sottoapplicazione "%s"
+disable_submodule.button        = Disabilita la sottoapplicazione "%s"
+
+# main_help
+
+help_title								= Aiuto
+
+#pass_cleanlog
+
+logcleaned_status			= Log pulito.
+lognotcleaned_status			= ERRORE: Log non pulito.
+
+# Notes
+
+sitenotes_label             = Annotazioni
+notes_set.status            = Annotazioni aggiornate
+sitenotes.title             = Annotazioni sito
+sitenotes_text.label        = Annotazioni sito
+notes_apply.submit          = Applica

@@ -1,0 +1,95 @@
+# General
+
+advanced.title				= Impostazioni avanzate
+default.button				= Avanzate
+processes.button			= Processi
+help.button				= Aiuto
+eraseall.button			= Elimina tutti
+
+# main_default
+
+submit.button				= Applica
+state.label				= Stato dell'ambiente di Ampoliros
+debug.radio				= Debug
+development.radio			= Sviluppo
+production.radio			= Produzione
+
+# main_processes
+
+pid.header				= Id processo
+creation.header				= Creazione
+remove.button				= Elimina
+debug.button				= Debug
+remove_confirm.label			= Si vuole veramente eliminare il file del processo?
+
+# main_debug
+
+instance.label				= Istanza
+pid.label				= Id processo
+sessionid.label				= Id sessione
+state.label				= Stato
+interface.label				= Interfaccia
+mode.label				= Modalità
+pagename.label				= Pagina
+siteid.label				= Id sito
+userid.label				= Id utente
+environment.label			= Ambiente
+memorylimit.label			= Memoria massima allocabile
+timelimit.label				= Tempo massimo di esecuzione
+sessionlifetime.label			= Durata della sessione
+extensions.label			= Estensioni caricate
+includedfiles.label			= File inclusi
+memoryusage.label           = Memoria utilizzata
+runtime.label				= Runtime
+logevents.label				= Eventi registrati nei log
+calledhooks.label			= Eventi agganciati da hook
+libraries.label				= Librerie aperte
+huievents.label				= Eventi Hui
+queries.label				= Query nel database
+profiler.label				= Profiler
+markers.label			= Marcatori
+dbmarkers.label         = Query SQL
+dbload.label            = Carico database
+source.label			= Sorgente
+classes.label			= Classi definite
+functions.label			= Funzioni definite
+variables.label			= Variabili global scope
+bugreport.label				= Bug report
+module.label				= Modulo
+bugsemail.label				= Indirizzo di destinazione
+submitteremail.label			= Tua email
+message.label				= Messaggio opzionale
+sendnotify.label			= Notificare l'Ampoliros Team
+bugreport.submit			= Invia il bug report
+eraseall.confirm			= Si vuole veramente eliminare tutti i file dei processi?
+
+# action_setadvanced
+
+advancedset.status			= Impostazioni avanzate salvate.
+advancednotset.status			= ERRORE: Impostazioni avanzate non salvate.
+
+# action_removepid
+
+pid_removed.status			= Il file del processo è stato rimosso.
+pid_not_removed.status			= ERRORE: Non è stato possibile rimuovere il file del processo.
+
+all_pids_removed.status			= Tutti i file dei processi sono stati eliminati.
+
+# pass_submitbugreport
+
+bugreport_sent.status			= Bug report inviato.
+bugreport_not_sent.status		= ERRORE: Bug report NON inviato.
+
+# semaphores
+
+semaphores.button               = Semafori
+resource.header                 = Risorsa
+semaphore.header                = Semaforo
+semaphorepid.header             = Id processo
+remove_sem.button               = Elimina
+remove_sem_confirm.label        = Vuoi veramente eliminare questo semaforo?
+eraseall_sem.button             = Elimina tutti
+eraseall_sem.confirm            = Vuoi veramente eliminare tutti i semafori?
+sem_removed.status              = Semaforo eliminato.
+sem_not_removed.status          = ERRORE: Non è stato possibile rimuovere il semaforo.
+all_sems_removed.status         = Tutti i semafori sono stati rimossi.

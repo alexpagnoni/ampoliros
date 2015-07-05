@@ -1,0 +1,10 @@
+<?xml version='1.0'?>
+<database>
+
+   <table name="usersettings">
+     <field name="userid" type="integer" notnull="1"/>
+     <field name="keyname" type="text" notnull="1"/>
+     <field name="val" type="text"/>
+   </table>
+
+</database>

@@ -1,0 +1,219 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: rootpage.element,v 1.11 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'rootpage';
+$element['classname'] = 'RootpageElement';
+$element['priority'] = 0;
+$element['site'] = false;
+
+if ( !defined( 'ROOTPAGE_ELEMENT' ) )
+{
+define( 'ROOTPAGE_ELEMENT', true );
+
+/*!
+@class RootpageElement
+
+@abstract Rootpage element handler.
+*/
+class RootpageElement extends ModuleElement
+{
+    public $type = 'rootpage';
+    public $site = false;
+
+    function RootpageElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+        if ( !isset( $params['file'] ) ) $params['file'] = '';
+        if ( !isset( $params['catalog'] ) ) $params['catalog'] = '';
+        if ( !isset( $params['themeicon'] ) ) $params['themeicon'] = '';
+        if ( !isset( $params['themeicontype'] ) ) $params['themeicontype'] = '';
+
+        if ( strlen( $params['file'] ) )
+        {
+            if ( strlen( $params['icon'] ) )
+            {
+                $params['icon'] = $this->basedir.'/www/root/'.$params['icon'];
+
+                if ( @copy( $params['icon'], AMP_PATH.basename( $params['icon'] ) ) )
+                {
+                    @chmod( AMP_PATH.basename( $params['icon'] ), 0644 );
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doinstallaction',
+                                            'In module '.$this->modname.', element '.$params['name'].': Unable to copy root page icon '.$params['icon'].' to destination '.AMP_PATH.basename( $params['icon'] ), LOGGER_ERROR );
+            }
+
+            $params['file'] = $this->basedir.'/www/root/'.$params['file'];
+
+            if ( @copy( $params['file'], AMP_PATH.basename( $params['file'] ) ) )
+            {
+                @chmod( AMP_PATH.basename( $params['file'] ), 0644 );
+
+                if ( $params['show'] != 'no' )
+                {
+                    $group_query = &$this->ampdb->Execute( 'SELECT * '.
+                                                           'FROM rootgroups '.
+                                                           'WHERE name = '.$this->ampdb->Format_Text( $params['category'] ) );
+                    if ( $group_query->NumRows() ) $group_id = $group_query->Fields( 'id' );
+                    else $group_id = '';
+
+                    $ins = 'insert into rootpages values ('.$this->ampdb->NextSeqValue( 'rootpages_id_seq' ).','.
+                        $this->ampdb->Format_Text( $params['name'] ).','.
+                        $this->ampdb->Format_Text( basename( $params['file'] ) ).','.
+                        $this->ampdb->Format_Text( basename( $params['icon'] ) ).','.
+                        $this->ampdb->Format_Text( $params['catalog'] ).','.
+                        $this->ampdb->Format_Text( $group_id ).','.
+                        $this->ampdb->Format_Text( $params['themeicon'] ).','.
+                        $this->ampdb->Format_Text( $params['themeicontype'] ).')';
+
+                    $result = &$this->ampdb->Execute( $ins );
+
+                    if ( !$result ) $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doinstallaction',
+                                                           'In module '.$this->modname.', element '.$params['name'].': Unable to insert root page in rootpages table', LOGGER_ERROR );
+                }
+                else $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doinstallaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to copy root page file '.$params['file'].' to destination '.AMP_PATH.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doinstallaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Empty page file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+        if ( !isset( $params['file'] ) ) $params['file'] = '';
+        if ( !isset( $params['catalog'] ) ) $params['catalog'] = '';
+        if ( !isset( $params['themeicon'] ) ) $params['themeicon'] = '';
+        if ( !isset( $params['themeicontype'] ) ) $params['themeicontype'] = '';
+
+        if ( strlen( $params['file'] ) )
+        {
+            if ( strlen( $params['icon'] ) )
+            {
+                if ( @unlink( AMP_PATH.basename( $params['icon'] ) ) )
+                {
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.douninstallaction',
+                                            'In module '.$this->modname.', element '.$params['name'].': Unable to remove icon file '.AMP_PATH.basename( $params['icon'] ), LOGGER_ERROR );
+            }
+
+            if ( @unlink( AMP_PATH.basename( $params['file'] ) ) )
+            {
+                if ( $params['show'] != 'no' )
+                {
+                    $result = &$this->ampdb->Execute( 'DELETE FROM rootpages WHERE name = '.$this->ampdb->Format_Text( $params['name'] ) );
+                    if ( !$result ) $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.douninstallaction',
+                                                           'In module '.$this->modname.', element '.$params['name'].': Unable to remove root page from rootpages table', LOGGER_ERROR );
+                }
+                else $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.douninstallaction',
+				'In module '.$this->modname.', element '.$params['name'].': Unable to remove root page file '.AMP_PATH.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.douninstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty page file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+        if ( !isset( $params['file'] ) ) $params['file'] = '';
+        if ( !isset( $params['catalog'] ) ) $params['catalog'] = '';
+        if ( !isset( $params['themeicon'] ) ) $params['themeicon'] = '';
+        if ( !isset( $params['themeicontype'] ) ) $params['themeicontype'] = '';
+
+        if ( strlen( $params['file'] ) )
+        {
+            if ( isset( $params['icon'] ) and strlen( $params['icon'] ) )
+            {
+                $params['icon'] = $this->basedir.'/www/root/'.$params['icon'];
+
+                if ( @copy( $params['icon'], AMP_PATH.basename( $params['icon'] ) ) )
+                {
+                    @chmod( AMP_PATH.basename( $params['icon'] ), 0644 );
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doupdateaction',
+                                            'In module '.$this->modname.', element '.$params['name'].': Unable to copy root page icon '.$params['icon'].' to destination '.AMP_PATH.basename( $params['icon'] ), LOGGER_ERROR );
+            }
+
+            $params['file'] = $this->basedir.'/www/root/'.$params['file'];
+
+            if ( @copy( $params['file'], AMP_PATH.basename( $params['file'] ) ) )
+            {
+                @chmod( AMP_PATH.basename( $params['file'] ), 0644 );
+
+                if ( !isset( $params['category'] ) ) $params['category'] = '';
+
+                $group_query = &$this->ampdb->Execute( 'SELECT * '.
+                                                       'FROM rootgroups '.
+                                                       'WHERE name = '.$this->ampdb->Format_Text( $params['category'] ) );
+                if ( $group_query->NumRows() ) $group_id = $group_query->Fields( 'id' );
+                else $group_id = '';
+
+
+                $result = &$this->ampdb->Execute( 'UPDATE rootpages SET iconfile='.$this->ampdb->Format_Text( basename( $params['icon'] ) ).','.
+                                                  'catalog='.$this->ampdb->Format_Text( $params['catalog'] ).','.
+                                                  'themeicon='.$this->ampdb->Format_Text( $params['themeicon'] ).','.
+                                                  'themeicontype='.$this->ampdb->Format_Text( $params['themeicontype'] ).
+                                                  ( $group_id ? ',groupid='.$group_id : '' ).
+                                                  ' WHERE name='.$this->ampdb->Format_Text( $params['name'] ) );
+
+                if ( !$result ) $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doupdateaction',
+                                                       'In module '.$this->modname.', element '.$params['name'].': Unable to update root page in rootpages table', LOGGER_ERROR );
+            }
+            else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doupdateaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to copy root page file '.$params['file'].' to destination '.AMP_PATH.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.rootpage_element.rootpageelement_class.doupdateaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Empty page file name', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

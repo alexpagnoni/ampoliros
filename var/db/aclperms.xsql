@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<database>
+
+   <table name="aclperms">
+      <field name="nodeid"   type="integer"/>
+      <field name="type"     type="integer"/>
+      <field name="ugid"     type="integer"/>
+      <field name="perm"     type="integer"/>
+   </table>
+
+</database>

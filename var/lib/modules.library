@@ -1,0 +1,56 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: modules.library,v 1.31 2004-07-08 15:04:23 alex Exp $
+
+
+if ( defined( 'MODULES_LIBRARY' ) ) return;
+else define( 'MODULES_LIBRARY', true );
+
+Carthag::import('com.solarix.ampoliros.db.DBLayer');
+Carthag::import('com.solarix.ampoliros.io.log.Logger');
+Carthag::import('com.solarix.ampoliros.xml.XMLParser');
+Carthag::import('com.solarix.ampoliros.module.ModuleDep');
+Carthag::import('com.solarix.ampoliros.module.ModuleConfig');
+Carthag::import('com.solarix.ampoliros.module.ModuleRegister');
+
+OpenLibrary( 'misc.library' );
+
+define( 'INSTALL_MODE_INSTALL',    0 );
+define( 'INSTALL_MODE_UNINSTALL',  1 );
+define( 'INSTALL_MODE_UPDATE',     2 );
+define( 'INSTALL_MODE_ENABLE',     3 );
+define( 'INSTALL_MODE_DISABLE',    4 );
+
+define( 'UPDATE_MODE_ADD',    0 );
+define( 'UPDATE_MODE_REMOVE', 1 );
+define( 'UPDATE_MODE_CHANGE', 2 );
+
+define( 'STRUCTURE_FILE', 'structure.xml' );
+define( 'GENERALDEF_FILE', 'general.def' );
+define( 'BUNDLEDEF_FILE', 'bundle.def' );
+
+?>

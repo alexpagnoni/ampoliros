@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="activemodules">
+		<field name="moduleid"	type="integer"	notnull="1"/>
+		<field name="siteid"	type="integer"	notnull="1"/>
+        <field name="activationdate"   type="date"/>
+        <field name="expirydate"       type="date"/>
+        <field name="active"    type="boolean"/>
+	</table>
+
+</database>

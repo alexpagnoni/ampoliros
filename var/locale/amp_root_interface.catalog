@@ -1,0 +1,52 @@
+# Global
+
+interface_pagetitle				= Ampoliros interface
+interface_title					= Ampoliros interface
+default_button					= Interface
+themes_button					= Themes
+advanced_button					= Advanced
+help_button					= Help
+
+# main_default
+
+default_title					= Interface settings
+oemframe_label					= OEM settings
+oemname_label					= OEM name
+oemurl_label					= OEM url
+oemlogo_label					= OEM link logo
+oembiglogo_label       				= OEM big logo
+oem_submit                                      = Apply
+oem_biglogo_enabled_label			= OEM big logo
+enabled_icons_label				= Enabled icons
+amp_biglogo_enabled_label			= Ampoliros big logo
+amp_link_enabled_label				= Link to Ampoliros site
+solarix_link_enabled_label			= Link to Solarix site
+oem_link_enabled_label				= Link to OEM site
+enabled_label					= Enabled
+enable_submit					= Apply
+
+# main_themes
+
+themes_title					= Themes
+themes_label					= Themes
+settheme_submit					= Apply
+
+# main_advanced
+
+advanced_title					= Advanced interface settings
+advancedsettings_label				= Advanced settings
+hui-comments_label				= Comments on interface HTML code
+compressed-ob_label				= Compressed output
+advanced_submit					= Apply
+
+# pass_setenabledicons
+
+incosset_status					= Settings saved.
+
+# pass_setadvanced
+
+advancedset_status				= Advanced settings saved.
+
+# pass_settheme
+
+themeset_status					= Theme applied.

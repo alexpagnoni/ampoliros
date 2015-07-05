@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="elementtypes">
+		<field name="id"			type="integer"	notnull="1"/>
+        	<field name="typename"		type="text"	length="50"	notnull="1"/>
+                <field name="priority"		type="integer"	notnull="1"/>
+                <field name="site"		type="boolean"	notnull="1"/>
+                <field name="file"		type="text"	notnull="1"/>
+                <field name="class"		type="text"/>
+		<key field="id"	type="unique"/>
+        </table>
+
+	<sequence name="elementtypes_id_seq"	start="34"/>
+
+</database>

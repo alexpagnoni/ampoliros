@@ -1,0 +1,58 @@
+Nuovo sito
+==========
+
+Da questa pagina è possibile creare un nuovo sito.
+
+Il pannello è diviso in due parti, la prima dedicata alle impostazioni
+generali e la seconda alle impostazioni del database.
+
+Molti dei campi possono essere lasciati vuoti perchè vengono
+automaticamente determinati da Ampoliros con i settaggi più
+appropriati.
+
+Impostazioni generali
+---------------------
+
+- Nome del sito: nome descrittivo del sito.
+
+- Id: nome breve per identificare il sito. Non utilizzare spazi, segni
+di punteggiatura o altri segni particolari. Corrisponde inoltre al nome
+del superutente del sito.
+
+- Password: password di accesso del superutente.
+
+- Path: directory pubblica nel server dedicata al sito. Si consiglia di
+lasciare vuoto il campo.
+
+- URL: indirizzo della directory pubblica del sito. Opzionale.
+
+Impostazioni database
+---------------------
+
+- Tipo database: tipo di server SQL che gestisce il database. Si
+consiglia di lasciare il campo con il valore proposto se non si hanno
+esigenze differenti.
+
+- Nome database: nome del database, si consiglia di lasciare vuoto il
+campo. Il nuovo database verrà creato con la convenzione 'amp' + id del
+sito + 'site'; es. per il sito 'test' verrà creato il database
+'amptestsite'.
+
+- Host name database: nome dell'host in cui risiede il database.
+Lasciando il campo vuoto verrà automaticamente utilizzato l'host name
+del database centrale di Ampoliros.
+
+- Porta database: porta dell'host in cui è in ascolto il database.
+Lasciando il campo vuoto verrà automaticamente utilizzata la porta del
+database centrale di Ampoliros.
+
+- Utente database: nome utente del database. Lasciando il campo vuoto
+verrà automaticamente utilizzato il nome utente del database centrale
+di Ampoliros.
+
+- Password database: password del database. Lasciando il campo vuoto
+verrà automaticamente utilizzata la password del database centrale di
+Ampoliros.
+
+- Log file database: log del database del sito. Si consiglia di
+lasciare il campo vuoto.

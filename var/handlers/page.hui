@@ -1,0 +1,122 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: page.hui,v 1.26 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiPage';
+
+if (!defined('PAGE_HUI')) {
+	define ('PAGE_HUI', true);
+
+	import('com.solarix.ampoliros.hui.HuiContainerElement');
+
+	class HuiPage extends HuiContainerElement {
+		public $mWidgetType = 'page';
+		/*! @public mTitle string - Page title. */
+		//public $mTitle;
+		/*! @public mBackground string - Background image url. */
+		//public $mBackground;
+		/*! @public mJavascript string - Javascript. */
+		//public $mJavascript;
+		/*! @public mBorder string - Set to 'true' if the page should have a border. Defaults to 'true'. */
+		//public $mBorder;
+		/*! @public mRefresh integer - Optional page refresh time in seconds. */
+		//public $mRefresh = 0;
+
+		public function HuiPage($elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '') {
+			$this -> HuiContainerElement($elemName, $elemArgs, $elemTheme, $dispEvents);
+			if (isset($this -> mArgs['border']) and ($elemArgs['border'] == 'true' or $elemArgs['border'] == 'false'))
+				$this -> mArgs['border'] = $elemArgs['border'];
+			else
+				$this -> mArgs['border'] = 'true';
+			if (isset($this -> mArgs['refresh']))
+				$this -> mArgs['refresh'] = (int) $this -> mArgs['refresh'];
+			else
+				$this -> mArgs['refresh'] = 0;
+		}
+
+		protected function _buildBegin() {
+			if (!strlen($GLOBALS['gEnv']['user']['locale']['country']))
+				$GLOBALS['gEnv']['user']['locale']['country'] = 'unitedstates';
+			import('com.solarix.ampoliros.locale.LocaleCountry');
+			$country = new LocaleCountry($GLOBALS['gEnv']['user']['locale']['country']);
+			$charset = $country -> GetCharSet();
+			unset($country);
+			if (!strlen($charset))
+				$charset = 'iso-8859-1';
+
+			//$block  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n";
+			$block = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'."\n";
+			$block.= "<html>\n";
+			$block.= "<head>\n";
+			$block.= '<script language="JavaScript" type="text/javascript" src="'.CGI_URL.'hui.js"></script>'."\n";
+			$block.= "<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\nfunction HuiWindowClose()\n{\nif ( window.name == \"detached-".$_SERVER['PHP_SELF']."\" )\n{\nwindow.close();\n}\nelse\n{\nwindow.location = \"main.php\";\n}\n}\n";
+			$block.= "function HuiWindowOpen(location,name,params)\n{\nif ( window.name != \"detached-".$_SERVER['PHP_SELF']."\" )\n{\nvar myWin = window.open(location,name,params);\nwindow.location = \"main.php\";\n}\n}\n";
+			$block.= "-->\n</script>\n";
+			$block.= "<script language=\"JavaScript\" type=\"text/javascript\" src=\"".CGI_URL."layersmenu.js\"></script>\n";
+			$block.= "<link rel=\"stylesheet\" type=\"text/css\" href=\"".$this -> mThemeHandler -> mStyle['css']."\">\n";
+			$block.= '<link rel="shortcut icon" href="'.AMP_URL.'/favicon.ico" type="image/x-icon"/>'."\n";
+			$block.= "<style type=\"text/css\">\nimg {\nbehavior:	url(\"".CGI_URL."pngbehavior.htc\");\n}\n</style>\n";
+			$block.= "<title>".htmlentities($this -> mArgs['title'])."</title>\n";
+			$block.= (strlen($this -> mArgs['javascript']) ? "<script language=\"JavaScript\">\n<!--\n".$this -> mArgs['javascript']."\n//-->\n</script>\n" : '');
+			$block.= '<meta http-equiv="Content-Type" content="text/html; charset='.$charset.'">'."\n";
+			$block.= '<meta name="MSSmartTagsPreventParsing" content="TRUE">'."\n";
+			if ($this -> mArgs['refresh'])
+				$block.= '<meta http-equiv="refresh" content="'.$this -> mArgs['refresh'].'">'."\n";
+			$block.= "</head>\n";
+			$block.= '<body bgcolor="'.$this -> mThemeHandler -> mColorsSet['pages']['bgcolor'].'"';
+			$block.= (strlen($this -> mArgs['background']) ? ' background="'.$this -> mArgs['background'].'"' : '');
+			$block.= ">\n";
+
+			if ($this -> mArgs['border'] == 'true') {
+				$block.= '<table border="0" height="0%" cellspacing="0" cellpadding="1"><tr><td bgcolor="'.$this -> mThemeHandler -> mColorsSet['pages']['border']."\">\n";
+				$block.= '<table border="0" height="0%" cellspacing="0" cellpadding="0" bgcolor="white">'."\n";
+				$block.= '<tr><td>';
+			}
+
+			return $block;
+		}
+
+		protected function _buildEnd() {
+			$block = '';
+
+			if ($this -> mArgs['border'] == 'true') {
+				$block.= '</td></tr>'."\n";
+				$block.= '<tr><td height="0%" bgcolor="white"></td></tr>'."\n</table>\n";
+				$block.= "</td></tr>\n</table>\n";
+			}
+
+			if (isset($GLOBALS['gEnv']['runtime']['hui_menu']['footer'])) {
+				$block.= $GLOBALS['gEnv']['runtime']['hui_menu']['footer'];
+			}
+			$block.= "</body>\n</html>\n";
+
+			return $block;
+		}
+	}
+
+}
+?>

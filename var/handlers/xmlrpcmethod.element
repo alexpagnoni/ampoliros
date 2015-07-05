@@ -1,0 +1,120 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: xmlrpcmethod.element,v 1.9 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'xmlrpcmethod';
+$element['classname'] = 'XmlrpcmethodElement';
+$element['priority'] = 0;
+$element['site'] = false;
+
+if ( !defined( 'XMLRPCMETHOD_ELEMENT' ) )
+{
+define( 'XMLRPCMETHOD_ELEMENT', true );
+
+OpenLibrary( 'xmlrpc.library' );
+
+/*!
+@class XmlrpcmethodElement
+
+@abstract Xmlrpcmethod element handler.
+*/
+class XmlrpcmethodElement extends ModuleElement
+{
+    public $type = 'xmlrpcmethod';
+    public $site = false;
+
+    function XmlrpcmethodElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new XmlRpcMethod( $this->ampdb );
+
+            if ( !isset( $params['signature'] ) ) $params['signature'] = '';
+            if ( !isset( $params['unsecure'] ) ) $params['unsecure'] = '';
+            if ( !isset( $params['catalog'] ) ) $params['catalog'] = '';
+            if ( !isset( $params['docstring'] ) ) $params['docstring'] = '';
+
+            if ( $xm->Install( $params['name'], $params['function'], $params['handler'], $this->modname, $params['signature'], $params['docstring'], $params['unsecure'], $params['catalog'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.doinstallaction',
+                                       'In module '.$this->modname.', element '.$params['name'].': Unable to install xmlrpc method', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.doinstallaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty xmlrpc handler file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new XmlRpcMethod( $this->ampdb, $params['name'] );
+            if ( $xm->Uninstall() ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.douninstallaction',
+                                       'In module '.$this->modname.', element '.$params['name'].': Unable to uninstall xmlrpc method', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.douninstallaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty xmlrpc handler file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new XmlRpcMethod( $this->ampdb, $params['name'] );
+
+            if ( !isset( $params['signature'] ) ) $params['signature'] = '';
+            if ( !isset( $params['unsecure'] ) ) $params['unsecure'] = '';
+            if ( !isset( $params['catalog'] ) ) $params['catalog'] = '';
+            if ( !isset( $params['docstring'] ) ) $params['docstring'] = '';
+
+            if ( $xm->Update( $params['function'], $params['handler'], $params['signature'], $params['docstring'], $params['unsecure'], $params['catalog'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.doupdateaction',
+                                       'In module '.$this->modname.', element '.$params['name'].': Unable to update xmlrpc method', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.xmlrpc_element.xmlrpcelement_class.doupdateaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty xmlrpc handler file name', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

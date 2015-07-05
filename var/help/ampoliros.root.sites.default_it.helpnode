@@ -1,0 +1,27 @@
+Siti
+====
+
+Da questa pagina è possibile amministrare i siti. I siti vanno intesi
+come contenitori di moduli e non solo come siti web.
+
+Operazioni disponibili sui siti
+-------------------------------
+
+- Configurazione: mostra la configurazione attuale del sito.
+
+- Edita: variazione delle impostazioni di base del sito.
+
+- Accesso: accesso diretto al sito con diritti di superutente, da non
+utilizzare come metodo standard di accesso.
+
+- Disabilita / Abilita: abilitazione e disabilitazione del sito.
+
+- Rimuovi: rimozione del sito. Viene richiesta conferma.
+
+- Moduli: abilitazione e disabilitazione al sito dei moduli.
+
+- Log: accesso al log del sito. Disponibile se è presente il relativo
+log.
+
+- Log database: accesso al log del database del sito. Disponibile se è
+presente il relativo log.

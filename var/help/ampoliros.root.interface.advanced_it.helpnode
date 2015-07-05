@@ -1,0 +1,15 @@
+Impostazioni avanzate interfaccia
+=================================
+
+Questa pagina è dedicata alle funzionalità avanzate dell'interfaccia di
+Ampoliros.
+
+- Output compresso: se abilitato, il contenuto delle pagine viene
+inviato in formato compresso. Può rendere più veloce l'invio di pagine
+di grandezza consistente, sebbene potrebbe aumentare il carico di
+sistema nel server.
+
+- Commenti nel codice HTML dell'interfaccia: se abilitato, nel codice
+HTML dell'interfaccia vengono inseriti dei commenti che identificano i
+singoli elementi. È utile solo per ragioni di debug, in quanto aumenta
+la grandezza delle pagine senza aggiungere altre funzionalità.

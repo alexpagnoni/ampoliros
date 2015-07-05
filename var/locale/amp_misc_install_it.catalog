@@ -1,0 +1,157 @@
+# Global
+
+ampsetup_title				= Installazione di Ampoliros
+retry_button				= Riprova
+next_button					= Avanti
+next_submit					= Avanti
+requiredfields_label			= (*) campo richiesto.
+
+# Install phases
+
+setupphase_header			= Fase di setup
+systemcheckphase_label		= Controllo del sistema
+filesinstallphase_label		= Installazione dei file
+editionchoicephase_label    = Edizione di Ampoliros
+amphostchoicephase_label	= Nome e dominio di Ampoliros
+countrychoicephase_label	= Nazione del superutente
+languagechoicephase_label	= Linguaggio del superutente
+dblayersphase_label			= Creazione delle interfacce ai database
+amprootdbphase_label		= Creazione del database di Ampoliros
+ampcomponentsphase_label	= Inizializzazione dei componenti di Ampoliros
+passwordphase_label			= Password del superutente
+ampcentralphase_label       = AmpCentral
+cleanupphase_label			= Pulizia finale
+finishphase_label			= Installazione terminata
+
+# System check
+
+systemcheck_title			= Controllo del sistema
+required_label				= Richiesto
+optional_label				= Opzionale
+info_label					= Informazione
+
+ampcgi_test_label			= Alias dei cgi di Ampoliros %s
+ampcgi_available_label		= Disponibile
+ampcgi_not_available_label	= Non disponibile - L'alias %s non è stato definito nel web server. (Ho tentato di aprire %sampbigdot.gif)
+
+php_test_label				= PHP versione >= 5.0.0
+php_available_label			= %s - Supportato
+php_not_available_label		= %s - Non supportato
+
+fileupload_test_label				= Supporto per l'upload dei file
+fileupload_available_label			= Disponibile
+fileupload_not_available_label		= Non disponibile - Imposta file_uploads = On nel file php.ini
+
+xml_test_label				= Supporto PHP XML
+xml_available_label			= Disponibile
+xml_not_available_label		= Non disponibile
+
+domxml_test_label				= Supporto PHP DOM XML
+domxml_available_label			= Disponibile
+domxml_not_available_label		= Non disponibile
+
+zlib_test_label				= Supporto ZLib
+zlib_available_label			= Disponibile
+zlib_not_available_label		= Non disponibile
+
+db_test_label				= Supporto PHP per i database disponibili sotto Ampoliros
+db_available_label			= Disponibile
+db_not_available_label		= Non disponibile
+
+xmlrpc_extension_test_label		= Conflitto con l'estensione PHP XML-RPC
+xmlrpc_extension_notloaded_label	= Nessun conflitto, l'estensione non è presente e non deve essere caricata
+xmlrpc_extension_loaded_label		= Conflitto con l'estensione XML-RPC, deve essere disabilitata dal file php.ini
+
+crontab_test_label			= Supporto per i compiti pianificati
+crontab_available_label		= Disponibile
+crontab_not_available_label	= Non disponibile
+
+xmlrpc_test_label			= Supporto per l'autenticazione XML-RPC
+xmlrpc_available_label		= Disponibile
+xmlrpc_not_available_label	= Non disponibile - L'attuale interfaccia del web server è cgi, l'autenticazione HTTP per le chiamate XML-RPC non può essere effettuata
+
+xmlrpc_test_label			= Supporto per l'autenticazione XML-RPC
+xmlrpc_available_label		= Disponibile
+xmlrpc_not_available_label	= Non disponibile - L'attuale interfaccia del web server è cgi, l'autenticazione HTTP per le chiamate XML-RPC non può essere effettuata
+
+com_test_label				= Supporto per Windows COM
+com_available_label			= Disponibile
+com_not_available_label		= Non disponibile
+
+os_test_label				= Sistema operativo
+
+webserver_test_label		= Interfaccia del web server
+
+user_test_label				= Utente PHP attuale
+
+# Ampoliros edition
+
+edition_title               = Edizione di Ampoliros
+edition_label               = Edizione
+edition_explain_label       = Edizione di Ampoliros.<br/><b>ASP</b> (Application Service Provider): numero illimitato di siti.<br/><b>Enteprise</b>: solo un sito.<br>Non può essere cambiata una volta impostata.
+asp_edition_label           = ASP
+enterprise_edition_label    = Enterprise
+
+# Database layers
+
+dblayerscreation_title		= Creazione delle interfacce dei database
+dblayersphase_label			= Creazione delle interfacce dei database
+
+# Database creation
+
+dbcreation_title			= Creazione del database
+dbcreationphase_label		= Creazione del database di Ampoliros
+dbtype_label				= Tipo di database
+dbname_label				= Nome del database
+dbhost_label				= Host del database
+dbport_label				= Porta del database
+dbuser_label				= Utente del database
+dbpassword_label			= Password del database
+
+# Components initialization
+
+components_title			= Inizializzazione dei componenti
+componentsphase_label		= Inizializzazione dei componenti. Può richiedere del tempo
+
+# Amp host
+
+amphost_title				= Nome e dominio di Ampoliros
+amphostphase_label			= Nome e dominio di Ampoliros
+amphost_label				= Nome di Ampoliros
+ampdomain_label				= Dominio di Ampoliros
+ampdns_label				= DNS di Ampoliros
+
+# Amp country
+
+ampcountry_title			= Nazione del superutente
+country_label				= Nazione
+
+# Amp language
+
+amplanguage_title			= Linguaggio del superutente
+language_label				= Linguaggio
+countrylanguage_label		= Linguaggio predefinito per la nazione attuale: %s
+
+# Amp password
+
+password_title				= Password del superutente
+passwordphase_label			= Password del superutente
+amppassworda_label			= Password
+amppasswordb_label			= Ripetere la password
+
+# AmpCentral
+
+ampcentral_label            = Scarica e installa AmpCentral
+ampcentral_explain_label    = AmpCentral è un sistema per installare moduli per Ampoliros tramite servizi web.
+ampcentral_title            = Installazione AmpCentral
+
+# Clean up
+
+cleanup_title				= Pulizia finale
+cleanup_label				= Pulizia finale e completamento dell'installazione
+
+# Finish
+
+finish_title				= Installazione terminata
+finish_label				= L'installazione è stata completata! Ora Ampoliros è operativo. Il nome utente del superutente è <b>amp</b>.<br><br>Vuoi sapere come si pronuncia Ampoliros? Puoi sentirlo in formato wav cliccando <a href="/ampcgi/ampoliros.wav" target="_blank">qui</a>.
+

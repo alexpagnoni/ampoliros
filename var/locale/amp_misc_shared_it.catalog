@@ -1,0 +1,34 @@
+sites.menu				= Siti
+siteslist.menu				= Lista
+newsite.menu				= Nuovo sito
+
+modules.menu				= Applicazioni
+moduleslist.menu			= Lista
+newmodule.menu				= Installa
+updatemodule.menu			= Aggiorna
+
+remote.menu				= Servizi web
+remoteprofiles.menu			= Profili
+newremoteprofile.menu			= Nuovo profilo
+remoteusers.menu			= Utenti
+newremoteuser.menu			= Nuovo utente
+remoteaccounts.menu			= Account
+newremoteaccount.menu			= Nuovo account
+
+settings.menu				= Impostazioni
+interface.menu				= Interfaccia
+network.menu				= Rete
+locale.menu				= Localizzazione
+password.menu				= Password
+info.menu				= Informazioni
+advanced.menu				= Avanzate
+maintenancesettings.menu    = Manutenzione
+
+tools.menu                  = Strumenti
+securitysettings.menu       = Sicurezza
+securitycheck.menu               = Controllo sicurezza
+processes.menu              = Processi e debugger
+maintenance.menu            = Manutenzione
+
+help.menu                   = Aiuto
+about.menu                  = Informazioni su Ampoliros

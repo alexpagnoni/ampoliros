@@ -1,0 +1,10 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="xmlrpcpermissions">
+                <field name="profileid" type="integer" notnull="1"/>
+                <field name="module"	type="text"/>
+                <field name="method"	type="text"/>
+        </table>
+
+</database>

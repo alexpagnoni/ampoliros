@@ -1,0 +1,99 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: library.element,v 1.6 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'library';
+$element['classname'] = 'LibraryElement';
+$element['priority'] = 110;
+$element['site'] = false;
+
+if ( !defined( 'LIBRARY_ELEMENT' ) )
+{
+define( 'LIBRARY_ELEMENT', true );
+
+/*!
+@class LibraryElement
+
+@abstract Library element handler.
+*/
+class LibraryElement extends ModuleElement
+{
+    public $type = 'library';
+    public $site = false;
+
+    function LibraryElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $params['file'] = $this->basedir.'/var/lib/'.$params['file'];
+
+            if ( @copy( $params['file'], LIBRARY_PATH.basename( $params['file'] )  ) )
+            {
+                @chmod( LIBRARY_PATH.basename( $params['file'] ), 0644 );
+                $result = true;
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.library_element.libraryelement_class.doinstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty library file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            if ( @unlink( LIBRARY_PATH.basename( $params['file'] ) ) )
+            {
+                $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.library_element.libraryelement_class.douninstallaction',
+				'In module '.$this->modname.', element '.$params['name'].': Unable to remove '.LIBRARY_PATH.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.library_element.libraryelement_class.douninstallaction',
+			'In module '.$this->modname.', element '.$params['name'].': Empty library file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        return $this->DoInstallAction( $params );
+    }
+}
+
+}
+?>

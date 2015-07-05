@@ -1,0 +1,54 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2003-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: file.huivalidator,v 1.4 2004-07-08 15:04:22 alex Exp $
+
+// Handling of uploaded files hui eventdata
+//
+if (isset($_FILES['huifiles']) and is_array($_FILES['huifiles']) and count($_FILES['huifiles'])) {
+    reset($_FILES);
+    $disps = array();
+
+    while (list ($key, $val) = each($_FILES['huifiles']['name'])) {
+        $disps[] = $key;
+    }
+
+    $args[0] = 'name';
+    $args[1] = 'type';
+    $args[2] = 'tmp_name';
+    $args[3] = 'size';
+
+    for ($i = 0; $i < 4; $i ++) {
+        reset($disps);
+        reset($_FILES);
+        while (list (, $disp) = each($disps)) {
+            while (list ($eventdataname, $eventdatacontent) = each($_FILES['huifiles'][$args[$i]][$disp]['eventdata'])) {
+                $GLOBALS['gEnv']['runtime']['disp']['hui'][$disp]['eventdata'][$eventdataname][$args[$i]] = $eventdatacontent;
+            }
+        }
+    }
+}
+?>

@@ -1,0 +1,485 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2003-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: ampoliros_logs.maintenance,v 1.6 2004-07-08 15:04:22 alex Exp $
+
+if ( defined( 'AMPOLIROS_LOGS_MAINTENANCE' ) ) return;
+else define( 'AMPOLIROS_LOGS_MAINTENANCE', true );
+
+class AmpolirosLogsMaintenance
+{
+    public $mModuleConfig;
+
+    public $mCleanAmpLog;
+    public $mCleanAmpDbLog;
+    public $mCleanAccessLog;
+    public $mCleanRemoteLog;
+    public $mCleanPhpLog;
+    public $mCleanSitesLogs;
+    public $mRotateAmpLog;
+    public $mRotateAmpDbLog;
+    public $mRotateAccessLog;
+    public $mRotateRemoteLog;
+    public $mRotatePhpLog;
+    public $mRotateSitesLogs;
+
+    function AmpolirosLogsMaintenance()
+    {
+        OpenLibrary( 'modules.library' );
+
+        $this->mModuleConfig = new ModuleConfig(
+            $GLOBALS['gEnv']['root']['db'],
+            'ampoliros'
+            );
+
+        $this->mCleanAmpLog = $this->mModuleConfig->GetKey( 'maintenance_cleanamplog' ) == '1' ? true : false;
+        $this->mCleanAmpDbLog = $this->mModuleConfig->GetKey( 'maintenance_cleanampdblog' ) == '1' ? true : false;
+        $this->mCleanAccessLog = $this->mModuleConfig->GetKey( 'maintenance_cleanaccesslog' ) == '1' ? true : false;
+        $this->mCleanRemoteLog = $this->mModuleConfig->GetKey( 'maintenance_cleanremotelog' ) == '1' ? true : false;
+        $this->mCleanPhpLog = $this->mModuleConfig->GetKey( 'maintenance_cleanphplog' ) == '1' ? true : false;
+        $this->mCleanSitesLogs = $this->mModuleConfig->GetKey( 'maintenance_cleansiteslogs' ) == '1' ? true : false;
+
+        $this->mRotateAmpLog = $this->mModuleConfig->GetKey( 'maintenance_rotateamplog' ) == '1' ? true : false;
+        $this->mRotateAmpDbLog = $this->mModuleConfig->GetKey( 'maintenance_rotateampdblog' ) == '1' ? true : false;
+        $this->mRotateAccessLog = $this->mModuleConfig->GetKey( 'maintenance_rotateaccesslog' ) == '1' ? true : false;
+        $this->mRotateRemoteLog = $this->mModuleConfig->GetKey( 'maintenance_rotateremotelog' ) == '1' ? true : false;
+        $this->mRotatePhpLog = $this->mModuleConfig->GetKey( 'maintenance_rotatephplog' ) == '1' ? true : false;
+        $this->mRotateSitesLogs = $this->mModuleConfig->GetKey( 'maintenance_rotatesiteslogs' ) == '1' ? true : false;
+    }
+
+
+
+    function SetCleanAmpLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanamplog',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanAmpLog = $clean ? true : false;
+    }
+
+    function GetCleanAmpLog()
+    {
+        return $this->mCleanAmpLog;
+    }
+
+    function SetRotateAmpLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_rotateamplog',
+            $clean ? '1' : '0'
+            );
+        $this->mRotateAmpLog = $clean ? true : false;
+    }
+
+    function GetRotateAmpLog()
+    {
+        return $this->mRotateAmpLog;
+    }
+
+
+
+    function SetCleanAmpDbLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanampdblog',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanAmpDbLog = $clean ? true : false;
+    }
+
+    function GetCleanAmpDbLog()
+    {
+        return $this->mCleanAmpDbLog;
+    }
+
+    function SetRotateAmpDbLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_rotateampdblog',
+            $clean ? '1' : '0'
+            );
+        $this->mRotateAmpDbLog = $clean ? true : false;
+    }
+
+    function GetRotateAmpDbLog()
+    {
+        return $this->mRotateAmpDbLog;
+    }
+
+
+
+    function SetCleanAccessLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanaccesslog',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanAccessLog = $clean ? true : false;
+    }
+
+    function GetCleanAccessLog()
+    {
+        return $this->mCleanAccessLog;
+    }
+
+    function SetRotateAccessLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_rotateaccesslog',
+            $clean ? '1' : '0'
+            );
+        $this->mRotateAccessLog = $clean ? true : false;
+    }
+
+    function GetRotateAccessLog()
+    {
+        return $this->mRotateAccessLog;
+    }
+
+
+
+    function SetCleanRemoteLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanremotelog',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanRemoteLog = $clean ? true : false;
+    }
+
+    function GetCleanRemoteLog()
+    {
+        return $this->mCleanRemoteLog;
+    }
+
+    function SetRotateRemoteLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_rotateremotelog',
+            $clean ? '1' : '0'
+            );
+        $this->mRotateRemoteLog = $clean ? true : false;
+    }
+
+    function GetRotateRemoteLog()
+    {
+        return $this->mRotateRemoteLog;
+    }
+
+
+
+    function SetCleanPhpLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanphplog',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanPhpLog = $clean ? true : false;
+    }
+
+    function GetCleanPhpLog()
+    {
+        return $this->mCleanPhpLog;
+    }
+
+    function SetRotatePhpLog(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_rotatephplog',
+            $clean ? '1' : '0'
+            );
+        $this->mRotatePhpLog = $clean ? true : false;
+    }
+
+    function GetRotatePhpLog()
+    {
+        return $this->mRotatePhpLog;
+    }
+
+
+
+    function SetCleanSitesLogs(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleansiteslogs',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanSitesLogs = $clean ? true : false;
+    }
+
+    function GetCleanSitesLogs()
+    {
+        return $this->mCleanSitesLogs;
+    }
+
+    function SetRotateSitesLogs(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_rotatesiteslogs',
+            $clean ? '1' : '0'
+            );
+        $this->mRotateSitesLogs = $clean ? true : false;
+    }
+
+    function GetRotateSitesLogs()
+    {
+        return $this->mRotateSitesLogs;
+    }
+
+    // ----- Logs -----
+
+    function GetSystemLogsSize()
+    {
+        $total = 0;
+		import('carthag.core.Registry');
+		$reg = Registry :: instance();
+        if ( file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/amp.log' ) ) $total += filesize( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/amp.log' );
+        if ( file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log' ) ) $total += filesize( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log' );
+        if ( file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/access.log' ) ) $total += filesize( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/access.log' );
+        if ( file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/remote.log' ) ) $total += filesize( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/remote.log' );
+        if ( file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/php.log' ) ) $total += filesize( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/php.log' );
+
+        return $total;
+    }
+
+    function GetSitesLogsSize()
+    {
+        $total = 0;
+        $sites_query = &$GLOBALS['gEnv']['root']['db']->Execute(
+            'SELECT siteid,sitedblog '.
+            'FROM sites'
+            );
+
+        while ( !$sites_query->eof )
+        {
+            if ( file_exists( $sites_query->Fields( 'sitedblog' ) ) ) $total += filesize( $sites_query->Fields( 'sitedblog' ) );
+            if ( file_exists( SITESTUFF_PATH.$sites_query->Fields( 'siteid' ).'/log/site.log' ) )
+                $total += filesize( SITESTUFF_PATH.$sites_query->Fields( 'siteid' ).'/log/site.log' );
+
+            $sites_query->MoveNext();
+        }
+
+        return $total;
+    }
+
+    function CleanSystemLogs()
+    {
+    	import('carthag.core.Registry');
+    	$reg = Registry :: instance();
+    	
+        if (
+            $this->mCleanAmpLog
+            and file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/amp.log' )
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/amp.log' );
+            $log->Rotate( 0 );
+            unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/amp.log' );
+        }
+        if (
+            $this->mCleanAmpDbLog
+            and file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log' )
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log' );
+            $log->Rotate( 0 );
+            unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log' );
+        }
+        if (
+            $this->mCleanPhpLog
+            and file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/php.log' )
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/php.log' );
+            $log->Rotate( 0 );
+            unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/php.log' );
+        }
+        if (
+            $this->mCleanRemoteLog
+            and file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/remote.log' )
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/remote.log' );
+            $log->Rotate( 0 );
+            unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/remote.log' );
+        }
+        if (
+            $this->mCleanAccessLog
+            and file_exists( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/access.log' )
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/access.log' );
+            $log->Rotate( 0 );
+            unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/access.log' );
+        }
+
+        if (
+            $this->mRotateAmpLog
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/amp.log' );
+            $log->Rotate( 7 );
+        }
+        if (
+            $this->mRotateAmpDbLog
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/ampdb.log' );
+            $log->Rotate( 7 );
+        }
+        if (
+            $this->mRotatePhpLog
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/php.log' );
+            $log->Rotate( 7 );
+        }
+        if (
+            $this->mRotateRemoteLog
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/remote.log' );
+            $log->Rotate( 7 );
+        }
+        if (
+            $this->mRotateAccessLog
+            )
+        {
+            $log = new Logger( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/log/access.log' );
+            $log->Rotate( 7 );
+        }
+
+        return true;
+    }
+
+    function CleanSitesLogs()
+    {
+        $sites_query = &$GLOBALS['gEnv']['root']['db']->Execute(
+            'SELECT siteid,sitedblog '.
+            'FROM sites'
+            );
+
+        while ( !$sites_query->eof )
+        {
+            if ( file_exists( $sites_query->Fields( 'sitedblog' ) ) )
+            {
+                if ( $this->mCleanSitesLogs )
+                {
+                    $log = new Logger( $sites_query->Fields( 'sitedblog' ) );
+                    $log->Rotate( 0 );
+                    unlink( $sites_query->Fields( 'sitedblog' ) );
+                }
+                else if ( $this->mRotateSitesLogs )
+                {
+                    $log = new Logger( $sites_query->Fields( 'sitedblog' ) );
+                    $log->Rotate( 7 );
+                }
+            }
+
+            if ( file_exists( SITESTUFF_PATH.$sites_query->Fields( 'siteid' ).'/log/site.log' ) )
+            {
+                if ( $this->mCleanSitesLogs )
+                {
+                    $log = new Logger( SITESTUFF_PATH.$sites_query->Fields( 'siteid' ).'/log/site.log' );
+                    $log->Rotate( 0 );
+                    unlink( SITESTUFF_PATH.$sites_query->Fields( 'siteid' ).'/log/site.log' );
+                }
+                else if ( $this->mRotateSitesLogs )
+                {
+                    $log = new Logger( SITESTUFF_PATH.$sites_query->Fields( 'siteid' ).'/log/site.log' );
+                    $log->Rotate( 7 );
+                }
+            }
+
+            $sites_query->MoveNext();
+        }
+
+        return true;
+    }
+
+    /*
+    function RotateSystemLogs()
+    {
+    }
+
+    function RotateSitesLogs()
+    {
+    }
+    */
+
+    // ----- Facilities -----
+
+    function DoMaintenance()
+    {
+        $this->CleanSystemLogs();
+        $this->CleanSitesLogs();
+
+        return true;
+    }
+
+    function GetCleanableDiskSize()
+    {
+        $total = 0;
+
+        $total += $this->GetSystemLogsSize();
+        $total += $this->GetSitesLogsSize();
+
+        return $total;
+    }
+}
+
+function ampoliros_logs_maintenance_handler()
+{
+    $maint = new AmpolirosLogsMaintenance();
+    return $maint->DoMaintenance();
+}
+
+?>

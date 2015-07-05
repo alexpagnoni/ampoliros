@@ -1,0 +1,126 @@
+sites_title						= Sites
+newsite_title					= New site
+showsiteconfig_title			= Site configuration
+editsiteconfig_title			= Edit site configuration
+showsitedblog_title				= Site database log
+showsitelog_title				= Site log
+
+createdb_label					= Create database
+dbparamsnote_label				= (**) if left empty, will be automatically filled.
+createdbnote_label				= (***) if selected and the database is already existing, it will be destroyed.
+
+sites_button					= Sites
+newsite_button					= New site
+help_button						= Help
+situation.button                = Situation
+
+cleanlog_button				= Clean log
+
+sitecreated_status				= Site created.
+sitenotcreated_status			= ERROR: Site not created.
+siteupdated_status				= Site updated.
+sitenotupdated_status			= ERROR: Site not updated.
+siteremoved_status				= Site removed.
+sitenotremoved_status			= ERROR: Site not removed.
+siteenabled_status				= Site enabled.
+sitenotenabled_status			= ERROR: Site not enabled.
+sitedisabled_status				= Site disabled.
+sitenotdisabled_status			= ERROR: Site not disabled.
+
+status_header					= Status
+siteid_header					= Id
+sitename_header					= Name
+sitecreationdate_header			= Creation date
+
+showconfig_label				= Config
+editconfig_label				= Edit
+accesssite_label				= Access
+enablesite_label				= Enable
+disablesite_label				= Disable
+removesite_label				= Remove
+sitemodules_label				= Applications
+sitelog_label					= Log
+sitedblog_label					= Db log
+no_available_sites_status			= There are no available sites.
+enable_all_modules.button       = Enable all applications
+modules_enabled.status          = Applications enabled.
+modules_not_enabled.status      = ERROR: Applications not enabled.
+disable_all_modules.button       = Disable all applications
+modules_disabled.status          = Applications disabled.
+modules_not_disabled.status      = ERROR: Applications not disabled.
+disable_all_modules.confirm     = Do you really want to disable all applications?
+
+requiredfields_label			= (*) required field
+
+sitename_label					= Site name
+siteid_label					= Id
+sitepassword_label				= Password
+sitepath_label					= Path
+siteurl_label					= Url
+maxusers_label                  = Max users
+sitedbtype_label				= Database type
+sitedbname_label				= Database name
+sitedbhost_label				= Database host name
+sitedbport_label				= Database port
+sitedbuser_label				= Database user
+sitedbpassword_label			= Database password
+sitedblog_label					= Database log file
+
+createsite_submit				= Create site
+editsite_submit					= Update site
+
+# pass_activatemodule
+
+modenabled_status				= Appliction enabled.
+modnotenabled_status			= APPLICATION NOT ENABLED.
+unmetsuggs_status				= Unmet suggestions:
+unmetdeps_status				= Unmet dependencies:
+
+# pass_deactivatemodule
+
+moddisabled_status				= Application disabled.
+modnotdisabled_status			= APPLICATION NOT DISABLED.
+disunmetdeps_status				= Unmet dependencies:
+
+# main_newsite
+
+newsite_formcheck.message       = Some fields have wrong data:
+
+# main_editsite
+
+editsite_formcheck.message       = Some fields have wrong data:
+
+# main_removesite
+
+removesite_title				= Remove site
+removesitequestion_label			= Do you really want to remove %s site?
+okremove_button					= Remove
+dontremove_button				= Cancel
+
+# main_sitemodules
+
+sitemodules_title				= Site applications
+moduleid_header					= Applications
+modactivationdate_header		= Activation date
+deactivatemodule_label			= Disable
+activatemodule_label			= Enable
+moddeps_header					= Unmet or pending dependencies
+enable_submodule.button         = Enable "%s" subapplication
+disable_submodule.button        = Disable "%s" subapplication
+
+# main_help
+
+help_title								= Help
+
+#pass_cleanlog
+
+logcleaned_status			= Log cleaned.
+lognotcleaned_status			= ERROR: Log not cleaned.
+
+# Notes
+
+sitenotes_label             = Notes
+notes_set.status            = Notes updated.
+sitenotes.title             = Site notes
+sitenotes_text.label        = Site notes
+notes_apply.submit          = Apply

@@ -1,0 +1,329 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: huiiconsset.element,v 1.8 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'huiiconsset';
+$element['classname'] = 'HuiiconssetElement';
+$element['priority'] = 0;
+$element['site'] = FALSE;
+
+if (!defined('HUIICONSSET_ELEMENT')) {
+    define ('HUIICONSSET_ELEMENT', TRUE);
+
+    OpenLibrary('hui.library');
+    OpenLibrary('huithemes.library');
+
+    /*!
+    @class HuiiconssetElement
+    
+    @abstract Huiiconsset element handler.
+    */
+    class HuiiconssetElement extends ModuleElement {
+        public $type = 'huiiconsset';
+        public $site = FALSE;
+
+        function HuiiconssetElement(& $ampdb, & $sitedb, $modname, $name, $file, $basedir) {
+            $this -> ModuleElement($ampdb, $sitedb, $modname, $name, $file, $basedir);
+        }
+
+        function DoInstallAction($params) {
+            $result = FALSE;
+
+            if (strlen($params['file'])) {
+                $params['file'] = $this -> basedir.'/etc/'.basename($params['file']);
+
+                if (@ copy($params['file'], CONFIG_PATH.basename($params['file']))) {
+                    @ chmod(CONFIG_PATH.basename($params['file']), 0644);
+
+                    $hui_element = new HuiIconsSet($this -> ampdb, $params['name']);
+                    $params['file'] = basename($params['file']);
+
+                    if ($hui_element -> Install($params)) {
+                        $set_elements = $hui_element -> GetIconsSet();
+
+                        if (!file_exists(CGI_PATH.'icons'))
+                            @ mkdir(CGI_PATH.'icons', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name']))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'], 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/actions'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/actions', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/apps'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/apps', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/devices'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/devices', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/filesystems'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/filesystems', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/mimetypes'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/mimetypes', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/mini'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/mini', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/big'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/big', 0755);
+
+                        if (is_array($set_elements['actions'])) {
+                            while (list (, $file) = each($set_elements['actions'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/actions/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/actions/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['apps'])) {
+                            while (list (, $file) = each($set_elements['apps'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/apps/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/apps/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['devices'])) {
+                            while (list (, $file) = each($set_elements['devices'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/devices/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/devices/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['filesystems'])) {
+                            while (list (, $file) = each($set_elements['filesystems'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/filesystems/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/filesystems/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['mimetypes'])) {
+                            while (list (, $file) = each($set_elements['mimetypes'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/mimetypes/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/mimetypes/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['mini'])) {
+                            while (list (, $file) = each($set_elements['mini'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/mini/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/mini/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['big'])) {
+                            while (list (, $file) = each($set_elements['big'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/big/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/big/'.$file['file']);
+                            }
+                        }
+
+                        $result = TRUE;
+                    } else
+                        $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.doinstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to install element', LOGGER_ERROR);
+                } else
+                    $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.doinstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to copy hui element file ('.$params['file'].') to its destination ('.CONFIG_PATH.basename($params['file']).')', LOGGER_ERROR);
+            } else
+                $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.doinstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Empty element file name', LOGGER_ERROR);
+
+            return $result;
+        }
+
+        function DoUninstallAction($params) {
+            $result = FALSE;
+
+            if (strlen($params['file'])) {
+                $hui_element = new HuiIconsSet($this -> ampdb, $params['name']);
+
+                if ($hui_element -> Remove($params)) {
+                    $set_elements = $hui_element -> GetIconsSet();
+
+                    if (is_array($set_elements['actions'])) {
+                        while (list (, $file) = each($set_elements['actions'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/actions/'.$file['file']);
+                        }
+                    }
+
+                    if (is_array($set_elements['apps'])) {
+                        while (list (, $file) = each($set_elements['apps'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/apps/'.$file['file']);
+                        }
+                    }
+
+                    if (is_array($set_elements['devices'])) {
+                        while (list (, $file) = each($set_elements['devices'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/devices/'.$file['file']);
+                        }
+                    }
+
+                    if (is_array($set_elements['filesystems'])) {
+                        while (list (, $file) = each($set_elements['filesystems'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/filesystems/'.$file['file']);
+                        }
+                    }
+
+                    if (is_array($set_elements['mimetypes'])) {
+                        while (list (, $file) = each($set_elements['mimetypes'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/mimetypes/'.$file['file']);
+                        }
+                    }
+
+                    if (is_array($set_elements['mini'])) {
+                        while (list (, $file) = each($set_elements['mini'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/mini/'.$file['file']);
+                        }
+                    }
+
+                    if (is_array($set_elements['big'])) {
+                        while (list (, $file) = each($set_elements['big'])) {
+                            if (strlen($file['file']))
+                                @ unlink(CGI_PATH.'icons/'.$params['name'].'/big/'.$file['file']);
+                        }
+                    }
+
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/actions'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/actions');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/apps'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/apps');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/devices'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/devices');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/filesystems'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/filesystems');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/mimetypes'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/mimetypes');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/mini'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/mini');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/big'))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name'].'/big');
+                    if (!file_exists(CGI_PATH.'icons/'.$params['name']))
+                        @ rmdir(CGI_PATH.'icons/'.$params['name']);
+
+                    if (@ unlink(CONFIG_PATH.basename($params['file']))) {
+                        $result = TRUE;
+                    }
+                } else
+                    $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.douninstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to uninstall element', LOGGER_ERROR);
+            } else
+                $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.douninstallaction', 'In module '.$this -> modname.', element '.$params['name'].': Empty element file name', LOGGER_ERROR);
+
+            return $result;
+        }
+
+        function DoUpdateAction($params) {
+            $result = FALSE;
+
+            if (strlen($params['file'])) {
+                $params['file'] = $this -> basedir.'/etc/'.basename($params['file']);
+
+                if (@ copy($params['file'], CONFIG_PATH.basename($params['file']))) {
+                    @ chmod(CONFIG_PATH.basename($params['file']), 0644);
+
+                    $hui_element = new HuiIconsSet($this -> ampdb, $params['name']);
+                    $params['file'] = basename($params['file']);
+                    if ($hui_element -> Update($params)) {
+                        $set_elements = $hui_element -> GetIconsSet();
+
+                        if (!file_exists(CGI_PATH.'icons'))
+                            @ mkdir(CGI_PATH.'icons', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name']))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'], 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/actions'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/actions', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/apps'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/apps', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/devices'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/devices', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/filesystems'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/filesystems', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/mimetypes'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/mimetypes', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/mini'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/mini', 0755);
+                        if (!file_exists(CGI_PATH.'icons/'.$params['name'].'/big'))
+                            @ mkdir(CGI_PATH.'icons/'.$params['name'].'/big', 0755);
+
+                        if (is_array($set_elements['actions'])) {
+                            while (list (, $file) = each($set_elements['actions'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/actions/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/actions/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['apps'])) {
+                            while (list (, $file) = each($set_elements['apps'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/apps/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/apps/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['devices'])) {
+                            while (list (, $file) = each($set_elements['devices'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/devices/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/devices/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['filesystems'])) {
+                            while (list (, $file) = each($set_elements['filesystems'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/filesystems/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/filesystems/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['mimetypes'])) {
+                            while (list (, $file) = each($set_elements['mimetypes'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/mimetypes/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/mimetypes/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['mini'])) {
+                            while (list (, $file) = each($set_elements['mini'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/mini/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/mini/'.$file['file']);
+                            }
+                        }
+
+                        if (is_array($set_elements['big'])) {
+                            while (list (, $file) = each($set_elements['big'])) {
+                                if (strlen($file['file']))
+                                    @ copy($this -> basedir.'/www/themes/icons/'.$params['name'].'/big/'.$file['file'], CGI_PATH.'icons/'.$params['name'].'/big/'.$file['file']);
+                            }
+                        }
+
+                        $result = TRUE;
+                    } else
+                        $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.doupdateaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to update element', LOGGER_ERROR);
+                } else
+                    $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.doupdateaction', 'In module '.$this -> modname.', element '.$params['name'].': Unable to copy hui element file ('.$params['file'].') to its destination ('.CONFIG_PATH.basename($params['file']).')', LOGGER_ERROR);
+
+            } else
+                $this -> mLog -> LogEvent('ampoliros.huiiconsset_element.huiiconsset_class.doupdateaction', 'In module '.$this -> modname.', element '.$params['name'].': Empty element file name', LOGGER_ERROR);
+
+            return $result;
+        }
+    }
+
+}
+?>

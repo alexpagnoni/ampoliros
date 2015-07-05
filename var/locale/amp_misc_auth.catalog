@@ -1,0 +1,13 @@
+noauth        = You have no rights to access this page.
+nodb          = Database connection failed.
+nopageauth    = You have no rights to access this page.
+amplogin	 = Desktop login
+amprootlogin	 = Control panel login
+ampsitelogin	 = Desktop login
+wrongpwd	 = Wrong username or password.
+username	 = Username
+password	 = Password
+enter		 = Enter
+sitedisabled  = This site has been disabled.
+only_https_allowed      = Only https access is allowed
+auth_copyright.label    = Copyright &copy; 2000-2004 Solarix S.r.l.

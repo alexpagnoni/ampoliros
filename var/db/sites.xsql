@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<database>
+
+    <table name="sites">
+      <field name="id"              type="integer" notnull="1"/>
+      <field name="siteid"         type="text"    length="30" notnull="1"/>
+      <field name="sitemd5id"      type="text"    length="32" notnull="1"/>
+      <field name="sitepath"       type="text"    length="300" notnull="1"/>
+      <field name="sitename"       type="text"    length="100" notnull="1"/>
+      <field name="sitepassword"   type="text"    length="32" notnull="1"/>
+      <field name="siteurl"        type="text"    length="200"/>
+      <field name="sitedbname"     type="text"    length="40" notnull="1"/>
+      <field name="sitedbhost"     type="text"    length="100"/>
+      <field name="sitedbport"     type="integer"/>
+      <field name="sitedbuser"     type="text"    length="15"/>
+      <field name="sitedbpassword" type="text"    length="15"/>
+      <field name="sitedblog"      type="text"    length="300"/>
+      <field name="sitedbtype"     type="text"    length="20" notnull="1"/>
+      <field name="sitecreationdate"              type="date"/>
+      <field name="siteexpirydate" type="date"/>
+      <field name="siteactive"     type="boolean"/>
+      <field    name="notes"    type="text"/>
+      <field    name="maxusers" type="integer"/>
+      <key field="id" type="unique"/>
+   </table>
+
+   <sequence name="sites_id_seq"/>
+
+</database>

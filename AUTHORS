@@ -1,0 +1,108 @@
+
+                     Ampoliros Application Server
+
+                       http://www.ampoliros.com
+
+
+
+                          AUTHORS AND CREDITS
+                          ===================
+
+
+
+Core team
+---------
+
+Alex Pagnoni (alex)         <alex.pagnoni@solarix.it>
+- Original concept, design, coding, testing, webmaster.
+
+Roberto Ricci (robywan)     <roberto.ricci@solarix.it>
+- Suggestions, coding and testing.
+
+Carlo Farinella             <carlo.farinella@solarix.it>
+- Testing.
+
+
+
+Authors of external code and other contributions (alphabetical order)
+---------------------------------------------------------------------
+
+Dietrich Ayala              <dietrich@ganx4.com>
+NuSphere Corporation        <http://www.nusphere.com>
+- NuSOAP code included in soap.library.
+
+Josh Barger                 <josh.barger@attbi.com>
+- Tar class in archives.library.
+
+Everaldo Coelho             <everaldo@everaldo.com>
+- Its great Crystal icon set used as default theme.
+
+Pat Deegan                  <pdeegan@psychogenic.com>
+- MiniXML code              <http://minixml.psychogenic.com>
+
+The De-Strukht Team         <destruckht@linuxplaza.com.au>
+- Original OOP HTML classes in oophtml.library.
+
+Edd Dumbill                 <edd@usefulinc.com>
+Andres Salomon              <dilinger@voxel.net>
+Geoffrey T. Dairiki
+- Original XML-RPC stuff in xmlrpc.library.
+
+Daniel Jaenecke             <jaenecke@gmx.li>
+- Dump class in debug.library
+
+Fredrik Kristiansen         <russlndr@online.no>
+- PHP coding standard
+
+Manuel Lemos                <mlemos@acm.org>
+- Some code in dblayer.library.
+
+John Lim                    <jlim@natsoft.com.my>
+- Lot of code from ADODB in dblayer.library.
+
+Boris Penck                 <boris@gamate.com>
+- FileMan class in configman.library.
+
+Marco Pratesi               <pratesi@telug.it>
+- Original PHP Layers Menu in menu.hui.
+
+Saravanan                   <winsaravanan@yahoo.com>
+- Mail class in mail.library.
+
+Nicolas Bui					<nbui@wanadoo.fr>
+Mario (Neto, from brazil for helping on some detail)
+Gilles Delabordie for some comments and bug report
+- JPHP base system.
+
+
+
+Past contributors
+-----------------
+
+Willynux
+- Original configure script.
+
+Diego Costantini (evil)     <cowst@inwind.it>
+- Testing.
+
+John Voth (zeke)            <zeke@ampoliros.com>
+- Site and forum maintenance, bug reports.
+
+
+
+Thanks to
+---------
+
+Marco Vassura
+- Security bug report.      <vxr@libero.it>
+
+Damien Fressard and Benoit Boire
+- Bug reports, suggestions.
+
+
+
+Misc credits
+------------
+
+Thanks to all those who contributed by reporting bugs and issues.
+

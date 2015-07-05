@@ -1,0 +1,107 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: moduleconfig.element,v 1.6 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'moduleconfig';
+$element['classname'] = 'ModuleconfigElement';
+$element['priority'] = 10;
+$element['site'] = false;
+
+if ( !defined( 'MODULECONFIG_ELEMENT' ) )
+{
+define( 'MODULECONFIG_ELEMENT', true );
+
+/*!
+@class ModuleconfigElement
+
+@abstract Moduleconfig element handler.
+*/
+class ModuleconfigElement extends ModuleElement
+{
+    public $type = 'moduleconfig';
+    public $site = false;
+
+    function ModuleconfigElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and isset( $params['module'] ) and isset( $params['key'] ) )
+        {
+            $mod_cfg = new ModuleConfig( $this->ampdb, $params['module'] );
+            $mod_cfg->SetKey( $params['key'], isset( $params['value'] ) ? $params['value'] : '' );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.moduleconfig_element.moduleconfigelement_class.doinstallaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty file argument', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and isset( $params['module'] ) and isset( $params['key'] ) )
+        {
+            if ( !( isset( $params['keep'] ) and $params['keep'] = 'true' ) )
+            {
+                $mod_cfg = new ModuleConfig( $this->ampdb, $params['module'] );
+                $mod_cfg->DelKey( $params['key'] );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.moduleconfig_element.moduleconfigelement_class.douninstallaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty file argument', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and isset( $params['module'] ) and isset( $params['key'] ) )
+        {
+            $mod_cfg = new ModuleConfig( $this->ampdb, $params['module'] );
+
+            if ( !( isset( $params['keep'] ) and $params['keep'] = 'true' and $mod_cfg->CheckKey( $params['key'] ) ) )
+            {
+                $mod_cfg->SetKey( $params['key'], isset( $params['value'] ) ? $params['value'] : '' );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.moduleconfig_element.moduleconfigelement_class.doupdateaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty file argument', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="huithemes">
+		<field	name="id"	type="integer"	notnull="1"/>
+		<field	name="name"	type="text"	notnull="1"/>
+		<field	name="file"	type="text"	notnull="1"/>
+                <field	name="catalog"	type="text"	notnull="1"/>
+
+		<key	field="id"	type="unique"/>
+	</table>
+
+	<sequence	name="huithemes_id_seq"/>
+
+</database>

@@ -1,0 +1,147 @@
+
+                     Ampoliros Application Server
+
+                       http://www.ampoliros.com
+
+
+
+                         AMPOLIROS INFORMATION
+                         =====================
+
+
+
+General information
+-------------------
+
+Ampoliros is an advanced and easy to use distributed PHP Web
+applications platform, featuring a powerful Xml-Rpc and Soap interface.
+
+It is suitable as an Internet/Intranet development and deployment
+system. It has a very strong modular architecture and allows very fast
+deployment of web solutions.
+
+
+Features
+--------
+
+- Web interface. The first standard Ampoliros interface is the web
+administration system.
+
+- Xml interface for Web Services. The second Ampoliros standard interface
+is the remote procedures one, through XML. The platform provides
+interface for XmlRpc and Soap calls.
+
+- Centralized sites administration. Creation, editing and remotion of the
+sites can be done through a single interface.
+
+- Centralized applications administration. Installation, update and
+remotion of the applications (called "modules" in Ampoliros
+terminology) can be done through a single interface.
+
+- Extensibility of platform functions. Platform functions can be extended
+through external modules and hooks.
+
+- Extreme modularity. The whole platform is designed with modularity in
+mind.
+
+- Interaction between the applications. Every application can interact
+with the other applications, through API calls, hooks, remote
+procedures. The platform also provides dependencies support between
+applications.
+
+- Immediate installation and update of applications. To install an
+application in the platform you only need to upload the application
+file through a modules administration page. The same applies for the
+update of already installed applications.
+
+- Install applications once - use many times. When installing an
+application, it can be enabled to all platform sites without
+reinstalling it.
+
+- Easy installation and immediate update of the platform. Since Ampoliros
+itself is a module, it has all of modules properties and can be updated
+like any other module with a single step.
+
+- Separation of code and presentation. Application interface is
+programmed with a dedicated library of functions; no HTML in code.
+
+- Use of open standards and technologies. Ampoliros follow open standards
+like SQL, XML, XML-RPC, Soap and no proprietary formats are introduced.
+
+- Open licensing. Ampoliros is licensed with the Gnu Public License
+(GPL).
+
+- Localization support. Ampoliros supports country and language
+localization, both on platform and applications levels.
+
+- Context sensitive help. The system provides online help.
+
+- Database abstraction. The platform provides an extensible database
+abstraction layer. Current available interfaces: PostgreSQL and MySQL.
+
+- Written in PHP language. Ampoliros is written in PHP, a language born
+and specifically designed for the web.
+
+- Cross platform. Being written in PHP language, Ampoliros can be
+installed in every operating system where PHP has been ported.
+
+
+License
+-------
+
+Ampoliros is released under the GPL license. See the file named LICENSE.
+
+
+Requirements
+------------
+
+Serverside:
+    A web server with PHP 4.3 support and a SQL server supported by Ampoliros.
+    Read INSTALL file for more information.
+
+Clientside:
+    A web browser with HTML 4.0 and CSS support.
+
+See the file named INSTALL for more details.
+
+
+Installation
+------------
+
+See the file named INSTALL.
+
+
+Additional Information
+----------------------
+
+Ampoliros official home page:
+    http://www.ampoliros.com/
+
+Ampoliros latest distribution:
+    http://www.ampoliros.com/en/dl/download.php
+    http://sourceforge.net/project/showfiles.php?group_id=21115
+
+Ampoliros IRC channel:
+    #ampoliros on irc.openprojects.net
+
+Ampoliros mailing lists:
+    none at the moment
+
+Solarix official home page:
+    http://www.solarix.it/
+
+Ampoliros page at Solarix site:
+    http://www.solarix.it/prodotti/ampoliros/
+
+To submit a bug report:
+    send an email to info@ampoliros.com
+
+To submit a support request:
+    send an email to info@ampoliros.com
+
+
+Disclaimer
+----------
+
+There is no warranty, expressed or implied, associated with this product.
+Use at your own risk.

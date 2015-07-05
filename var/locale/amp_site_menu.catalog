@@ -1,0 +1,13 @@
+# Menus
+
+preferences					= Preferences
+tools						= Tools
+
+# Items
+
+logout						= Log out
+sitedata					= Data
+password					= Password
+locale						= Localization
+profiles					= Profiles
+ampinterface					= Interface

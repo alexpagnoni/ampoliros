@@ -1,0 +1,119 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: hook.element,v 1.9 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'hook';
+$element['classname'] = 'HookElement';
+$element['priority'] = 40;
+$element['site'] = false;
+
+if ( !defined( 'HOOK_ELEMENT' ) )
+{
+define( 'HOOK_ELEMENT', true );
+
+OpenLibrary( 'hooks.library' );
+
+/*!
+@class HookElement
+
+@abstract Hook element handler.
+*/
+class HookElement extends ModuleElement
+{
+    public $type = 'hook';
+    public $site = false;
+
+    function HookElement( $ampdb, $sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $hook = new Hook( $this->ampdb, $params['functionmodule'], $params['function'] );
+            if ( $hook->Add( $params['event'], $this->modname, $params['hookhandler'], $params['hookfunction'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.hook_element.hookelement_class.doinstallaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to add hook', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.hook_element.hookelement_class.doinstallaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Empty hook name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new Hook( $this->ampdb, $params['functionmodule'], $params['function'] );
+            if ( $xm->Remove( $params['event'], $this->modname, $params['hookhandler'], $params['hookfunction'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.hook_element.hookelement_class.douninstallaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to remove hook', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.hook_element.hookelement_class.douninstallaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Empty hook name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) )
+        {
+            $xm = new Hook(
+                $this->ampdb,
+                $params['functionmodule'],
+                $params['function'] );
+
+            if ( $xm->Update(
+                $params['hookmodule'],
+                $params['hookhandler'],
+                $params['hookfunction'] ) ) $result = true;
+            else $this->mLog->LogEvent(
+                'ampoliros.hook_element.hookelement_class.doupdateaction',
+                'In module '.$this->modname.', element '.$params['name'].': Unable to update hook',
+                LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent(
+            'ampoliros.hook_element.hookelement_class.doupdateaction',
+            'In module '.$this->modname.', element '.$params['name'].': Empty hook name',
+            LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

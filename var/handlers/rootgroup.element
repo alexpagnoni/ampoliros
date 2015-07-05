@@ -1,0 +1,107 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: rootgroup.element,v 1.7 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'rootgroup';
+$element['classname'] = 'RootgroupElement';
+$element['priority'] = 10;
+$element['site'] = FALSE;
+
+if ( !defined( 'ROOTGROUP_ELEMENT' ) )
+{
+define( 'ROOTGROUP_ELEMENT', TRUE );
+
+/*!
+ @class RootgroupElement
+
+ @abstract Rootgroup element handler.
+ */
+class RootgroupElement extends ModuleElement
+{
+    public $type = 'rootgroup';
+    public $site = FALSE;
+
+    function RootgroupElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = &$this->ampdb->Execute( 'INSERT INTO rootgroups VALUES ('.$this->ampdb->nextseqvalue( 'rootgroups_id_seq' ).','.
+                                         $this->ampdb->Format_Text( $params['name'] ).','.
+                                         $this->ampdb->Format_Text( $params['catalog'] ).')' );
+
+        if ( !$result ) $this->mLog->LogEvent( 'ampoliros.rootgroup_element.rootgroupelement_class.doenablesiteaction',
+                                              'In module '.$this->modname.', element '.$params['name'].': Unable to insert rootgroup into rootgroups table', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $tmpquery = &$this->ampdb->Execute( 'SELECT id '.
+                                           'FROM rootgroups '.
+                                           'WHERE name = '.$this->ampdb->Format_Text( $params['name'] ) );
+
+        /*
+        $tmpperm = new RootPermissions( $this->siteid, 0 );
+        $tmpperm->RemoveNodes( $tmpquery->Fields( 'id' ), 'group' );
+        */
+
+        $result = &$this->ampdb->Execute( 'DELETE FROM rootgroups '.
+                                         'WHERE name = '.$this->ampdb->Format_Text( $params['name'] ) );
+
+        if ( !$result ) $this->mLog->LogEvent( 'ampoliros.rootgroup_element.rootgroupelement_class.dodisablesiteaction',
+                                              'In module '.$this->modname.', element '.$params['name'].': Unable to remove rootgroup from rootgroups table', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = FALSE;
+
+        if ( $this->ampdb->Execute( 'UPDATE rootgroups SET catalog='.
+                                   $this->ampdb->Format_Text( $params['catalog'] ).
+                                   ' WHERE name='.
+                                   $this->ampdb->Format_Text( $params['name'] ) ) )
+        {
+            $result = TRUE;
+        }
+        else
+        {
+            $this->mLog->LogEvent( 'ampoliros.rootgroup_element.rootgroupelement_class.doupdatesiteaction',
+                                  'In module '.$this->modname.', element '.$params['name'].': Unable to update rootgroups table for siteid '.$siteid, LOGGER_ERROR );
+        }
+
+        return $result;
+    }
+}
+
+}
+?>

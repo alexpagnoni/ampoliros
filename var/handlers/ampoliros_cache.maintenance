@@ -1,0 +1,288 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2003-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: ampoliros_cache.maintenance,v 1.13 2004-07-08 15:04:22 alex Exp $
+
+if ( defined( 'AMPOLIROS_CACHE_MAINTENANCE' ) ) return;
+else define( 'AMPOLIROS_CACHE_MAINTENANCE', true );
+
+class AmpolirosCacheMaintenance
+{
+    public $mModuleConfig;
+
+    public $mCleanCache;
+    public $mCleanSessions;
+    public $mCleanPidFiles;
+    public $mCleanAmpTempDirs;
+    public $mCleanClipboard;
+
+    function AmpolirosCacheMaintenance()
+    {
+        OpenLibrary( 'modules.library' );
+
+        $this->mModuleConfig = new ModuleConfig(
+            $GLOBALS['gEnv']['root']['db'],
+            'ampoliros'
+            );
+
+        $this->mCleanCache = $this->mModuleConfig->GetKey( 'maintenance_cleancache' ) == '1' ? true : false;
+        $this->mCleanSessions = $this->mModuleConfig->GetKey( 'maintenance_cleansessions' ) == '1' ? true : false;
+        $this->mCleanPidFiles = $this->mModuleConfig->GetKey( 'maintenance_cleanpidfiles' ) == '1' ? true : false;
+        $this->mCleanAmpTempDirs = $this->mModuleConfig->GetKey( 'maintenance_cleanamptempdirs' ) == '1' ? true : false;
+        $this->mCleanClipboard = $this->mModuleConfig->GetKey( 'maintenance_cleanclipboard' ) == '1' ? true : false;
+    }
+
+    function SetCleanCache(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleancache',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanCache = $clean ? true : false;
+    }
+
+    function GetCleanCache()
+    {
+        return $this->mCleanCache;
+    }
+
+    function SetCleanSessions(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleansessions',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanSessions = $clean ? true : false;
+    }
+
+    function GetCleanSessions()
+    {
+        return $this->mCleanSessions;
+    }
+
+    function SetCleanPidFiles(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanpidfiles',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanPidFiles = $clean ? true : false;
+    }
+
+    function GetCleanPidFiles()
+    {
+        return $this->mCleanPidFiles;
+    }
+
+    function SetCleanAmpTempDirs(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanamptempdirs',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanAmpTempDirs = $clean ? true : false;
+    }
+
+    function GetCleanAmpTempDirs()
+    {
+        return $this->mCleanAmpTempDirs;
+    }
+
+    function SetCleanClipboard(
+        $clean
+        )
+    {
+        $this->mModuleConfig->SetKey(
+            'maintenance_cleanclipboard',
+            $clean ? '1' : '0'
+            );
+        $this->mCleanClipboard = $clean ? true : false;
+    }
+
+    function GetCleanClipboard()
+    {
+        return $this->mCleanClipboard;
+    }
+
+    // ----- Cache, session, etc. -----
+
+    function GetCacheSize()
+    {
+        return $this->_DirSize( TMP_PATH.'ampcache' );
+    }
+
+    function CleanCache()
+    {
+        Carthag::import( 'com.solarix.ampoliros.datatransfer.cache.CacheGarbageCollector' );
+
+        $gc = new CacheGarbageCollector();
+
+        return $gc->EmptyCache();
+    }
+
+    function GetSessionsSize()
+    {
+        return $this->_DirSize( TMP_PATH.'phpsessions' );
+    }
+
+    function CleanSessions()
+    {
+        return $this->_EraseDirContent(
+            TMP_PATH.'phpsessions',
+            $GLOBALS['gEnv']['runtime']['sessionid']
+            );
+    }
+
+    function GetPidFilesSize()
+    {
+        return $this->_DirSize( TMP_PATH.'pids' );
+    }
+
+    function CleanPidFiles()
+    {
+    	import('com.solarix.ampoliros.core.Ampoliros');
+    	$amp = Ampoliros::instance('Ampoliros');
+        return $this->_EraseDirContent(
+            TMP_PATH.'pids',
+            $amp->getPid()
+            );
+    }
+
+    function GetAmpTempDirsSize()
+    {
+        return $this->_DirSize( TMP_PATH.'modinst' );
+    }
+
+    function CleanAmpTempDirs()
+    {
+        return $this->_EraseDirContent( TMP_PATH.'modinst' );
+    }
+
+    function GetClipboardSize()
+    {
+        return $this->_DirSize( TMP_PATH.'clipboard' );
+    }
+
+    function CleanClipboard()
+    {
+        return $this->_EraseDirContent( TMP_PATH.'clipboard' );
+    }
+
+    // ----- Facilities -----
+
+    function DoMaintenance()
+    {
+        if ( $this->mCleanCache ) $this->CleanCache();
+        if ( $this->mCleanSessions ) $this->CleanSessions();
+        if ( $this->mCleanPidFiles ) $this->CleanPidFiles();
+        if ( $this->mCleanAmpTempDirs ) $this->CleanAmpTempDirs();
+        if ( $this->mCleanClipboard ) $this->CleanClipboard();
+
+        return true;
+    }
+
+    function GetCleanableDiskSize()
+    {
+        $total = 0;
+
+        $total += $this->GetCacheSize();
+        $total += $this->GetSessionsSize();
+        $total += $this->GetPidFilesSize();
+        $total += $this->GetAmpTempDirsSize();
+        $total += $this->GetClipboardSize();
+
+        return $total;
+    }
+
+    function _DirSize(
+        $dir
+        )
+    {
+        $totalsize = 0;
+
+        if ( $dirstream = @opendir( $dir ) )
+        {
+            while ( false !== ( $filename = readdir( $dirstream ) ) )
+            {
+                if ( $filename != '.' && $filename != '..' )
+                {
+                    if ( is_file( $dir.'/'.$filename ) )
+                        $totalsize += filesize( $dir.'/'.$filename );
+
+                    if ( is_dir( $dir.'/'.$filename ) )
+                        $totalsize += $this->_DirSize( $dir.'/'.$filename );
+                }
+            }
+
+            closedir( $dirstream );
+        }
+
+        return $totalsize;
+    }
+
+    function _EraseDirContent(
+        $dir,
+        $preserveFile = ''
+        )
+    {
+        if ( $dirstream = @opendir( $dir ) )
+        {
+            OpenLibrary( 'misc.library' );
+
+            while ( false !== ( $filename = readdir( $dirstream ) ) )
+            {
+                if ( $filename != '.' && $filename != '..' && $filename != $preserveFile )
+                {
+                    if ( is_file( $dir.'/'.$filename ) )
+                        unlink( $dir.'/'.$filename );
+
+                    if ( is_dir( $dir.'/'.$filename ) )
+                        RecRemoveDir( $dir.'/'.$filename );
+                }
+            }
+
+            closedir( $dirstream );
+        }
+
+        return true;
+    }
+}
+
+function ampoliros_cache_maintenance_handler()
+{
+    $maint = new AmpolirosCacheMaintenance();
+    return $maint->DoMaintenance();
+}
+
+?>

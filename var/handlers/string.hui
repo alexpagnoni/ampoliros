@@ -1,0 +1,116 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: string.hui,v 1.17 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiString';
+
+if ( !defined( 'STRING_HUI' ) )
+{
+define( 'STRING_HUI', true );
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+
+/*!
+ @class HuiString
+ @abstract String form widget.
+ */
+class HuiString extends HuiWidgetElement
+{
+    public $mWidgetType = 'string';
+    /*! @public mHint string - Help string for this element. */
+    //public $mHint;
+    /*! @public mValue string - Default content. */
+    //public $mValue;
+    /*! @public mDisp string - Dispatcher for this element. */
+    public $mDisp;
+    /*! @public mPassword boolean - Set to 'true' if this is a password string. */
+    //public $mPassword;
+    /*! @public mReadOnly boolean - Set to 'true' if this is a read only string. */
+    //public $mReadOnly;
+    /*! @public mRequired boolean - Set to 'true' if the value of the widget cannot be empty. */
+    //public $mRequired;
+    /*! @public mInteger boolean - Set to 'true' if the value of the widget must be an integer. */
+    //public $mInteger;
+    /*! @public mEmail boolean - Set to 'true' if the value of the widget must be an e-mail address. */
+    //public $mEmail;
+    /*! @public mCheckMessage string - Verbal description of the checks. */
+    //public $mCheckMessage;
+    /*! @public mSize integer - Width in characters of the widget. */
+    //public $mSize;
+    /*! @public mMaxLength integer - Max string length. */
+    //public $mMaxLength;
+    //public $mBgColor;
+    /*! @public mTabIndex integer - Position of the current element in the tabbing order. */
+    //public $mTabIndex = 0;
+
+    public function HuiString( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiWidgetElement( $elemName, $elemArgs, $elemTheme, $dispEvents );
+        if ( !isset( $this->mArgs['tabindex'] ) ) $this->mArgs['tabindex'] = 0;
+        if ( !isset( $this->mArgs['bgcolor'] ) or !strlen( $this->mArgs['bgcolor'] ) ) $this->mArgs['bgcolor'] = 'white';
+    }
+
+    protected function _build()
+    {
+        import('com.solarix.ampoliros.hui.HuiEventRawData');
+        $event_data = new HuiEventRawData( $this->mArgs['disp'], $this->mName );
+
+        if (
+            ( $this->mArgs['required'] == 'true' ) ||
+            ( $this->mArgs['integer'] == 'true' ) ||
+            ( $this->mArgs['email'] == 'true' )
+            )
+        {
+            $check_script = '
+<script language="JavaScript" type="text/javascript">
+<!--
+requiredFields[requiredFields.length] = new Array( "'.$event_data->GetDataString().'", "'.$this->mArgs['checkmessage'].'"';
+            $check_script .= $this->mArgs['required'] == 'true' ? ', "required"' : '';
+            $check_script .= $this->mArgs['integer'] == 'true' ? ', "integer"' : '';
+            $check_script .= $this->mArgs['email'] == 'true' ? ', "email"' : '';
+            $check_script .= ' );
+-->
+</script>';
+        }
+
+        $this->mLayout = $this->mComments ? '<!-- begin '.$this->mName.' string -->' : '';
+        $this->mLayout .= '<input class="normal" '.( strlen( $this->mArgs['hint'] ) ? 'onMouseOver="huiHint(\''.$this->mArgs['hint'].'\');" onMouseOut="huiUnHint();" ' : '' ).'type="'.( $this->mArgs['password'] == 'true' ? 'password' : 'text' ).'" name="'.$event_data->GetDataString().'"';
+        $this->mLayout .= ' tabindex="'.$this->mArgs['tabindex'].'"';
+        $this->mLayout .= strlen( $this->mArgs['value'] ) ? ' value="'.htmlentities( $this->mArgs['value'] ).'"' : '';
+        $this->mLayout .= $this->mArgs['hint'] ? ' alt="'.$this->mArgs['hint'].'"' : '';
+        $this->mLayout .= strlen( $this->mArgs['bgcolor'] ) ? ' style="background-color: '.$this->mArgs['bgcolor'].';"' : '';
+        $this->mLayout .= strlen( $this->mArgs['size'] ) ? ' size="'.$this->mArgs['size'].'"' : '';
+        $this->mLayout .= strlen( $this->mArgs['maxlength'] ) ? ' maxlength="'.$this->mArgs['maxlength'].'"' : '';
+        $this->mLayout .= strlen( $this->mArgs['readonly'] ) ? ' readonly' : '';
+        $this->mLayout .= '>'.( ( isset( $check_script ) and strlen( $check_script ) ) ? $check_script : '' );
+        $this->mLayout .= $this->mComments ? '<!-- end '.$this->mName." string -->\n" : '';
+        return true;
+    }
+}
+
+}
+?>

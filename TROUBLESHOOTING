@@ -1,0 +1,100 @@
+
+                     Ampoliros Application Server
+
+                       http://www.ampoliros.com
+
+
+
+                        TROUBLESHOOTING AND FAQ
+                        =======================
+
+
+
+GENERAL QUESTIONS
+-----------------
+
+Q. Is Ampoliros a CMS (content management system)?
+
+A. No it isn't. Ampoliros is an application server. If you are looking for an
+Ampoliros based CMS, check Magellan at the following URL:
+http://www.ampoliros.com/projects/magellan.
+------------------------------------------------------------------------------
+
+
+
+INSTALLATION AND UPGRADE QUESTIONS
+----------------------------------
+
+Q. When I click on the "Next" button at the bottom of the page during "System
+check" phase, nothing happens.
+
+A. Check that the Ampoliros directories have the right users and permissions.
+Typical user/group for Apache is nobody:nogroup or apache:apache. The same
+applies for Windows, you must ensure that the directories are writable by the
+web server user.
+------------------------------------------------------------------------------
+Q. Ampoliros hangs after the installation or upgrade of a module.
+
+A. The installation/upgrade process has been interrupted and the lock file
+[privatedir]/tmp/.upgrading_system has not been removed. Remove it using 
+[cgiurl]/unlock.php.
+------------------------------------------------------------------------------
+Q. After upgrading to Ampoliros 2.6.4 or greater, logging to Ampoliros does
+not work anymore.
+
+A. Ampoliros requires PHP 4.1.x or greater since version 2.6.4, so upgrade to
+a new PHP version.
+------------------------------------------------------------------------------
+Q. I'm unable to log into Ampoliros even if the password is right. I've PHP
+4.1.2.
+
+A. PHP 4.1.2 has a certain issue that prevents Ampoliros forms to work well.
+Upgrade to a newer PHP version.
+------------------------------------------------------------------------------
+Q. What is the meaning of the Ampoliros name, domain and DNS asked in the
+setup phase and in the Network administration page?
+
+A. At this stage they have no utilization, and you can leave them blank or
+fill them with any strings you want. For now, you can use them to identify
+various Ampoliros installations, e.g. you can define MyAmpNet as domain for
+all the installations and an unique name (amp1, amp2, web, intranet, ...) for
+each installation.
+------------------------------------------------------------------------------
+Q. I'm unable to complete the database creation phase during setup.
+
+A. This is likely to be a database permissions problem. You may try making
+sure that the specified database user has access to the database not only from
+localhost, but also by the IP address and domain name. Then change the default
+localhost on the form to your domain. If this doesn'work, you may also try
+with 127.0.0.1 as IP address, for certains setup this works.
+------------------------------------------------------------------------------
+Q. POST forms with attribute enctype="multipart/form-data" don't pass
+parameters.
+
+A. PHP must have file_uploads set to On in php.ini
+------------------------------------------------------------------------------
+Q. Since Ampoliros archive size is greater than 2 megabytes (Ampoliros 3.3.0)
+I'm unable to update it in the modules administration page.
+
+A. The standard PHP upload file size limit is set to 2M. Increase it to a value
+bigger than the Ampoliros archive, e.g.: upload_max_filesize = 4M
+
+
+
+CURIOSITIES
+-----------
+
+Q. Are Alex Pagnoni, wuH, burzmali and teg the same person?
+
+A. Yes, they are.
+------------------------------------------------------------------------------
+Q. Where does the Ampoliros word come from?
+
+A. Ampoliros comes from the Dune book series by Frank Herbert. It is the
+legendary "Flying Dutchman" of space. You can read the "Legend of Ampoliros"
+here: http://www.ampoliros.com/en/misc/legend.php
+------------------------------------------------------------------------------
+Q. How Ampoliros is pronounced?
+
+A. You can hear it pronounced here in wav format:
+http://www.ampoliros.com/files/ampoliros.wav

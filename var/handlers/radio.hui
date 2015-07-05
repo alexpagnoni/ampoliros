@@ -1,0 +1,88 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: radio.hui,v 1.17 2004-07-14 13:15:37 alex Exp $
+
+$huielementclass = 'HuiRadio';
+
+if ( !defined( 'RADIO_HUI' ) )
+{
+define( 'RADIO_HUI', true );
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+import('com.solarix.ampoliros.hui.HuiEventRawData');
+
+/*!
+ @class HuiRadio
+
+ @abstract Radio form widget.
+ */
+class HuiRadio extends HuiWidgetElement
+{
+    public $mWidgetType = 'radio';
+    public $mValue;
+    public $mDisp;
+    public $mChecked;
+    public $mLabel;
+    public $mReadOnly;
+    /*! @public mTabIndex integer - Position of the current element in the tabbing order. */
+    public $mTabIndex = 0;
+    /*! @public mHint string - Optional hint message. */
+    public $mHint;
+
+    function HuiRadio( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiWidgetElement( $elemName, $elemArgs, $elemTheme, $dispEvents );
+        if ( isset( $this->mArgs['value'] ) ) $this->mValue = $this->mArgs['value'];
+        if ( isset( $this->mArgs['disp'] ) ) $this->mDisp = $this->mArgs['disp'];
+        if ( isset( $this->mArgs['label'] ) ) $this->mLabel = $this->mArgs['label'];
+        if ( isset( $this->mArgs['checked'] ) ) $this->mChecked = $this->mArgs['checked'];
+        if ( isset( $this->mArgs['readonly'] ) ) $this->mReadOnly = $this->mArgs['readonly'];
+        if ( isset( $this->mArgs['tabindex'] ) ) $this->mTabIndex = $this->mArgs['tabindex'];
+        if ( isset( $this->mArgs['hint'] ) ) $this->mHint = $this->mArgs['hint'];
+    }
+
+    function _Build()
+    {
+        $result = false;
+
+        $event_data = new HuiEventRawData( $this->mDisp, $this->mName );
+
+        $this->mLayout = ( $this->mComments ? '<!-- begin '.$this->mName.' radio -->' : '' ).
+            '<table border="0" cellpadding="0" cellspacing="0"><tr><td valign="middle"><input class="normal" '.( strlen( $this->mHint ) ? 'onMouseOver="huiHint(\''.$this->mHint.'\');" onMouseOut="huiUnHint();" ' : '' ).'type="radio" '.
+            'name="'.$event_data->GetDataString().'"'.( strlen( $this->mValue ) ? ' value="'.$this->mValue.'"' : '' ).
+            ' tabindex="'.$this->mTabIndex.'"'.
+            ( strlen( $this->mReadOnly ) ? ' readonly' : '' ).
+            ( $this->mChecked == 'true' ? ' checked' : '' ).'></td><td valign="middle">'.htmlentities( $this->mLabel ).'</td></tr></table>'.
+            ( $this->mComments ? '<!-- end '.$this->mName." radio -->\n" : '' );
+        $result = true;
+
+        return $result;
+    }
+}
+
+}
+?>

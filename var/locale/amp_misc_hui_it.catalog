@@ -1,0 +1,35 @@
+# Months
+january     = Gennaio
+february    = Febbraio
+march       = Marzo
+april       = Aprile
+may         = Maggio
+june        = Giugno
+july        = Luglio
+august      = Agosto
+september   = Settembre
+october     = Ottobre
+november    = Novembre
+december    = Dicembre
+
+# Week Days
+
+sun = D
+mon = L
+tue = M
+wed = M
+thu = G
+fri = V
+sat = S
+
+sunday      = Domenica
+monday      = Lunedì
+tuesday     = Martedì
+wednesday   = Mercoledì
+thursday    = Giovedì
+friday      = Venerdì
+saturday    = Sabato
+
+# Misc
+
+calendar = Calendario

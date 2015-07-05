@@ -1,0 +1,201 @@
+
+                     Ampoliros Application Server
+
+                       http://www.ampoliros.com
+
+
+
+                     TODO LIST AND CURRENT ROADMAP
+                     =============================
+
+
+
+New PHP features and changes to consider
+----------------------------------------
+- Check PostgreSQL support.
+- Check the new declare() global support, it may be useful for debug purposes.
+- Check set_error_handler() now accepting methods as callbacks.
+- Check "ignore_repeated_errors" and "ignore_repeated_source" php.ini options.
+
+
+
+External code to keep updated
+-----------------------------
+- PHP Layers Menu
+- MiniXML
+- Tar class
+- NuSOAP
+- Crystal icons
+- XmlRpc
+
+
+
+4000 - 4.0.x
+------------
+NEW FEATURES:
+
+CHANGES:
+
+- Controllare fase di installazione per: JPHP
+- Sistemare AMPOLIROS_ARCHIVE_* nei vari moduli.
+
+
+
+Future generations and versions
+-------------------------------
+
+NEW FEATURES:
+
+Major features
+
+- Scripting
+  - Scripting.
+  - Events graphical management through bars and pipes.
+
+- Core/Logic
+  - Intelligent FillTypes in modules functions.
+  - Use of new PHP5 features.
+  - Backup/restore actions for element type handlers.
+  - Ampoliros instance as object.
+  - New persistance layer.
+  - Inclusion of Carthag project.
+  - Messages.
+  - Processes control.
+  - Threads (under Linux).
+  - Command Line Interface.
+
+- Web services
+  - Generic "remote procedures" wrapper for XmlRpc, Soap, etc.
+  - remote.php/soap.php cgi.
+  - Easier web services programming.
+
+- User interface
+  - New desktop layout.
+  - Automatic and transparent creation of Gtk interfaces by only setting a "gtk"
+    attribute to Hui class instance. This would be automatic by setting
+    Ampoliros interface to AMP_INTERFACE_GUI.
+
+- Mobile edition
+  - Compact Hui output.
+  - Mobile installation.
+
+
+
+Unscheduled specific features to be implemented
+-----------------------------------------------
+
+NEW FEATURES:
+
+Major features
+
+- "provider" dependencies.
+- Namespace definition.
+- Ampoliros network.
+- Mime types.
+- Time/zone management.
+
+Minor features
+
+- Handling of DROP COLUMN in postgres DbLayer.
+- Handling of default attribute when adding a column in postgres DbLayer.
+- Javascript popup based lookup for Hui widgets like HuiComboBox.
+- Handling of Ampoliros admin urls with a given port.
+- System generated messages to root (like important changes between releases).
+- module.submodule dependency.
+- Simplecron interface element.
+- Scheduled maintenance: removal of old semaphores.
+- Clipboard garbage collecting.
+- Scheduled maintenance: user commands.
+- ampoliros_shutdown().
+- Add help nodes.
+- More country descriptors.
+- Operating System dependencies (.os).
+- Change "URL" string in site creation panel to "Web site URL"
+- Add explicit port support.
+
+Security features
+
+- Check of some PHP settings: safe_mode, disable_functions, register_globals.
+- Check for potential unsecure code.
+- md5 checks on modules.
+- Wrong root and user logins on reports.
+- Disable root cron security setting.
+- Current activity.
+- IP based access lists for root administration area.
+- SSL flag for web services.
+
+CHANGES:
+
+- Better cron management.
+- Overall code revision.
+- Extended comments.
+- Consistent classes.
+- Better Makefile with install instead of cp.
+- Conversion to Xml Hui definitions.
+- XHTML compliant Hui HTML code.
+- Radio buttons in place of normal buttons in user profile editing page.
+
+FIXES:
+
+- Fix the wrong country descriptors.
+- Cannot rename profile name.
+
+TO BE FINISHED FEATURES:
+
+- Remote procedure calls for every platform function.
+- More hooks.
+- An hook for each web service and viceversa (when possible).
+
+
+XmlRpc methods to be implemented
+--------------------------------
+ampoliros.cron.list
+ampoliros.cron.task.add
+ampoliros.cron.task.change
+ampoliros.cron.task.remove
+ampoliros.dns.host.add
+ampoliros.dns.host.change
+ampoliros.dns.host.remove
+ampoliros.dns.host.resolve
+ampoliros.modules.list
+ampoliros.modules.module.install
+ampoliros.modules.module.remove
+ampoliros.modules.module.info
+ampoliros.modules.module.keys.list
+ampoliros.modules.module.keys.key.get
+ampoliros.modules.module.keys.key.set
+ampoliros.modules.module.keys.key.remove
+ampoliros.network.name.get
+ampoliros.network.name.set
+ampoliros.network.domain.get
+ampoliros.network.domain.set
+ampoliros.network.dns.get
+ampoliros.network.dns.set
+ampoliros.sites.list
+ampoliros.sites.enabledmodules
+ampoliros.sites.site.create
+ampoliros.sites.site.info
+ampoliros.sites.site.change
+ampoliros.sites.site.enable
+ampoliros.sites.site.disable
+ampoliros.sites.site.remove
+ampoliros.sites.site.keys.list
+ampoliros.sites.site.keys.key.get
+ampoliros.sites.site.keys.key.set
+ampoliros.sites.site.keys.key.remove
+ampoliros.sites.site.log.site.get
+ampoliros.sites.site.log.site.erase
+ampoliros.sites.site.log.site.logevent
+ampoliros.sites.site.log.db.get
+ampoliros.sites.site.log.db.erase
+ampoliros.sites.site.log.db.logevent
+ampoliros.sites.site.users.list
+ampoliros.sites.site.users.user.add
+ampoliros.sites.site.users.user.change
+ampoliros.sites.site.users.user.remove
+ampoliros.sites.site.profiles.list
+ampoliros.sites.site.profiles.profile.add
+ampoliros.sites.site.profiles.profile.change
+ampoliros.sites.site.profiles.profile.remove
+ampoliros.system.info
+ampoliros.version

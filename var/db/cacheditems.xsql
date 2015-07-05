@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="cacheditems">
+  	<field	name="module"	type="text"	notnull="1"/>
+		<field	name="itemid"	type="text"	notnull="1"/>
+    <field	name="itemfile"	type="text"	notnull="1"/>
+    <field	name="validator"	type="text"/>
+    <field  name="siteid"   type="integer"/>
+    <field  name="userid"   type="integer"/>
+	</table>
+
+</database>

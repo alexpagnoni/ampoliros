@@ -1,0 +1,13 @@
+noauth			= Non hai permessi sufficienti per accedere a questa pagina.
+nodb			= Connessione al database fallita.
+nopageauth		= Non hai permessi sufficienti per accedere a questa pagina.
+amplogin		= Accesso al Desktop
+amprootlogin	= Accesso al Pannello di controllo
+ampsitelogin	= Accesso al Desktop
+wrongpwd		= Nome utente o password errati.
+username		= Nome utente
+password		= Password
+enter			= Entra
+sitedisabled	= Questo sito è stato disabilitato.
+only_https_allowed      = L'accesso è consentito solo con https
+auth_copyright.label    = Copyright &copy; 2000-2004 Solarix S.r.l.

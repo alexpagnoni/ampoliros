@@ -1,0 +1,11 @@
+Nuovo account di un profilo di procedure remote
+===============================================
+
+Da questa pagina è possibile creare un nuovo account di un profilo di
+procedure remote di un altro host.
+
+Se non vengono indicati il nome utente e la password, Ampoliros crea un
+utente anonimo. Si consiglia di porre particolare attenzione nel
+scegliere quale profilo associare all'utente anonimo, perchè chiunque
+può accedere alle procedure remote associate al profilo di un utente
+anonimo.

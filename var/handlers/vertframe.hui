@@ -1,0 +1,89 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: vertframe.hui,v 1.11 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiVertFrame';
+
+if (!defined('VERTFRAME_HUI')) {
+    define ('VERTFRAME_HUI', true);
+
+import('com.solarix.ampoliros.hui.HuiContainerElement');
+
+    class HuiVertFrame extends HuiContainerElement {
+        public $mWidgetType = 'vertframe';
+        /*! @public mAlign string - Frame alignment. */
+        //public $mAlign;
+        /*! @public mWidth string - Frame widht, defaults to nothing. */
+        //public $mWidth;
+        //public $mBgColor;
+
+        public function HuiVertFrame($elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '') {
+            $this -> HuiContainerElement($elemName, $elemArgs, $elemTheme, $dispEvents);
+
+            if (isset($this -> mArgs['align'])) {
+                switch ($this -> mArgs['align']) {
+                    case 'left' :
+                    case 'center' :
+                    case 'right' :
+                        break;
+                    default :
+                        $this -> mArgs['align'] = 'left';
+                }
+            } else
+                $this -> mArgs['align'] = 'left';
+
+            if (!isset($this -> mArgs['bgcolor']))
+                $this -> mArgs['bgcolor'] = 'white';
+        }
+
+        protected function _BuildBegin() {
+            $block = ($this -> mComments ? '<!-- begin '.$this -> mName.' vertframe -->' : '');
+            $block.= '<table border="0" height="100%" cellspacing="0" '. (strlen($this -> mArgs['width']) ? 'width="'.$this -> mArgs['width'].'" ' : '').'cellpadding="1"><tr><td bgcolor="'.$this -> mThemeHandler -> mColorsSet['bars']['color']."\">\n";
+            $block.= '<table border="0" height="100%" cellspacing="0" '. (strlen($this -> mArgs['width']) ? 'width="'.$this -> mArgs['width'].'" ' : '').'cellpadding="1"><tr><td bgcolor="'.$this -> mThemeHandler -> mColorsSet['bars']['shadow']."\">\n";
+            $block.= '<table border="0" height="100%" cellspacing="0" '. (strlen($this -> mArgs['width']) ? 'width="'.$this -> mArgs['width'].'" ' : '').'cellpadding="0" bgcolor="'.$this -> mArgs['bgcolor']."\">\n";
+            return $block;
+        }
+
+        protected function _BuildEnd() {
+            $block = '<tr><td height="100%" bgcolor="white"></td></tr>'."\n".'</table>'."\n";
+            $block.= '</td></tr>'."\n".'</table>'."\n";
+            $block.= '</td></tr>'."\n".'</table>'."\n";
+            $block.= ($this -> mComments ? '<!-- end '.$this -> mName.' vertframe -->'."\n" : '');
+            return $block;
+        }
+
+        protected function _BuildBlockBegin() {
+            return '<tr><td'. ($this -> mArgs['align'] ? ' align="'.$this -> mArgs['align'].'"' : ''). (strlen($this -> mArgs['width']) ? ' width="'.$this -> mArgs['width'].'"' : '').'>';
+        }
+
+        protected function _BuildBlockEnd() {
+            return '</td></tr>'."\n";
+        }
+    }
+
+}
+?>

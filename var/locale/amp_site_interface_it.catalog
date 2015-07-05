@@ -1,0 +1,51 @@
+# Global
+
+interface_pagetitle				= Interfaccia di Ampoliros
+interface_title					= Interfaccia di Ampoliros
+default_button					= Temi
+advanced_button					= Avanzate
+help_button					= Aiuto
+
+# main_default
+
+default_title					= Impostazioni interfaccia
+oemframe_label					= Settaggi OEM
+oemname_label					= Nome OEM
+oemurl_label					= Indirizzo del sito OEM
+oemlogo_label					= Logo del collegamento al sito OEM
+oembiglogo_label       				= Logo grande dell'OEM
+oem_submit                                      = Applica
+oem_biglogo_enabled_label			= Logo grande dell'OEM
+enabled_icons_label				= Icone abilitate
+amp_biglogo_enabled_label			= Logo grande di Ampoliros
+amp_link_enabled_label				= Collegamento al sito Ampoliros
+solarix_link_enabled_label			= Collegamento al sito Solarix
+oem_link_enabled_label				= Collegamento al sito OEM
+enabled_label					= Abilitato
+enable_submit					= Applica
+
+# main_themes
+
+themes_title					= Temi
+themes_label					= Temi
+settheme_submit					= Applica
+
+# main_advanced
+
+advanced_title					= Impostazioni avanzate interfaccia
+advancedsettings_label				= Settaggi avanzati
+hui-comments_label				= Commenti nel codice HTML dell'interfaccia
+compressed-ob_label				= Output compresso
+advanced_submit					= Applica
+
+# pass_setenabledicons
+
+incosset_status					= Settaggi salvati.
+
+# pass_setadvanced
+
+advancedset_status				= Settaggi avanzati salvati.
+
+# pass_settheme
+
+themeset_status					= Tema applicato.

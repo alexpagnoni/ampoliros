@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<database>
+
+        <table name="xmlrpcprofiles">
+        	<field name="id"	type="integer"	notnull="1"/>
+                <field name="profilename"	type="text"	notnull="1"/>
+                <key field="id"	type="unique"/>
+        </table>
+
+	<sequence name="xmlrpcprofiles_id_seq"/>
+
+</database>

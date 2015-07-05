@@ -1,0 +1,101 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: binary.element,v 1.7 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'binary';
+$element['classname'] = 'BinaryElement';
+$element['priority'] = 0;
+$element['site'] = false;
+
+if ( !defined( 'BINARY_ELEMENT' ) )
+{
+define( 'BINARY_ELEMENT', true );
+
+import('carthag.core.Registry');
+
+/*!
+@class BinaryElement
+
+@abstract Binary element handler.
+*/
+class BinaryElement extends ModuleElement
+{
+    public $type = 'binary';
+    public $site = false;
+
+    function BinaryElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $params['file'] = $this->basedir.'/var/bin/'.$params['file'];
+
+			$reg = Registry::instance();
+            if ( @copy( $params['file'], $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/bin/'.basename( $params['file'] )  ) )
+            {
+                @chmod( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/bin/'.basename( $params['file'] ), 0755 );
+                $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.binary_element.binaryelement_class.doinstallaction', 'In module '.$this->modname.', element '.$params['name'].': Unable to copy binary file '.$params['file'].' to destination '.$reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/bin/'.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.binary_element.binaryelement_class.doinstallaction', 'In module '.$this->modname.', element '.$params['name'].': Empty binary file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+        	$reg = Registry::instance();
+            if ( @unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/bin/'.basename( $params['file'] ) ) )
+            {
+                $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.binary_element.binaryelement_class.douninstallaction', 'In module '.$this->modname.', element '.$params['name'].': Unable to remove '.$reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/bin/'.basename( $params['file'] ), LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.binary_element.binaryelement_class.douninstallaction', 'In module '.$this->modname.', element '.$params['name'].': Empty binary file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        return $this->DoInstallAction( $params );
+    }
+}
+
+}
+?>

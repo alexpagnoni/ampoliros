@@ -1,0 +1,87 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: image.hui,v 1.11 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiImage';
+
+if ( !defined( 'IMAGE_HUI' ) )
+{
+define( 'IMAGE_HUI', true );
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+
+/*!
+@class HuiImage
+
+@abstract Image widget.
+*/
+class HuiImage extends HuiWidgetElement
+{
+    public $mWidgetType = 'image';
+    /*! @public mImageUrl string - Url of the image. */
+    //public $mImageUrl;
+    /*! @public mWidth integer - Image width, optional. */
+    //public $mWidth;
+    /*! @public mHeight integer - Image height, optional. */
+    //public $mHeight;
+    /*! @public mHint string - Optional hint message. */
+    //public $mHint;
+
+    /*!
+     @function HuiImage
+
+     @abstract Class constructor.
+     */
+    public function HuiImage( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiWidgetElement( $elemName, $elemArgs, $elemTheme, $dispEvents );
+        if ( isset( $this->mArgs['imageurl'] ) ) $this->mArgs['imageurl'] = $this->mArgs['imageurl'];
+        if ( isset( $this->mArgs['width'] ) ) $this->mArgs['width']    = $this->mArgs['width'];
+        if ( isset( $this->mArgs['height'] ) ) $this->mHeight   = $this->mArgs['height'];
+        if ( isset( $this->mArgs['hint'] ) ) $this->mArgs['hint'] = $this->mArgs['hint'];
+    }
+
+    protected function _Build()
+    {
+        $result = false;
+
+        if ( strlen( $this->mArgs['imageurl'] ) )
+        {
+            $this->mLayout = ( $this->mComments ? '<!-- begin '.$this->mName.' image -->' : '' ).
+                '<img '.( strlen( $this->mArgs['hint'] ) ? 'onMouseOver="huiHint(\''.$this->mArgs['hint'].'\');" onMouseOut="huiUnHint(); ' : '' ).'src="'.$this->mArgs['imageurl'].'" border="0"'.
+                ( $this->mArgs['width'] ? ' width="'.$this->mArgs['width'].'"' : '' ).
+                ( $this->mHeight ? ' height="'.$this->mHeight.'"' : '' ).'>'.
+                ( $this->mComments ? '<!-- end '.$this->mName." image -->\n" : '' );
+            $result = true;
+        }
+
+        return $result;
+    }
+}
+
+}
+?>

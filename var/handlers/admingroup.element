@@ -1,0 +1,104 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: admingroup.element,v 1.7 2004-07-13 15:09:53 alex Exp $
+
+$element['type'] = 'admingroup';
+$element['classname'] = 'AdmingroupElement';
+$element['priority'] = 10;
+$element['site'] = TRUE;
+
+if ( !defined( 'ADMINGROUP_ELEMENT' ) )
+{
+define( 'ADMINGROUP_ELEMENT', TRUE );
+
+OpenLibrary( 'users.library' );
+
+/*!
+ @class AdmingroupElement
+
+ @abstract Admingroup element handler.
+ */
+class AdmingroupElement extends ModuleElement
+{
+    public $type = 'admingroup';
+    public $site = TRUE;
+
+    function AdmingroupElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoEnableSiteAction( $siteid, $params )
+    {
+        $result = &$this->sitedb->Execute( 'INSERT INTO admingroups VALUES ('.$this->sitedb->nextseqvalue( 'admingroups_id_seq' ).','.
+                                          $this->sitedb->Format_Text( $params['name'] ).','.
+                                          $this->sitedb->Format_Text( $params['catalog'] ).')' );
+
+        if ( !$result ) $this->mLog->LogEvent( 'ampoliros.admingroup_element.admingroupelement_class.doenablesiteaction',
+                                              'In module '.$this->modname.', element '.$params['name'].': Unable to insert admingroup into admingroups table', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoDisableSiteAction( $siteid, $params )
+    {
+        $tmpquery = &$this->sitedb->Execute( 'SELECT id FROM admingroups WHERE name = '.$this->sitedb->Format_Text( $params['name'] ) );
+
+        $tmpperm = new Permissions( $this->sitedb, 0 );
+        $tmpperm->RemoveNodes( $tmpquery->Fields( 'id' ), 'group' );
+
+        $result = &$this->sitedb->Execute( 'DELETE FROM admingroups WHERE name = '.$this->sitedb->Format_Text( $params['name'] ) );
+
+        if ( !$result ) $this->mLog->LogEvent( 'ampoliros.admingroup_element.admingroupelement_class.dodisablesiteaction',
+                                              'In module '.$this->modname.', element '.$params['name'].': Unable to remove admingroup from admingroups table', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateSiteAction( $siteid, $params )
+    {
+        $result = false;
+
+        if ( $this->sitedb->Execute( 'UPDATE admingroups SET catalog='.
+                                    $this->sitedb->Format_Text( $params['catalog'] ).
+                                    ' WHERE name='.
+                                    $this->sitedb->Format_Text( $params['name'] ) ) )
+        {
+            $result = TRUE;
+        }
+        else
+        {
+            $this->mLog->LogEvent( 'ampoliros.admingroup_element.admingroupelement_class.doupdatesiteaction',
+                                  'In module '.$this->modname.', element '.$params['name'].': Unable to update admingroups table for siteid '.$siteid, LOGGER_ERROR );
+        }
+
+        return $result;
+    }
+}
+
+}
+?>

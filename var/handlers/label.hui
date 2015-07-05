@@ -1,0 +1,87 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: label.hui,v 1.18 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiLabel';
+
+if (!defined('LABEL_HUI')) {
+    define ('LABEL_HUI', true);
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+
+    class HuiLabel extends HuiWidgetElement {
+        public $mWidgetType = 'label';
+        /*! @public mLabel string - Label text. */
+        //public $mLabel;
+        /*! @public mNoWrap string - 'true' if the text may be automatically wrapped when necessary. Defaults to 'true'. */
+        //public $mNoWrap;
+        /*! @public mAlign string - Text alignment, may be one of 'left', 'center', 'right'. */
+        //public $mAlign;
+        /*! @public mBold string - 'true' if the text should be rendered in bold style. */
+        //public $mBold;
+        /*! @public mUnderline string - 'true' if the text should be rendered in underline style. */
+        //public $mUnderline;
+        //public $mCompact;
+        /*! @public mHint string - Optional hint message. */
+        //public $mHint;
+        //public $mColor;
+
+        public function HuiLabel($elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '') {
+            $this -> HuiWidgetElement($elemName, $elemArgs, $elemTheme, $dispEvents);
+
+            if (isset($this -> mArgs['nowrap'])) {
+                switch ($this -> mArgs['nowrap']) {
+                    case 'true' :
+                    case 'false' :
+                        break;
+                    default :
+                        $this -> mArgs['nowrap'] = 'true';
+                }
+            } else
+                $this -> mArgs['nowrap'] = 'true';
+
+            if (isset($this -> mArgs['align'])) {
+                switch ($this -> mArgs['align']) {
+                    case 'left' :
+                    case 'center' :
+                    case 'right' :
+                        break;
+                    default :
+                        $this -> mArgs['align'] = 'left';
+                }
+            } else
+                $this -> mArgs['align'] = 'left';
+        }
+
+        protected function _build() {
+            $this -> mLayout = ($this -> mComments ? '<!-- begin '.$this -> mName.' label -->' : '').'<table '. (strlen($this -> mArgs['hint']) ? 'onMouseOver="huiHint(\''.$this -> mArgs['hint'].'\');" onMouseOut="huiUnHint(); ' : '').'border="0" '. ($this -> mArgs['nowrap'] == 'true' ? 'width="0%"' : '').' height="0%"'. ($this -> mArgs['compact'] == 'true' ? ' cellpadding="1" cellspacing="0"' : '').'>'.'<tr><td align="'.$this -> mArgs['align'].'" class="normal" '. ($this -> mArgs['nowrap'] == 'true' ? 'nowrap style="white-space: nowrap"' : '').'>'. ($this -> mArgs['bold'] == 'true' ? '<strong>' : ''). ($this -> mArgs['underline'] == 'true' ? '<u>' : ''). (isset($this -> mArgs['color']) ? '<font color="'.$this -> mArgs['color'].'">' : '').$this -> mArgs['label']. ($this -> mArgs['color'] ? '</font>' : ''). ($this -> mArgs['underline'] == 'true' ? '</u>' : ''). ($this -> mArgs['bold'] == 'true' ? '</strong>' : '').'</td></tr></table>'. ($this -> mComments ? '<!-- end '.$this -> mName." label -->\n" : '');
+            return true;
+        }
+    }
+
+}
+?>

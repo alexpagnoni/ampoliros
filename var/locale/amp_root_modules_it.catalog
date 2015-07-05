@@ -1,0 +1,103 @@
+# General
+
+modules_title							= Applicazioni
+modules_button							= Applicazioni
+newmodule_button						= Installa / Aggiorna
+help_button								= Aiuto
+requiredfields_label					= (*) campo obbligatorio
+
+# main_default
+
+modid_header							= Nome
+moddesc_header							= Descrizione
+modversion_header						= Versione
+moddate_header							= Data
+modauthor_header						= Autore
+moddetails_label						= Dettagli
+showmodule_label						= Struttura
+moduledeps_label						= Dipendenze
+removemodule_label						= Rimuovi
+no_available_modules_status					= Non ci sono applicazioni disponibili.
+
+# main_newmodule
+
+newmodule_title							= Nuova applicazione / Aggiornamento applicazione
+modulefile_label						= File dell'applicazione
+newmodule_submit						= Installa
+
+# main_details
+
+moduledetails_title						= Dettagli applicazione
+author_label							= Autore
+authorsite_label						= Sito autore
+authoremail_label						= Email autore
+supportemail_label						= Email di supporto
+bugsemail_label							= Email per segnalazione errori
+copyright_label							= Copyright
+license_label							= Licenza
+maintainer_label						= Mantenitore dell'applicazione
+maintaineremail_label						= Email del mantenitore dell'applicazione
+
+# main_showmodule
+
+elementtype_header						= Tipo elemento
+elementname_header						= Nome elemento
+elementattrs_header						= Attributi
+modulestructure_title						= Struttura applicazione
+
+# main_dependencies
+
+moduledeps_title						= Dipendenze dell'applicazione
+moddeps_label							= Dipendenze dell'applicazione
+modsuggs_label							= Suggerimenti dell'applicazione
+dependingmods_label						= Applicazioni che dipendono da %s
+suggestingmods_label					= Applicazioni che suggeriscono %s
+enabledsites_label					= Siti con questa applicazione abilitata
+
+# main_removemodule
+
+removemodule_title						= Rimuovi applicazione
+removemodulequestion_label				= Vuoi realmente eliminare l'applicazione %s e tutti i suoi dati?
+okremove_button							= Rimuovi
+dontremove_button						= Cancella
+
+# main_help
+
+help_title								= Aiuto
+
+# pass_install
+
+modinstalled_status						= Applicazione installata.
+unmetdeps_status						= APPLICAZIONE NON INSTALLATA. Applicazioni mancanti:
+unmetsuggs_status						= Applicazione suggerite:
+
+# pass_uninstall
+
+moduninstalled_status					= Applicazione rimossa.
+removeunmetdeps_status					= APPLICAZIONE NON RIMOSSA. Applicazioni che vi dipendono:
+
+# pass_activatemodule
+
+modenabled_status				= Applicazione abilitata.
+modnotenabled_status			= APPLICAZIONE NON ABILITATA.
+unmetsuggs_status				= Suggerimenti non soddisfatti:
+unmetdeps_status				= Dipendenze non soddisfatte:
+
+# pass_deactivatemodule
+
+moddisabled_status				= Applicazione disabilitata.
+modnotdisabled_status			= APPLICAZIONE NON DISABILITATA.
+disunmetdeps_status				= Dipendenze non soddisfatte:
+
+modlog_label                            = Log
+modlog.title                            = Log applicazione
+cleanlog_button                         = Elimina log
+logcleaned_status                       = Log eliminato.
+lognotcleaned_status                    = ERRORE: Log non eliminato.
+
+modulehooks.label               = Ganci
+hooks.label                     = Ganci
+hook_events.label               = Eventi agganciabili
+hook_function.header            = Funzione
+hook_event.header               = Evento
+hook_module.header              = Applicazione

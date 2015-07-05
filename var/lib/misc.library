@@ -1,0 +1,266 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: misc.library,v 1.11 2004-07-08 15:04:23 alex Exp $
+
+/*
+ * misc.library
+ *
+ * Provides miscellaneous functions that don't have place in
+ * other libraries
+ *
+ */
+
+if (!defined('MISC_LIBRARY')) {
+    define ('MISC_LIBRARY', TRUE);
+
+    if (!defined('AMPOLIROS_LIBRARY'))
+        include (LIBRARY_PATH.'ampoliros.library');
+
+    // Gets site datas by his md5 id
+    //
+    // database object $ampdb: database handler of Ampoliros
+    //                         central database
+    // string $md5id:          md5 of the site id
+    //
+    // Returns: site data array, false if something went wrong
+    //
+    function GetSiteDataByMd5Id(& $ampdb, $md5id) {
+        Carthag :: import('com.solarix.ampoliros.db.DBLayer');
+        $result = false;
+
+        if (isset($ampdb) & isset($md5id)) {
+            $stquery = & $ampdb -> execute('SELECT * '.'FROM sites '.'WHERE sitemd5id = '.$ampdb -> Format_Text($md5id));
+            if ($stquery -> numrows() > 0)
+                $result = $stquery -> fields();
+        }
+        return $result;
+    }
+
+    // Encrypts a password
+    //
+    function cryptpasswd($password) {
+        srand((double) microtime() * 1000000);
+
+        // Generates salt string for the crypt function
+        //
+        $random = 0;
+        $rand64 = '';
+        $salt = '';
+
+        $random = rand();
+
+        $rand64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $salt = substr($rand64, $random % 64, 1).substr($rand64, ($random / 64) % 64, 1);
+        $salt = substr($salt, 0, 2);
+
+        return crypt($password, $salt);
+    }
+
+    // Gets server uptime stats
+    // It relies on /proc/uptime
+    //
+    define ('UPTIME_FILE', '/proc/uptime');
+
+    function uptime() {
+        $result = false;
+
+        if ($fh = fopen(UPTIME_FILE, 'r')) {
+            $raw = fgets($fh, 200);
+
+            $uptimeraw = substr($raw, 0, strpos($raw, ''));
+            $uptime['days'] = floor($uptimeraw / 86400);
+            $uptime['hours'] = floor(($uptimeraw - ($uptime['days'] * 86400)) / 3600);
+            $uptime['mins'] = floor(($uptimeraw - ($uptime['days'] * 86400) - ($uptime['hours'] * 3600)) / 60);
+            $uptime['secs'] = floor($uptimeraw - ($uptime['mins'] * 60) - ($uptime['days'] * 86400) - ($uptime['hours'] * 3600));
+
+            $result = & $uptime;
+
+            fclose($fh);
+        }
+
+        return $result;
+    }
+
+    // Turns text passed through to it to hyperlinks if they are email addresses or urls.
+
+    function text_to_links($data = '') {
+        if (empty($data))
+            return $data;
+
+        $lines = split("\n", $data);
+
+        while (list ($key, $line) = each($lines)) {
+            $line = eregi_replace("([ \t]|^)www\.", ' http://www.', $line);
+            $line = eregi_replace("([ \t]|^)ftp\.", ' ftp://ftp.', $line);
+            $line = eregi_replace("(http://[^ )\r\n]+)", "<A href=\"\\1\" target=\"_blank\">\\1</A>", $line);
+            $line = eregi_replace("(https://[^ )\r\n]+)", "<A href=\"\\1\" target=\"_blank\">\\1</A>", $line);
+            $line = eregi_replace("(ftp://[^ )\r\n]+)", "<A href=\"\\1\" target=\"_blank\">\\1</A>", $line);
+            $line = eregi_replace("([-a-z0-9_]+(\.[_a-z0-9-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)+))", "<A HREF=\"mailto:\\1\">\\1</A>", $line);
+            $newText.= $line."\n";
+        }
+
+        return $newText;
+    }
+
+    // Gets file extension
+
+    function file_ext_name($filename) {
+        $pt = explode($filename, '.');
+        if ($pt[1])
+            $retval = $pt[count($pt) - 1];
+        return $retval;
+    }
+
+    // Recursively removes a dir
+    //
+    function RecRemoveDir($dirname) {
+        $result = true;
+
+        if (file_exists($dirname)) {
+            if ($dhandle = @ opendir($dirname)) {
+                while (false != ($file = @ readdir($dhandle))) {
+                    if ($file != '.' && $file != '..') {
+
+                        //:WARNING: evil 20020506: possible problems on Windows systems
+                        //It has a 'permission denied'
+
+                        if (is_file($dirname.'/'.$file))
+                            $result = @ unlink($dirname.'/'.$file);
+                        elseif (is_dir($dirname.'/'.$file)) $result = RecRemoveDir($dirname.'/'.$file);
+                    }
+                }
+                @ closedir($dhandle);
+
+                //:WARNING: evil 20020506: possible problems on Windows systems
+                //It says 'directory not empty'. Maybe caused by the unlink problem some line above
+
+                @ rmdir($dirname);
+            }
+        }
+
+        return $result;
+    }
+
+    function mkdirs($strPath, $nPermission) {
+        $strPathSeparator = "/";
+        $strDirname = substr($strPath, 0, strrpos($strPath, $strPathSeparator));
+        if (is_dir($strDirname)) {
+            return true;
+        }
+
+        $arMake = array();
+        array_unshift($arMake, $strDirname);
+        do {
+            $bStop = true;
+            $nPos = strrpos($strDirname, $strPathSeparator);
+            $strParent = substr($strDirname, 0, $nPos);
+            if (!is_dir($strParent)) {
+                $strDirname = $strParent;
+                array_unshift($arMake, $strDirname);
+
+                $bStop = false;
+            }
+        } while (!$bStop);
+
+        if (count($arMake) > 0) {
+            foreach ($arMake as $strDir) {
+                mkdir($strDir, $nPermission);
+            }
+        }
+        return true;
+    } //function mkdirs( $strPath, $nPermission)
+
+    function dircopy($from_path, $to_path) {
+        $this_path = getcwd();
+        if (!is_dir($to_path)) {
+            mkdir($to_path, 0775);
+        }
+
+        if (is_dir($from_path)) {
+            chdir($from_path);
+            $handle = opendir('.');
+            while (($file = readdir($handle)) !== false) {
+                if (($file != ".") && ($file != "..")) {
+                    if (is_dir($file)) {
+                        chdir($this_path);
+                        dircopy($from_path.$file."/", $to_path.$file."/");
+                        chdir($this_path);
+                        chdir($from_path);
+                    }
+                    if (is_file($file)) {
+                        chdir($this_path);
+                        copy($from_path.$file, $to_path.$file);
+                        chdir($from_path);
+                    }
+                }
+            }
+            closedir($handle);
+        }
+        chdir($this_path);
+    }
+
+    define ('AMPOLIROS_VERSIONCOMPARE_LESS', -1);
+    define ('AMPOLIROS_VERSIONCOMPARE_EQUAL', 0);
+    define ('AMPOLIROS_VERSIONCOMPARE_MORE', 1);
+
+    function CompareVersionNumbers($a, $b) {
+        $a = strtr($a, '-', '.');
+        $b = strtr($b, '-', '.');
+
+        $a_dots = substr_count($a, '.');
+        $b_dots = substr_count($b, '.');
+
+        $dots = max($a_dots, $b_dots);
+
+        if ($a_dots != $b_dots) {
+            if ($a_dots == $dots) {
+                for ($i = 0; $i < ($dots - $b_dots); $i ++) {
+                    $b.= '.0';
+                }
+            } else {
+                for ($i = 0; $i < ($dots - $a_dots); $i ++) {
+                    $a.= '.0';
+                }
+            }
+        }
+
+        $a_numbers = explode('.', $a);
+        $b_numbers = explode('.', $b);
+
+        for ($i = 0; $i <= $dots; $i ++) {
+            if ($a_numbers[$i] > $b_numbers[$i])
+                return AMPOLIROS_VERSIONCOMPARE_MORE;
+            else
+                if ($a_numbers[$i] < $b_numbers[$i])
+                    return AMPOLIROS_VERSIONCOMPARE_LESS;
+        }
+
+        return AMPOLIROS_VERSIONCOMPARE_EQUAL;
+    }
+
+}
+?>

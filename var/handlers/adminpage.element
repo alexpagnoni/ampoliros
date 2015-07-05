@@ -1,0 +1,240 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: adminpage.element,v 1.12 2004-07-13 15:09:53 alex Exp $
+
+$element['type'] = 'adminpage';
+$element['classname'] = 'AdminpageElement';
+$element['priority'] = 0;
+$element['site'] = true;
+
+if ( !defined( 'ADMINPAGE_ELEMENT' ) )
+{
+define( 'ADMINPAGE_ELEMENT', true );
+
+/*!
+ @class AdminpageElement
+
+ @abstract Adminpage element handler.
+ */
+class AdminpageElement extends ModuleElement
+{
+    public $type = 'adminpage';
+    public $site = true;
+
+    function AdminpageElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $params['file'] = $this->basedir.'/www/admin/'.$params['file'];
+
+            if ( file_exists( $params['file'] ) )
+            {
+                if ( @copy( $params['file'], ADMIN_PATH.basename( $params['file'] ) ) )
+                {
+                    @chmod( ADMIN_PATH.basename( $params['file'] ), 0644 );
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.adminpage_element_adminpageelement_class.doinstallaction',
+                                            'In module '.$this->modname.', element '.$params['name'].': Unable to copy '.$params['file'].' into destination '.ADMIN_PATH.basename( $params['file'] ), LOGGER_ERROR );
+            }
+        }
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+
+        if ( strlen( $params['icon'] ) )
+        {
+            $params['icon'] = $this->basedir.'/www/admin/'.$params['icon'];
+
+            if ( @copy( $params['icon'], ADMIN_PATH.basename( $params['icon'] ) ) )
+            {
+                @chmod( ADMIN_PATH.basename( $params['icon'] ), 0644 );
+                $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.adminpage_element_adminpageelement_class.doinstallaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to copy '.$params['icon'].' into destination '.ADMIN_PATH.basename( $params['icon'] ), LOGGER_ERROR );
+        }
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            if ( file_exists( ADMIN_PATH.basename( $params['file'] ) ) )
+            {
+                if ( @unlink( ADMIN_PATH.basename( $params['file'] ) ) )
+                {
+                    $result = true;
+                }
+                else $this->mLog->LogEvent( 'ampoliros.adminpage_element_adminpageelement_class.douninstallaction',
+                                            'In module '.$this->modname.', element '.$params['name'].': Unable to remove '.ADMIN_PATH.basename( $params['file'] ), LOGGER_ERROR );
+            }
+        }
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+
+        if ( strlen( $params['icon'] ) )
+        {
+            if ( @unlink( ADMIN_PATH.basename( $params['icon'] ) ) )
+            {
+                $result = true;
+            }
+            else $this->mLog->LogEvent( 'ampoliros.adminpage_element_adminpageelement_class.douninstallaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to remove '.ADMIN_PATH.basename( $params['icon'] ), LOGGER_ERROR );
+        }
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        return $this->DoInstallAction( $params );
+    }
+
+    function DoEnableSiteAction( $siteid, $params )
+    {
+        $result = false;
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+        if ( !isset( $params['themeicon'] ) ) $params['themeicon'] = '';
+        if ( !isset( $params['themeicontype'] ) ) $params['themeicontype'] = '';
+
+        if ( ( !empty( $params['icon'] ) or !empty( $params['themeicon'] ) ) and $params['show'] != 'no' )
+        {
+            // If the page has no group, puts it in the generic tools group
+            //
+            if ( empty( $params['category'] ) ) $params['category'] = 'tools';
+
+            $grquery = &$this->sitedb->Execute( 'SELECT * FROM admingroups WHERE name = '.$this->sitedb->Format_Text( $params['category'] ) );
+            if ( $grquery->numrows() > 0 ) $grdata = $grquery->fields();
+
+            if ( strlen( $params['catalog'] ) > 0 )
+            {
+                $ins  = 'insert into adminpages values ('.$this->sitedb->nextseqvalue( 'adminpages_id_seq' ).',';
+                $ins .= $this->sitedb->Format_Text( $grdata['id'] ).',';
+                $ins .= $this->sitedb->Format_Text( $params['name'] ).',';
+                $ins .= $this->sitedb->Format_Text( basename( $params['file'] ) ).',';
+                $ins .= $this->sitedb->Format_Text( $params['icon'] ).',';
+                $ins .= $this->sitedb->Format_Text( $params['catalog'] ).',';
+                $ins .= $this->sitedb->Format_Text( $params['themeicon'] ).',';
+                $ins .= $this->sitedb->Format_Text( $params['themeicontype'] ).')';
+                $result = &$this->sitedb->Execute( $ins );
+            }
+            else $result = true;
+        }
+
+        return $result;
+    }
+
+    function DoDisableSiteAction( $siteid, $params )
+    {
+        $result = false;
+
+        if ( !isset( $params['icon'] ) ) $params['icon'] = '';
+        if ( !isset( $params['themeicon'] ) ) $params['themeicon'] = '';
+        if ( !isset( $params['themeicontype'] ) ) $params['themeicontype'] = '';
+
+        if ( !empty( $params['file'] ) and ( !empty( $params['icon'] ) or !empty( $params['themeicon'] ) ) and $params['show'] != 'no' )
+        {
+            if ( !empty( $params['catalog'] ) )
+            {
+                $tmpquery = $this->sitedb->Execute( 'select id from adminpages where name = '.$this->sitedb->Format_Text( $params['name'] ) );
+
+                $tmpperm = new Permissions( $this->sitedb, 0 );
+                $tmpperm->RemoveNodes( $tmpquery->Fields( 'id' ), 'page' );
+
+                $result = &$this->sitedb->Execute( 'delete from adminpages where name = '.$this->sitedb->Format_Text( $params['name'] ) );
+
+                if ( !$result ) $this->mLog->LogEvent( 'ampoliros.adminpage_element.adminpageelement_class.dodisablesiteaction',
+                                                       'In module '.$this->modname.', element '.$params['name'].': Unable to remove adminpage from adminpages table', LOGGER_ERROR );
+            }
+            else $result = true;
+        }
+        else $this->mLog->LogEvent( 'ampoliros.adminpage_element.adminpageelement_class.dodisablesiteaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Both file and icon attributes of adminpage element are empty', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateSiteAction( $siteid, $params )
+    {
+        $result = false;
+
+        if ( empty( $params['category'] ) ) $params['category'] = 'tools';
+        if ( !isset( $params['themeicon'] ) ) $params['themeicon'] = '';
+        if ( !isset( $params['themeicontype'] ) ) $params['themeicontype'] = '';
+
+        if ( $grquery = &$this->sitedb->Execute( 'SELECT * FROM admingroups WHERE name = '.$this->sitedb->Format_Text( $params['category'] ) ) )
+        {
+            if ( $grquery->numrows() > 0 )
+            {
+                $grdata = $grquery->fields();
+
+                $check_query = $this->sitedb->Execute( 'SELECT id '.
+                                                       'FROM adminpages '.
+                                                       'WHERE name='.$this->sitedb->Format_Text( $params['name'] ) );
+
+                if ( $check_query->NumRows() )
+                {
+                    if ( $this->sitedb->Execute( 'UPDATE adminpages SET groupid='.$grdata['id'].
+                                                 ', catalog='.$this->sitedb->Format_Text( $params['catalog'] ).
+                                                 ', themeicon='.$this->sitedb->Format_Text( $params['themeicon'] ).
+                                                 ', themeicontype='.$this->sitedb->Format_Text( $params['themeicontype'] ).
+                                                 ' WHERE name='.$this->sitedb->Format_Text( $params['name'] ) ) )
+                    {
+                        $result = true;
+                    }
+                }
+                else
+                {
+                    $result = $this->DoEnableSiteAction( $siteid, $params );
+                }
+
+                // !!! nodes
+            }
+            else $this->mLog->LogEvent( 'ampoliros.adminpage_element.adminpageelement_class.doupdatesiteaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to find a suitable admin group for admin page '.$params['name'], LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.adminpage_element.adminpageelement_class.doupdatesiteaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Unable to execute select query for admin page '.$params['name'], LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

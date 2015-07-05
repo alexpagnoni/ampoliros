@@ -1,0 +1,45 @@
+#
+#                     Ampoliros Application Server
+#
+#                       http://www.ampoliros.com
+#
+
+# Module short name
+MODULEIDNAME         = ampoliros
+
+# Module version number
+MODULEVERSION        = 4.1
+
+# Module release date
+MODULEDATE           = 2004/10/15
+
+# Module long description
+MODULEDESCRIPTION    = <strong>Ampoliros <font color="red">4000</font></strong> Application Server.
+
+# Module dependencies
+MODULEDEPENDENCIES   = ampoliros[4.0],php[5.0],zlib.extension
+
+# Module suggestions
+MODULESUGGESTIONS    = curl.extension,pcntl.extension,posix.extension
+
+MODULE_AUTHOR        = Solarix
+
+MODULE_AUTHOR_EMAIL  = info@solarix.it
+
+MODULE_AUTHOR_SITE   = http://www.solarix.it/
+
+MODULE_SUPPORT_EMAIL = support@ampoliros.com
+
+MODULE_BUGS_EMAIL    = bugs@ampoliros.com
+
+MODULE_COPYRIGHT     = Copyright (c) 2000-2004 Solarix
+
+MODULE_LICENSE       = GPL
+
+MODULE_LICENSE_FILE  = LICENSE
+
+MODULE_MAINTAINER    = Alex Pagnoni
+
+MODULE_MAINTAINER_EMAIL = alex@ampoliros.com
+
+MODULE_CATEGORY      = ampoliros

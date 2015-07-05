@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<database>
+
+   <table name="aclnodes">
+      <field name="id"	     type="integer" notnull="1"/>
+      <field name="modid"    type="text"    length="50"/>
+      <field name="nodename" type="text"    length="15"/>
+      <key field="id" type="unique"/>
+   </table>
+
+   <sequence name="aclnodes_id_seq">
+
+</database>

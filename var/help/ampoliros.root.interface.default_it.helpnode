@@ -1,0 +1,39 @@
+Interfaccia
+===========
+
+Da questa pagina è possibile impostare alcuni aspetti dell'interfaccia
+di Ampoliros. In particolare gli OEM possono personalizzare l'ambiente
+inserendo propri loghi.
+
+Settaggi OEM
+------------
+
+- Nome OEM: eventuale nome dell'OEM.
+
+- Indirizzo del sito OEM: eventuale indirizzo del sito dell'OEM,
+utilizzato come collegamento nei loghi dell'OEM, se abilitati.
+
+- Logo grande dell'OEM: eventuale logo dell'OEM, viene mostrato nelle
+pagine principali.
+
+- Logo del collegamento al sito OEM: eventuale logo dell'OEM in formato
+più piccolo, viene mostrato nella pagina iniziale sotto alle icone per
+l'accesso ad Ampoliros.
+
+Icone abilitate
+---------------
+
+- Collegamento al sito Ampoliros: se disabilitato, non viene mostrato
+il collegamento al sito Ampoliros nella pagina iniziale di accesso.
+
+- Collegamento al sito Solarix: se disabilitato, non viene mostrato il
+collegamento al sito Solarix nella pagina iniziale di accesso.
+
+- Collegamento al sito OEM: se abilitato, viene mostrato il
+collegamento al sito dell'OEM nella pagina iniziale di accesso.
+
+- Logo grande di Ampoliros: se disabilitato, non viene mostrato il logo
+di Ampoliros nelle pagine principali.
+
+- Logo grande dell'OEM: se abilitato, viene mostrato il logo dell'OEM
+nelle pagine principali.

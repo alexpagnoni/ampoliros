@@ -1,0 +1,19 @@
+ampoliros.version		= Returns Ampoliros version
+
+ampoliros.log.amp.get		= Returns Ampoliros main log
+ampoliros.log.amp.erase		= Erases Ampoliros main log
+ampoliros.log.amp.logevent	= Logs an event in the Ampoliros main log
+ampoliros.log.db.get		= Returns Ampoliros database log
+ampoliros.log.db.erase		= Erases Ampoliros database log
+ampoliros.log.db.logevent	= Logs an event in the Ampoliros database log
+
+ampoliros.modules.list		= Returns a list of the installed modules
+ampoliros.modules.module.install	= Installs a module
+ampoliros.modules.module.remove	= Removes a module
+
+ampoliros.sites.list		= Returns a list of the sites
+ampoliros.sites.site.enabledmodules	= Returns a list of the modules enabled to the given site
+
+ampoliros.log.remote.get	= Returns Ampoliros remote procedures log
+ampoliros.log.remote.erase	= Erases Ampoliros remote procedures log
+ampoliros.log.remote.logevent	= Logs an event in the Ampoliros remote procedures log

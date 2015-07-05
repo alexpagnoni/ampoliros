@@ -1,0 +1,124 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: country.element,v 1.8 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'country';
+$element['classname'] = 'CountryElement';
+$element['priority'] = 0;
+$element['site'] = false;
+
+if ( !defined( 'COUNTRY_ELEMENT' ) )
+{
+define( 'COUNTRY_ELEMENT', true );
+
+import('carthag.core.Registry');
+
+/*!
+@class CountryElement
+
+@abstract Country element handler.
+*/
+class CountryElement extends ModuleElement
+{
+    public $type = 'country';
+    public $site = false;
+
+    function CountryElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and strlen( $params['name'] ) and strlen( $params['short'] ) )
+        {
+            $params['file'] = $this->basedir.'/var/locale/'.$params['file'];
+
+			$reg = Registry :: instance();
+            if ( @copy( $params['file'], $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/locale/'.basename( $params['file'] )  ) )
+            {
+                @chmod( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/locale/'.basename( $params['file'] ), 0644 );
+                $result = &$this->ampdb->Execute( 'INSERT INTO countries '.
+                                                  'VALUES ('.$this->ampdb->Format_Text( $params['short'] ).','.
+                                                  $this->ampdb->Format_Text( $params['name'] ).','.
+                                                  $this->ampdb->Format_Text( basename( $params['file'] ) ).')' );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.country_element.countryelement_class.doinstallaction', 'In module '.$this->modname.', element '.$params['name'].': Empty country file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) and strlen( $params['name'] ) and strlen( $params['short'] ) )
+        {
+        	$reg = Registry::instance();
+            if ( @unlink( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/locale/'.basename( $params['file'] ) ) )
+            {
+                $result = &$this->ampdb->Execute( 'DELETE FROM countries '.
+                                                  'WHERE countryname='.$this->ampdb->Format_Text( $params['name'] ).' '.
+                                                  'AND countryshort='.$this->ampdb->Format_Text( $params['short'] ) );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.country_element.countryelement_class.douninstallaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty country file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['name'] ) and strlen( $params['short'] ) and strlen( $params['file'] ) )
+        {
+            $params['file'] = $this->basedir.'/var/locale/'.$params['file'];
+
+			$reg = Registry::instance();
+            if ( @copy( $params['file'], $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/locale/'.basename( $params['file'] )  ) )
+            {
+                @chmod( $reg->getEntry('amp.config')->getKey('PRIVATE_TREE').'var/locale/'.basename( $params['file'] ), 0644 );
+                $result = &$this->ampdb->Execute( 'UPDATE countries '.
+                                                  'SET countryshort='.$this->ampdb->Format_Text( $params['short'] ).','.
+                                                  'countryname = '.$this->ampdb->Format_Text( $params['name'] ).' '.
+                                                  'WHERE countryfile='.$this->ampdb->Format_Text( basename( $params['file'] ) ) );
+            }
+        }
+        else $this->mLog->LogEvent( 'ampoliros.country_element.countryelement_class.doupdateaction',
+                                   'In module '.$this->modname.', element '.$params['name'].': Empty country name ('.$params['name'].') or short name ('.$params['short'].')', LOGGER_ERROR );
+
+        return $result;
+    }
+}
+
+}
+?>

@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<database>
+
+	<table name="xmlrpcusers">
+        	<field name="id"	type="integer"	notnull="1"/>
+                <field name="username"	type="text"  	notnull="1"/>
+                <field name="password"	type="text"	notnull="1"/>
+                <field name="profileid" type="integer" notnull="1"/>
+                <field  name="siteid"   type="integer"/>
+                <key field="id"	type="unique"/>
+        </table>
+
+	<sequence name="xmlrpcusers_id_seq"/>
+
+</database>

@@ -1,0 +1,97 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: tempdir.element,v 1.7 2004-07-08 15:04:22 alex Exp $
+
+$element['type'] = 'tempdir';
+$element['classname'] = 'TempdirElement';
+$element['priority'] = 0;
+$element['site'] = false;
+
+if ( !defined( 'TEMPDIR_ELEMENT' ) )
+{
+define( 'TEMPDIR_ELEMENT', true );
+
+OpenLibrary( 'misc.library' );
+
+/*!
+ @class TempdirElement
+
+ @abstract Tempdir element handler.
+ */
+class TempdirElement extends ModuleElement
+{
+    public $type = 'tempdir';
+    public $site = false;
+
+    function TempdirElement( &$ampdb, &$sitedb, $modname, $name, $file, $basedir )
+    {
+        $this->ModuleElement( $ampdb, $sitedb, $modname, $name, $file, $basedir );
+    }
+
+    function DoInstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            $result = true;
+
+            if ( !file_exists( TMP_PATH.$params['file'] ) ) $result = @mkdir( TMP_PATH.$params['file'], 0755 );
+
+            if ( !$result ) $this->mLog->LogEvent( 'ampoliros.tempdir_element.tempdirelement_class.doinstallaction',
+                                                   'In module '.$this->modname.', element '.$params['name'].': Unable to create temporary directory', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.tempdir_element.tempdirelement_class.doinstallaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Empty temporary directory name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUninstallAction( $params )
+    {
+        $result = false;
+
+        if ( strlen( $params['file'] ) )
+        {
+            if ( RecRemoveDir( TMP_PATH.$params['file'] ) ) $result = true;
+            else $this->mLog->LogEvent( 'ampoliros.tempdir_element.tempdirelement_class.douninstallaction',
+                                        'In module '.$this->modname.', element '.$params['name'].': Unable to remove temporary directory', LOGGER_ERROR );
+        }
+        else $this->mLog->LogEvent( 'ampoliros.tempdir_element.tempdirelement_class.douninstallaction',
+                                    'In module '.$this->modname.', element '.$params['name'].': Empty temporary directory file name', LOGGER_ERROR );
+
+        return $result;
+    }
+
+    function DoUpdateAction( $params )
+    {
+        return $this->DoInstallAction( $params );
+    }
+}
+
+}
+?>

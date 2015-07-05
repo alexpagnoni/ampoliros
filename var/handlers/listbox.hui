@@ -1,0 +1,112 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: listbox.hui,v 1.16 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiListBox';
+
+if ( !defined( 'LISTBOX_HUI' ) )
+{
+define( 'LISTBOX_HUI', true );
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+
+/*!
+ @class HuiListBox
+
+ @abstract List box form widget.
+ */
+class HuiListBox extends HuiWidgetElement
+{
+    public $mWidgetType = 'listbox';
+    /*! @public mElements array - Array of the elements. */
+    //public $mElements;
+    /*! @public mDefault string - Id of the default item. */
+    //public $mDefault;
+    /*! @public $mMultiSelect bool - True is multiple items can be selected. */
+    //public $mMultiSelect;
+    /*! @public $mSize int - List rows. */
+    //public $mSize;
+    //public $mDisp;
+    /*! @public mTabIndex integer - Position of the current element in the tabbing order. */
+    //public $mTabIndex = 0;
+    /*! @public mHint string - Optional hint message. */
+    //public $mHint;
+
+    public function HuiListBox( $elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '' )
+    {
+        $this->HuiWidgetElement( $elemName, $elemArgs, $elemTheme, $dispEvents );
+        if ( !isset( $this->mArgs['tabindex'] ) ) $this->mArgs['tabindex'] = 0;
+       if ( $this->mArgs['size'] < 2 ) $this->mArgs['size'] = 2;
+
+        if ( is_array( $this->mArgs['default'] ) )
+        {
+
+        }
+        else
+        {
+            $def = $this->mArgs['default'];
+            $this->mArgs['default'] = array();
+            $this->mArgs['default'][] = $def;
+        }
+    }
+
+    protected function _build()
+    {
+        if ( is_array( $this->mArgs['elements'] ) )
+        {
+            import('com.solarix.ampoliros.hui.HuiEventRawData');
+            $event_data = new HuiEventRawData( $this->mArgs['disp'], $this->mName );
+
+            $this->mLayout = ( $this->mComments ? '<!-- begin '.$this->mName." listbox -->\n" : '' ).
+                '<select class="normal" '.( strlen( $this->mArgs['hint'] ) ? 'onMouseOver="huiHint(\''.$this->mArgs['hint'].'\');" onMouseOut="huiUnHint();" ' : '' ).
+                'name="'.$event_data->GetDataString().( $this->mArgs['multiselect'] == 'true' ? '[]' : '' ).'" size="'.$this->mArgs['size'].'"'.( $this->mArgs['multiselect'] == 'true' ? ' multiple' : '' ).
+                ' tabindex="'.$this->mArgs['tabindex'].'"'.
+                ">\n";
+
+            reset( $this->mArgs['elements'] );
+
+            if ( sizeof( $this->mArgs['elements'] ) )
+            {
+                while ( list( $key, $val ) = each( $this->mArgs['elements'] ) )
+                {
+                    $this->mLayout .= '<option value="'.$key.'"'.( in_array( $key, $this->mArgs['default'] ) ? ' selected' : '' ).'>'.htmlentities( $val )."</option>\n";
+                }
+            }
+            else
+            {
+                $this->mLayout .= '<option value=""> </option>'."\n";
+            }
+
+            $this->mLayout .= "</select>\n".( $this->mComments ? '<!-- end '.$this->mName." listbox -->\n" : '' );
+        }
+
+        return true;
+    }
+}
+
+}
+?>

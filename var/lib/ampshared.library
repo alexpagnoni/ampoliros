@@ -1,0 +1,85 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: ampshared.library,v 1.13 2004-07-08 15:04:23 alex Exp $
+
+if ( !defined( 'AMPSHARED_LIBRARY' ) )
+{
+define( 'AMPSHARED_LIBRARY', true );
+
+//Carthag::import('com.solarix.ampoliros.hui.*');
+
+function get_ampoliros_root_menu_def(
+    $localeLang
+    )
+{
+	Carthag::import('com.solarix.ampoliros.locale.Locale');
+    $sh_loc = new Locale( 
+        'amp_misc_shared', 
+        $localeLang 
+        );
+
+    $result =
+        '.|'.$sh_loc->GetStr( 'sites.menu' )."\n".
+        '..|'.$sh_loc->GetStr( 'siteslist.menu' ).'|'.build_events_call_string( 'sites.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'newsite.menu' ).'|'.build_events_call_string( 'sites.php', array( array( 'main', 'newsite' ) ) ) ."\n".
+
+        '.|'.$sh_loc->GetStr( 'modules.menu' )."\n".
+        '..|'.$sh_loc->GetStr( 'moduleslist.menu' ).'|'.build_events_call_string( 'applications.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'newmodule.menu' ).'|'.build_events_call_string( 'applications.php', array( array( 'main', 'newmodule' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'updatemodule.menu' ).'|'.build_events_call_string( 'applications.php', array( array( 'main', 'newmodule' ) ) ) ."\n".
+
+        '.|'.$sh_loc->GetStr( 'remote.menu' )."\n".
+        '..|'.$sh_loc->GetStr( 'remoteprofiles.menu' ).'|'.build_events_call_string( 'xmlrpc.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'newremoteprofile.menu' ).'|'.build_events_call_string( 'xmlrpc.php', array( array( 'main', 'newprofile' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'remoteusers.menu' ).'|'.build_events_call_string( 'xmlrpc.php', array( array( 'main', 'users' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'newremoteuser.menu' ).'|'.build_events_call_string( 'xmlrpc.php', array( array( 'main', 'newuser' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'remoteaccounts.menu' ).'|'.build_events_call_string( 'xmlrpc.php', array( array( 'main', 'accounts' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'newremoteaccount.menu' ).'|'.build_events_call_string( 'xmlrpc.php', array( array( 'main', 'newaccount' ) ) ) ."\n".
+
+        '.|'.$sh_loc->GetStr( 'settings.menu' )."\n".
+        '..|'.$sh_loc->GetStr( 'interface.menu' ).'|'.build_events_call_string( 'ampinterface.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'network.menu' ).'|'.build_events_call_string( 'network.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'locale.menu' ).'|'.build_events_call_string( 'locale.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'password.menu' ).'|'.build_events_call_string( 'password.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'securitysettings.menu' ).'|'.build_events_call_string( 'security.php', array( array( 'main', 'settings' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'maintenancesettings.menu' ).'|'.build_events_call_string( 'maintenance.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'advanced.menu' ).'|'.build_events_call_string( 'ampadvanced.php', array( array( 'main', 'default' ) ) ) ."\n".
+
+        '.|'.$sh_loc->GetStr( 'tools.menu' )."\n".
+        '..|'.$sh_loc->GetStr( 'info.menu' ).'|'.build_events_call_string( 'info.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'processes.menu' ).'|'.build_events_call_string( 'ampadvanced.php', array( array( 'main', 'processes' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'securitycheck.menu' ).'|'.build_events_call_string( 'security.php', array( array( 'main', 'default' ) ) ) ."\n".
+        '..|'.$sh_loc->GetStr( 'maintenance.menu' ).'|'.build_events_call_string( 'maintenance.php', array( array( 'main', 'default' ) ) ) ."\n".
+
+        '.|'.$sh_loc->GetStr( 'help.menu' )."\n".
+        '..|'.$sh_loc->GetStr( 'about.menu' ).'|'.build_events_call_string( 'info.php', array( array( 'main', 'about' ) ) ) ."\n";
+
+    return $result;
+}
+
+}
+?>

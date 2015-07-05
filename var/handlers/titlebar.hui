@@ -1,0 +1,106 @@
+<?php
+/*
+ *
+ *                    Ampoliros Application Server
+ *
+ *                      http://www.ampoliros.com
+ *
+ *
+ *
+ *   Copyright (C) 2000-2004 Solarix
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+// $Id: titlebar.hui,v 1.19 2004-07-08 15:04:22 alex Exp $
+
+$huielementclass = 'HuiTitleBar';
+
+if (!defined('TITLEBAR_HUI')) {
+    define ('TITLEBAR_HUI', true);
+
+//    if (!defined('HUI_LIBRARY'))
+//        include (LIBRARY_PATH.'hui.library');
+
+import('com.solarix.ampoliros.hui.HuiWidgetElement');
+import('com.solarix.ampoliros.hui.HuiEventsCall');
+
+    /*!
+    @class HuiTitleBar
+    
+    @abstract Title bar widget.
+    */
+    class HuiTitleBar extends HuiWidgetElement {
+        public $mWidgetType = 'titlebar';
+        /*! @public mTitle string - Title shown in the title bar. */
+        //public $mTitle;
+        //public $mCloseWidget;
+        //public $mNewWindowWidget;
+        public $mIcon;
+
+        public function HuiTitleBar($elemName, $elemArgs = '', $elemTheme = '', $dispEvents = '') {
+            $this -> HuiWidgetElement($elemName, $elemArgs, $elemTheme, $dispEvents);
+            if (isset($this -> mArgs['title']))
+                $this -> mArgs['title'] = $this -> mArgs['title'];
+
+
+            if (isset($this -> mArgs['closewidget'])) {
+                if ($this -> mArgs['closewidget'] == 'false')
+                    $this -> mArgs['closewidget'] = 'false';
+                if ($this -> mArgs['closewidget'] == 'true')
+                    $this -> mArgs['closewidget'] = 'true';
+            }
+            else $this -> mArgs['closewidget'] = 'true';
+
+            if (isset($this -> mArgs['newwindowwidget'])) {
+                if ($this -> mArgs['newwindowwidget'] == 'false')
+                    $this -> mArgs['newwindowwidget'] = 'false';
+                if ($this -> mArgs['newwindowwidget'] == 'true')
+                    $this -> mArgs['newwindowwidget'] = 'true';
+            }
+            else $this -> mArgs['newwindowwidget'] = 'true';
+
+            if (isset($this -> mArgs['icon']) and strlen($this -> mArgs['icon']))
+                $this -> mIcon = $this -> mArgs['icon'];
+            else
+                $this -> mIcon = 'empty_ascii';
+        }
+
+        protected function _build() {
+            if (strlen($this -> mIcon)) {
+                $icon = '<img src="'.$this -> mThemeHandler -> mIconsBase.$this -> mThemeHandler -> mIconsSet['mini'][$this -> mIcon]['base'].'/mini/'.$this -> mThemeHandler -> mIconsSet['mini'][$this -> mIcon]['file'].'" alt="" border="0" style="width: 16px; height: 16px;">';
+            } else
+                $icon = '';
+
+            $new_window_event = new HuiEventsCall();
+            $new_window_event -> AddEvent(new HuiEvent('main', 'default', ''));
+
+            $win_name = eregi_replace('[./_-]', '', 'detached'.$_SERVER['PHP_SELF']);
+
+            /*
+                        "<table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"1\"><tr><td bgcolor=\"".$this->mThemeHandler->mColorsSet['frames']['border']."\">\n".
+                        "</td></tr>\n</table>\n".
+            */
+
+            $this -> mLayout = ($this -> mComments ? '<!-- begin '.$this -> mName.' titlebar -->' : '')."<table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"2\" bgcolor=\"white\">\n"."<tr>\n"."<td background=\"".$this -> mThemeHandler -> mStyle['titlebar']."\" align=\"center\" valign=\"middle\" nowrap style=\"white-space: nowrap\">\n".$icon."</td>\n"."<td nowrap style=\"white-space: nowrap\" background=\"".$this -> mThemeHandler -> mStyle['titlebartitle']."\" class=\"titlebar\" valign=\"middle\" bgcolor=\"".$this -> mThemeHandler -> mColorsSet['titlebars']['bgcolor']."\">"."<font color=\"".$this -> mThemeHandler -> mColorsSet['titlebars']['textcolor']."\">&nbsp;".$this -> mArgs['title']."</font></td>\n".'<td width="100%" background="'.$this -> mThemeHandler -> mStyle['titlebar'].'">&nbsp;</td>'."\n".'<td background="'.$this -> mThemeHandler -> mStyle['titlebar'].'" align="center" valign="middle" nowrap style="white-space: nowrap">'."\n". ($this -> mArgs['newwindowwidget'] == 'true' ? "<a href=\"#\" onClick=\"HuiWindowOpen('".$new_window_event -> GetEventsCallString()."','".$win_name."','width=600,height=400,resizable=yes,scrollbars=yes')\"><img src=\"".$this -> mThemeHandler -> mStyle['windownew'].'" border="0" style="width: 16px; height: 16px;" alt=""></a>&nbsp;' : ''). ($this -> mArgs['closewidget'] == 'true' ? "<a href=\"main.php\" onClick=\"HuiWindowClose()\"><img src=\"".$this -> mThemeHandler -> mStyle['windowclose']."\" border=\"0\" style=\"width: 16px; height: 16px;\" alt=\"\"></a>\n" : '')."</td>\n".
+                //onClick="window.open('http://www.pageresource.com/jscript/jex5.htm','mywindow','width=400,height=200')"
+    "</tr>\n</table>\n". ($this -> mComments ? '<!-- end '.$this -> mName." titlebar -->\n" : '');
+
+            return true;
+        }
+    }
+
+}
+?>

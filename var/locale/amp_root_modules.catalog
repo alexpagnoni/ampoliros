@@ -1,0 +1,103 @@
+# General
+
+modules_title							= Applications
+modules_button							= Applications
+newmodule_button						= Install / Update
+help_button								= Help
+requiredfields_label					= (*) required field
+
+# main_default
+
+modid_header							= Name
+moddesc_header							= Description
+modversion_header						= Version
+moddate_header							= Date
+modauthor_header						= Author
+moddetails_label						= Details
+showmodule_label						= Structure
+moduledeps_label						= Dependencies
+removemodule_label						= Remove
+no_available_modules_status					= There are no available applications.
+
+# main_newmodule
+
+newmodule_title							= Install application / Update application
+modulefile_label						= Application file
+newmodule_submit						= Install
+
+# main_showmodule
+
+elementtype_header						= Element type
+elementname_header						= Element name
+elementattrs_header						= Attributes
+modulestructure_title						= Application structure
+
+# main_details
+
+moduledetails_title						= Application details
+author_label							= Author
+authorsite_label						= Author site
+authoremail_label						= Author email
+supportemail_label						= Support email
+bugsemail_label							= Bugs submitting email
+copyright_label							= Copyright
+license_label							= License
+maintainer_label						= Application maintainer
+maintaineremail_label						= Application maintainer email
+
+# main_dependencies
+
+moduledeps_title						= Application dependencies
+moddeps_label							= Application dependencies
+modsuggs_label							= Application suggestions
+dependingmods_label						= Applications depending on %s
+suggestingmods_label					= Applications suggesting %s
+enabledsites_label					= Sites with this application enabled
+
+# main_removemodule
+
+removemodule_title						= Remove application
+removemodulequestion_label				= Do you really want to remove application %s and all of its data?
+okremove_button							= Remove
+dontremove_button						= Cancel
+
+# main_help
+
+help_title								= Help
+
+# pass_install
+
+modinstalled_status						= Application installed.
+unmetdeps_status						= APPLICATION NOT INSTALLED. Missing applications:
+unmetsuggs_status						= Suggested applications:
+
+# pass_uninstall
+
+moduninstalled_status					= Applicatoin removed.
+removeunmetdeps_status					= APPLICATION NOT REMOVED. Depending applications:
+
+# pass_activatemodule
+
+modenabled_status				= Application enabled.
+modnotenabled_status			= APPLICATION NOT ENABLED.
+unmetsuggs_status				= Unmet suggestions:
+unmetdeps_status				= Unmet dependencies:
+
+# pass_deactivatemodule
+
+moddisabled_status				= Application disabled.
+modnotdisabled_status			= APPLICATION NOT DISABLED.
+disunmetdeps_status				= Unmet dependencies:
+
+modlog_label                            = Log
+modlog.title                            = Application log
+cleanlog_button                         = Erase log
+logcleaned_status                       = Log erased.
+lognotcleaned_status                    = ERROR: Log not erased.
+
+modulehooks.label               = Hooks
+hooks.label                     = Hooks
+hook_events.label               = Hookable events
+hook_function.header            = Function
+hook_event.header               = Event
+hook_module.header              = Application
